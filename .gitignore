@@ -1,0 +1,11 @@
+# Ignore files with .backup extension
+*.backup
+
+# Ignore credentials.auto.tfvars file (contains sensitive credentials)
+credentials.auto.tfvars
+
+# Ignore all files with .tfstate extension (Terraform state files)
+*.tfstate
+
+# Ignore the .terraform directory (contains Terraform runtime files)
+.terraform
