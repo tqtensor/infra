@@ -1,33 +1,33 @@
-resource "proxmox_vm_qemu" "workspace" {
-  name        = "workspace"
+resource "proxmox_vm_qemu" "teleport" {
+  name        = "teleport"
   desc        = "Ubuntu Server"
-  vmid        = 201
+  vmid        = 202
   target_node = "hpz440"
 
   agent = 1
 
   clone   = "ubuntu-jammy-template"
-  cores   = 8
+  cores   = 2
   sockets = 1
   cpu     = "host"
-  memory  = 65536
-  balloon = 2048
+  memory  = 2048
+  balloon = 1024
 
   network {
     bridge   = "vmbr0"
     model    = "virtio"
     firewall = true
-    macaddr  = "02:01:01:01:01:73"
+    macaddr  = "02:01:01:01:01:74"
   }
 
   disk {
     storage = "local-lvm"
     type    = "virtio"
-    size    = "200G"
+    size    = "30G"
   }
 
   os_type    = "cloud-init"
-  ipconfig0  = "ip=11.11.1.73/16,gw=11.11.1.1"
+  ipconfig0  = "ip=11.11.1.74/16,gw=11.11.1.1"
   nameserver = "1.1.1.1"
   ciuser     = "terrabot"
   sshkeys    = <<EOF
@@ -38,7 +38,7 @@ resource "proxmox_vm_qemu" "workspace" {
     type        = "ssh"
     user        = self.ciuser
     private_key = file("~/.ssh/terrabot")
-    host        = "11.11.1.73"
+    host        = "11.11.1.74"
   }
 
   provisioner "file" {

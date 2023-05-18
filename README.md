@@ -13,7 +13,7 @@ proxmox_api_token_secret = ""
 https://austinsnerdythings.com/2021/08/30/how-to-create-a-proxmox-ubuntu-cloud-init-image/
 
 ```bash
-export distro=focal # Ubuntu Server 20.04 LTS
+export distro=jammy # Ubuntu Server 22.04 LTS
 wget "https://cloud-images.ubuntu.com/${distro}/current/${distro}-server-cloudimg-amd64.img"
 
 apt update -y && apt install libguestfs-tools -y
@@ -37,7 +37,7 @@ qm template 9000
 https://austinsnerdythings.com/2021/08/30/how-to-create-a-proxmox-ubuntu-cloud-init-image/
 
 ```bash
-export distro=focal # Ubuntu Server 20.04 LTS
+export distro=jammy # Ubuntu Server 22.04 LTS
 wget "https://cloud-images.ubuntu.com/${distro}/current/${distro}-server-cloudimg-amd64.img"
 
 apt update -y && apt install libguestfs-tools -y

@@ -6,6 +6,7 @@ credentials.auto.tfvars
 
 # Ignore all files with .tfstate extension (Terraform state files)
 *.tfstate
+*.tfstate.*
 
 # Ignore the .terraform directory (contains Terraform runtime files)
 .terraform
