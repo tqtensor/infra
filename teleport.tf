@@ -64,4 +64,12 @@ resource "proxmox_vm_qemu" "teleport" {
       "/tmp/install_conda.sh",
     ]
   }
+
+  lifecycle {
+    ignore_changes = [
+      qemu_os,
+      disk[0].type,
+      disk[0].size
+    ]
+  }
 }
