@@ -14,7 +14,7 @@ resource "proxmox_vm_qemu" "workspace" {
   balloon = 2048
 
   network {
-    bridge   = "vmbr0"
+    bridge   = "vmbr1"
     model    = "virtio"
     firewall = true
     macaddr  = "02:01:01:01:01:73"
