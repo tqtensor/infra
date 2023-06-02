@@ -10,3 +10,9 @@ credentials.auto.tfvars
 
 # Ignore the .terraform directory (contains Terraform runtime files)
 .terraform
+
+# Ignore .DS_Store files (Mac specific)
+.DS_Store
+
+# Ignore docker-compose-secret.yml file (contains Docker Compose configuration)
+docker-compose-secret.yml
