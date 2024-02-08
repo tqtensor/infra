@@ -17,7 +17,7 @@ resource "proxmox_vm_qemu" "krypfolio" {
     bridge   = "vmbr0"
     model    = "virtio"
     firewall = true
-    macaddr  = "02:01:01:01:01:73"
+    macaddr  = "02:01:01:01:01:74"
   }
 
   disk {
