@@ -1,5 +1,5 @@
-resource "proxmox_vm_qemu" "fragrantica" {
-  name        = "fragrantica"
+resource "proxmox_vm_qemu" "newsagg" {
+  name        = "newsagg"
   desc        = "Ubuntu Server"
   vmid        = 202
   target_node = "asus"
