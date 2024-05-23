@@ -7,10 +7,10 @@ resource "proxmox_vm_qemu" "workspace" {
   agent = 1
 
   clone   = "ubuntu-jammy-template"
-  cores   = 8
+  cores   = 10
   sockets = 1
   cpu     = "host"
-  memory  = 65536
+  memory  = 112640
   balloon = 2048
 
   network {
@@ -23,7 +23,7 @@ resource "proxmox_vm_qemu" "workspace" {
   disk {
     storage = "local-lvm"
     type    = "virtio"
-    size    = "200G"
+    size    = "500G"
   }
 
   os_type    = "cloud-init"
