@@ -11,13 +11,41 @@ def create_airbyte():
         opts=pulumi.ResourceOptions(protect=True),
     )
 
-    airbyte_igw = aws.ec2.InternetGateway(
-        "airbyte_igw",
+    airbyte_gw = aws.ec2.InternetGateway(
+        "airbyte_gw",
         vpc_id=airbyte_vpc.id,
         tags={
-            "Name": "airbyte_igw",
+            "Name": "airbyte_gw",
         },
         opts=pulumi.ResourceOptions(protect=True),
+    )
+
+    airbyte_rt = aws.ec2.RouteTable(
+        "airbyte_rt",
+        routes=[
+            {
+                "cidr_block": "0.0.0.0/0",
+                "gateway_id": airbyte_gw.id,
+            }
+        ],
+        vpc_id=airbyte_vpc.id,
+        opts=pulumi.ResourceOptions(protect=True),
+    )
+
+    airbyte_subnet = aws.ec2.Subnet(
+        "airbyte_subnet",
+        availability_zone="us-east-1b",
+        cidr_block="172.31.16.0/20",
+        map_public_ip_on_launch=True,
+        private_dns_hostname_type_on_launch="ip-name",
+        vpc_id=airbyte_vpc.id,
+        opts=pulumi.ResourceOptions(protect=False),
+    )
+
+    airbyte_rt_assoc = aws.ec2.RouteTableAssociation(
+        "airbyte_rt_assoc",
+        route_table_id=airbyte_rt.id,
+        subnet_id=airbyte_subnet.id,
     )
 
     airbyte_sg = aws.ec2.SecurityGroup(
@@ -55,20 +83,10 @@ def create_airbyte():
         opts=pulumi.ResourceOptions(protect=False),
     )
 
-    airbyte_subnet = aws.ec2.Subnet(
-        "airbyte_subnet",
-        availability_zone="us-east-1a",
-        cidr_block="172.31.0.0/20",
-        map_public_ip_on_launch=True,
-        private_dns_hostname_type_on_launch="ip-name",
-        vpc_id=airbyte_vpc.id,
-        opts=pulumi.ResourceOptions(protect=True),
-    )
-
     airbyte_key_pair = aws.ec2.KeyPair(
         "airbyte_key_pair",
-        key_name="airbyte",
-        public_key="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDIa3KXBrCT/5bm4xwejbyPi4UVKNqhXJ6HHSF6v7R4Fnz75rr2PnapQb/vSNDnmpgUm504dW3ibx3NVefpTb1D7g4sr1sio0lYG7bnDtmg4qF5XwGGEcyBFXh0n+Ovpx2ZMdh5lY7RZdDABrmkmfRuloUU8gW2Qy5G9iP1oedjhB9FEmFZRjp3H7yndfC7WY/RnmRUau738Hp/ub8CRBL+M5tsEI+DQoNHGVpf6QlficolSo+tiKww0+DWoxQf98KF/FAAJTe3Pw6f0QFjoPWXygCBpZlc/oiZtjiddINp5u0v+ospAHRbOnBLsaDfLHeOrDqMVBYmyuKuMULOqkjafqDsYuNvfHOx6ZqMCkW/219vQHiZnQ2qid6JjWkCoh9AZ/C8/zuoy0cwTyYKNfnib1DjfGS7K9S4nFefPRUpZFlrnTRs5XUhmDRKHJ946aqZCLH7iejNtdA2ngljkIhOhWAQXtdtB3MUWWrwPJIFxaK28mJCbqHpJyS/3ygixnls9Zm6QSOXs1DEuy9DHGhffaPBos4c49oQZwx9QwTvfHghHgZjipLFmm3mGEhIhHlH35bEVaWUSeTWSPPAloT0WXtBocAxXttGCKrD2tnYQ6avkeTm81yqImA3KsgzRUG0XHurEtVa076zjLfQVFx+qUKEeopbvXgEgMhvGMmdHQ== victortang212@gmail.com",
+        key_name="infra",
+        public_key="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDbnm55mNBsS3Ackocgh2jv79s5Ep4MsTxCD8OnG6QXIk6QvCATYHxHnhXmcokwpjMPiSUJdhbfVTZCq05jCDjEgSFAZRJSOopzmCS0nzpWcdlhvnLRGZinH8zTBwK4AX/aPMfb301fICZf0Z7pZFA4rNTjSaDs591aIlZWC9sJIPJvaglHaFSTdxCyFoX0JFVIcHXxiE0PP1i3ECYAePtlERJtVQ0UkpV5B4XaDrE+Nglp3iaXRDUHYJIirqfVkT4WABlFJu0Em7UzGghOCqyeoSqEm01H+txUs8065EUQ+7MZArSMGXlNr7YVWrWY2fppxDNQ2XSyOer5NSz5y05t infra\n",
         opts=pulumi.ResourceOptions(protect=True),
     )
 
