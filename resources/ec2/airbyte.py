@@ -134,7 +134,7 @@ def create_airbyte_instance():
         },
         ebs_optimized=True,
         instance_initiated_shutdown_behavior="stop",
-        instance_type=aws.ec2.InstanceType.T3A_X_LARGE,
+        instance_type=aws.ec2.InstanceType.T3A_2_X_LARGE,
         key_name=airbyte_key_pair.key_name,
         maintenance_options={
             "auto_recovery": "default",
