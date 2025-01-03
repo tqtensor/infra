@@ -82,6 +82,18 @@ def create_nextcloud_instance():
                 "protocol": "tcp",
                 "to_port": 80,
             },
+            {
+                "cidr_blocks": ["0.0.0.0/0"],
+                "from_port": 8080,
+                "protocol": "tcp",
+                "to_port": 8080,
+            },
+            {
+                "cidr_blocks": ["0.0.0.0/0"],
+                "from_port": 8443,
+                "protocol": "tcp",
+                "to_port": 8443,
+            },
         ],
         name="nextcloud_sg",
         vpc_id=nextcloud_vpc.id,
