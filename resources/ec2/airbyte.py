@@ -1,63 +1,80 @@
 import pulumi
 import pulumi_aws as aws
 
+from resources.providers.aws import aws_us_east_1
+
 OPTS = pulumi.ResourceOptions(
-    protect=False,
-    provider=aws.Provider(
-        "aws-eu-central-1", region="eu-central-1", profile="krypfolio"
-    ),
+    protect=True,
+    provider=aws_us_east_1,
 )
 
 
-def create_nextcloud():
-    nextcloud_vpc = aws.ec2.Vpc(
-        "nextcloud_vpc",
+def create_airbyte_instance():
+    airbyte_vpc = aws.ec2.Vpc(
+        "airbyte_vpc",
         cidr_block="172.31.0.0/16",
         enable_dns_hostnames=True,
         instance_tenancy="default",
         opts=OPTS,
     )
 
-    nextcloud_gw = aws.ec2.InternetGateway(
-        "nextcloud_gw",
-        vpc_id=nextcloud_vpc.id,
+    airbyte_gw = aws.ec2.InternetGateway(
+        "airbyte_gw",
+        vpc_id=airbyte_vpc.id,
         tags={
-            "Name": "nextcloud_gw",
+            "Name": "airbyte-gw",
         },
         opts=OPTS,
     )
 
-    nextcloud_rt = aws.ec2.RouteTable(
-        "nextcloud_rt",
+    airbyte_rt = aws.ec2.RouteTable(
+        "airbyte_rt",
         routes=[
             {
                 "cidr_block": "0.0.0.0/0",
-                "gateway_id": nextcloud_gw.id,
+                "gateway_id": airbyte_gw.id,
             }
         ],
-        vpc_id=nextcloud_vpc.id,
+        vpc_id=airbyte_vpc.id,
         opts=OPTS,
     )
 
-    nextcloud_subnet = aws.ec2.Subnet(
-        "nextcloud_subnet",
-        availability_zone="eu-central-1b",
+    airbyte_subnet_a = aws.ec2.Subnet(
+        "airbyte_subnet_a",
+        availability_zone="us-east-1a",
+        cidr_block="172.31.32.0/20",
+        map_public_ip_on_launch=True,
+        private_dns_hostname_type_on_launch="ip-name",
+        vpc_id=airbyte_vpc.id,
+        opts=OPTS,
+    )
+
+    airbyte_subnet_b = aws.ec2.Subnet(
+        "airbyte_subnet_b",
+        availability_zone="us-east-1b",
         cidr_block="172.31.16.0/20",
         map_public_ip_on_launch=True,
         private_dns_hostname_type_on_launch="ip-name",
-        vpc_id=nextcloud_vpc.id,
+        vpc_id=airbyte_vpc.id,
         opts=OPTS,
     )
 
-    nextcloud_rt_assoc = aws.ec2.RouteTableAssociation(
-        "nextcloud_rt_assoc",
-        route_table_id=nextcloud_rt.id,
-        subnet_id=nextcloud_subnet.id,
+    airbyte_rt_assoc_a = aws.ec2.RouteTableAssociation(
+        "airbyte_rt_assoc_a",
+        route_table_id=airbyte_rt.id,
+        subnet_id=airbyte_subnet_a.id,
         opts=OPTS,
     )
 
-    nextcloud_sg = aws.ec2.SecurityGroup(
-        "nextcloud_sg",
+    airbyte_rt_assoc_b = aws.ec2.RouteTableAssociation(
+        "airbyte_rt_assoc_b",
+        route_table_id=airbyte_rt.id,
+        subnet_id=airbyte_subnet_b.id,
+        opts=OPTS,
+    )
+
+    airbyte_sg = aws.ec2.SecurityGroup(
+        "airbyte_sg",
         egress=[
             {
                 "cidr_blocks": ["0.0.0.0/0"],
@@ -85,24 +102,30 @@ def create_nextcloud():
                 "protocol": "tcp",
                 "to_port": 80,
             },
+            {
+                "cidr_blocks": ["0.0.0.0/0"],
+                "from_port": 8080,
+                "protocol": "tcp",
+                "to_port": 8080,
+            },
         ],
-        name="nextcloud_sg",
-        vpc_id=nextcloud_vpc.id,
+        name="airbyte-sg",
+        vpc_id=airbyte_vpc.id,
         opts=OPTS,
     )
 
-    nextcloud_key_pair = aws.ec2.KeyPair(
-        "nextcloud_key_pair",
+    airbyte_key_pair = aws.ec2.KeyPair(
+        "airbyte_key_pair",
         key_name="infra",
         public_key="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDbnm55mNBsS3Ackocgh2jv79s5Ep4MsTxCD8OnG6QXIk6QvCATYHxHnhXmcokwpjMPiSUJdhbfVTZCq05jCDjEgSFAZRJSOopzmCS0nzpWcdlhvnLRGZinH8zTBwK4AX/aPMfb301fICZf0Z7pZFA4rNTjSaDs591aIlZWC9sJIPJvaglHaFSTdxCyFoX0JFVIcHXxiE0PP1i3ECYAePtlERJtVQ0UkpV5B4XaDrE+Nglp3iaXRDUHYJIirqfVkT4WABlFJu0Em7UzGghOCqyeoSqEm01H+txUs8065EUQ+7MZArSMGXlNr7YVWrWY2fppxDNQ2XSyOer5NSz5y05t infra\n",
         opts=OPTS,
     )
 
-    nextcloud_instance = aws.ec2.Instance(
-        "nextcloud_instance",
-        ami="ami-0745b7d4092315796",
+    airbyte_instance = aws.ec2.Instance(
+        "airbyte_instance",
+        ami="ami-0e2c8caa4b6378d8c",
         associate_public_ip_address=True,
-        availability_zone=nextcloud_subnet.availability_zone,
+        availability_zone=airbyte_subnet_b.availability_zone,
         capacity_reservation_specification={
             "capacity_reservation_preference": "open",
         },
@@ -111,8 +134,8 @@ def create_nextcloud():
         },
         ebs_optimized=True,
         instance_initiated_shutdown_behavior="stop",
-        instance_type=aws.ec2.InstanceType.T3A_MEDIUM,
-        key_name=nextcloud_key_pair.key_name,
+        instance_type=aws.ec2.InstanceType.T3A_X_LARGE,
+        key_name=airbyte_key_pair.key_name,
         maintenance_options={
             "auto_recovery": "default",
         },
@@ -129,22 +152,22 @@ def create_nextcloud():
         root_block_device={
             "iops": 3000,
             "throughput": 125,
-            "volume_size": 200,
+            "volume_size": 100,
             "volume_type": "gp3",
         },
-        subnet_id=nextcloud_subnet.id,
+        subnet_id=airbyte_subnet_b.id,
         tags={
-            "Name": "nextcloud_instance",
+            "Name": "airbyte-instance",
         },
         tenancy=aws.ec2.Tenancy.DEFAULT,
-        vpc_security_group_ids=[nextcloud_sg.id],
+        vpc_security_group_ids=[airbyte_sg.id],
         opts=OPTS,
     )
 
-    nextcloud_eip_assoc = aws.ec2.EipAssociation(
-        "nextcloud_eip_assoc",
-        instance_id=nextcloud_instance.id,
-        private_ip_address=nextcloud_instance.private_ip,
-        public_ip="3.75.72.239",
+    airbyte_eip_assoc = aws.ec2.EipAssociation(
+        "airbyte_eip_assoc",
+        instance_id=airbyte_instance.id,
+        private_ip_address=airbyte_instance.private_ip,
+        public_ip="3.220.5.254",
         opts=OPTS,
     )

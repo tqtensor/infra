@@ -1,7 +1,7 @@
 """A Python Pulumi program"""
 
-from resources.airbyte import create_airbyte
-from resources.nextcloud import create_nextcloud
+from resources.ec2.airbyte import create_airbyte_instance
+from resources.ec2.nextcloud import create_nextcloud_instance
 
-create_airbyte()
-create_nextcloud()
+create_airbyte_instance()
+create_nextcloud_instance()
