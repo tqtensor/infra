@@ -111,7 +111,7 @@ def create_nextcloud():
         },
         ebs_optimized=True,
         instance_initiated_shutdown_behavior="stop",
-        instance_type=aws.ec2.InstanceType.T3A_X_LARGE,
+        instance_type=aws.ec2.InstanceType.T3A_MEDIUM,
         key_name=nextcloud_key_pair.key_name,
         maintenance_options={
             "auto_recovery": "default",
@@ -129,7 +129,7 @@ def create_nextcloud():
         root_block_device={
             "iops": 3000,
             "throughput": 125,
-            "volume_size": 100,
+            "volume_size": 200,
             "volume_type": "gp3",
         },
         subnet_id=nextcloud_subnet.id,
