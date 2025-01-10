@@ -4,14 +4,14 @@ import pulumi_aws as aws
 from resources.providers.aws import aws_personal
 
 OPTS = pulumi.ResourceOptions(
-    protect=True,
+    protect=False,
     provider=aws_personal,
 )
 
 
 def create_nextcloud_user():
     nextcloud_user = aws.iam.User(
-        "nextcloud_user", name="nextcloud_user", force_destroy=True, opts=OPTS
+        "nextcloud_user", name="nextcloud-user", force_destroy=True, opts=OPTS
     )
 
     nextcloud_s3_policy = aws.iam.Policy(
