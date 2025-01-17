@@ -1,12 +1,9 @@
 import pulumi
 import pulumi_aws as aws
 
-from resources.providers.aws import aws_personal
+from resources.utils import get_options
 
-OPTS = pulumi.ResourceOptions(
-    protect=False,
-    provider=aws_personal,
-)
+OPTS = get_options(profile="personal", region="us-east-1", type="resource")
 
 
 def create_nextcloud_user():

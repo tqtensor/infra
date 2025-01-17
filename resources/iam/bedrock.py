@@ -1,12 +1,9 @@
 import pulumi
 import pulumi_aws as aws
 
-from resources.providers.aws import aws_us_east_1
+from resources.utils import get_options
 
-OPTS = pulumi.ResourceOptions(
-    protect=True,
-    provider=aws_us_east_1,
-)
+OPTS = get_options(profile="krypfolio", region="us-east-1", type="resource")
 
 
 def create_bedrock_user():

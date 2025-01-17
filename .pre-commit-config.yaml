@@ -8,9 +8,9 @@ repos:
     rev: v4.4.0
     hooks:
       - id: check-json
-        exclude: '(^.vscode/|^.aws-sam/)'
+        exclude: '(^.vscode/)'
       - id: pretty-format-json
-        exclude: '(^.vscode/|^.aws-sam/)'
+        exclude: '(^.vscode/)'
         args:
           - --autofix
           - --indent
@@ -22,3 +22,12 @@ repos:
     hooks:
       - id: isort
         args: ['--profile', 'black']
+  - repo: local
+    hooks:
+      - id: flake8
+        name: flake8
+        entry: poetry run flake8 resources
+        language: system
+        pass_filenames: false
+        always_run: true
+        args: ['--ignore=F841,E501']
