@@ -1,9 +1,8 @@
-import pulumi
 import pulumi_aws as aws
 
-from resources.providers.aws import aws_eu_central_1
+from resources.utils import get_options
 
-OPTS = pulumi.ResourceOptions(protect=True, provider=aws_eu_central_1)
+OPTS = get_options(profile="krypfolio", region="eu-central-1", type="resource")
 
 
 def create_nextcloud_instance():
