@@ -376,6 +376,23 @@ semver = ">=2.8.1"
 typing-extensions = {version = ">=4.11", markers = "python_version < \"3.11\""}
 
 [[package]]
+name = "pulumi-cloudflare"
+version = "5.47.0"
+description = "A Pulumi package for creating and managing Cloudflare cloud resources."
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "pulumi_cloudflare-5.47.0-py3-none-any.whl", hash = "sha256:432b755777ba6eaae905e0b26ff7e4b84abed27764ce48659f0dec9b77ef4769"},
+    {file = "pulumi_cloudflare-5.47.0.tar.gz", hash = "sha256:90e8fc1949791553bbaa664371bddc672debf6f7823ef891d2321afe85465f5e"},
+]
+
+[package.dependencies]
+parver = ">=0.2.1"
+pulumi = ">=3.142.0,<4.0.0"
+semver = ">=2.8.1"
+typing-extensions = {version = ">=4.11", markers = "python_version < \"3.11\""}
+
+[[package]]
 name = "pycodestyle"
 version = "2.12.1"
 description = "Python style guide checker"
@@ -561,4 +578,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "711bf8beae5fe51a5c20433ee7705f47b3ec38df7e20ed50bf35297dd27c9c66"
+content-hash = "44f34bebec1704a6116e46aaeb253a72a5f63e4200a21676bf33e214759b6cdc"

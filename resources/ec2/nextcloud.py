@@ -149,10 +149,20 @@ def create_nextcloud_instance():
         opts=OPTS,
     )
 
+    nextcloud_eip = aws.ec2.Eip(
+        "nextcloud_eip",
+        domain="vpc",
+        network_border_group="eu-central-1",
+        tags={"Name": "nextcloud-eip"},
+        opts=OPTS,
+    )
+
     nextcloud_eip_assoc = aws.ec2.EipAssociation(
         "nextcloud_eip_assoc",
         instance_id=nextcloud_instance.id,
         private_ip_address=nextcloud_instance.private_ip,
-        public_ip="3.75.72.239",
+        public_ip=nextcloud_eip.public_ip,
         opts=OPTS,
     )
+
+    return nextcloud_instance
