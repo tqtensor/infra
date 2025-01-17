@@ -1,3 +1,2 @@
-config:
-  aws:profile: krypfolio
-  aws:region: us-east-1
+environment:
+  - tqtensor/infra
