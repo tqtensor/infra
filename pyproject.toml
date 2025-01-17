@@ -1,0 +1,18 @@
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core"]
+
+[tool]
+
+[tool.poetry]
+package-mode = false
+
+[tool.poetry.dependencies]
+pulumi = ">=3.0.0,<4.0.0"
+pulumi-aws = "^6.66.2"
+python = "^3.10"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.1.1"
+flake8 = "^7.1.1"
+toml-sort = "^0.24.2"
