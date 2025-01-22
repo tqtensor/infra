@@ -1,1 +1,1 @@
-from .duplicati import duplicati_bucket  # noqa
+from .bucket import *  # noqa

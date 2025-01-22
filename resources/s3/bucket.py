@@ -6,9 +6,10 @@ OPTS = get_options(
     profile="personal", region="eu-central-1", type="resource", protect=False
 )
 
-duplicati_bucket = aws.s3.Bucket(
-    "duplicati-bucket",
-    bucket="tqtensor-duplicati-bucket-eu",
+
+arq_bucket = aws.s3.Bucket(
+    "arq_bucket",
+    bucket="tqtensor-arq-bucket-eu",
     acl="private",
     opts=OPTS,
 )

@@ -6,6 +6,7 @@ from resources.utils import get_options
 
 OPTS = get_options(provider="cloudflare")
 
+
 drive_tqtensor_com = cloudflare.Record(
     "drive_tqtensor_com",
     name="drive",
