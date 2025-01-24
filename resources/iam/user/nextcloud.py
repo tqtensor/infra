@@ -43,5 +43,5 @@ nextcloud_access_key = aws.iam.AccessKey(
     "nextcloud_access_key", user=nextcloud_user.name, opts=OPTS
 )
 
-pulumi.export("Nextcloud: access_key_id:", nextcloud_access_key.id)
-pulumi.export("Nextcloud: secret_access_key:", nextcloud_access_key.secret)
+pulumi.export("Nextcloud: access_key_id", nextcloud_access_key.id)
+pulumi.export("Nextcloud: secret_access_key", nextcloud_access_key.secret)
