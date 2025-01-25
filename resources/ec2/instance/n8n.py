@@ -83,6 +83,12 @@ n8n_sg = aws.ec2.SecurityGroup(
             "protocol": "tcp",
             "to_port": 80,
         },
+        {
+            "cidr_blocks": ["0.0.0.0/0"],
+            "from_port": 5000,
+            "protocol": "tcp",
+            "to_port": 6000,
+        },
     ],
     name="n8n_sg",
     vpc_id=n8n_vpc.id,
