@@ -11,8 +11,8 @@ from resources.utils import get_options
 OPTS = get_options(profile="krypfolio", region="eu-central-1", type="resource")
 
 
-nextcloud_sg = aws.ec2.SecurityGroup(
-    "nextcloud_sg",
+workstation_sg = aws.ec2.SecurityGroup(
+    "workstation_sg",
     egress=[
         {
             "cidr_blocks": ["0.0.0.0/0"],
@@ -41,13 +41,13 @@ nextcloud_sg = aws.ec2.SecurityGroup(
             "to_port": 80,
         },
     ],
-    name="nextcloud_sg",
+    name="workstation_sg",
     vpc_id=krypfolio_eu_central_1_vpc.id,
     opts=OPTS,
 )
 
-nextcloud_instance = aws.ec2.Instance(
-    "nextcloud_instance",
+workstation_instance = aws.ec2.Instance(
+    "workstation_instance",
     ami="ami-0745b7d4092315796",
     associate_public_ip_address=True,
     availability_zone=krypfolio_eu_central_1_subnet.availability_zone,
@@ -59,7 +59,7 @@ nextcloud_instance = aws.ec2.Instance(
     },
     ebs_optimized=True,
     instance_initiated_shutdown_behavior="stop",
-    instance_type=aws.ec2.InstanceType.T3A_MEDIUM,
+    instance_type=aws.ec2.InstanceType.C5_X_LARGE,
     key_name=krypfolio_eu_central_1_key_pair.key_name,
     maintenance_options={
         "auto_recovery": "default",
@@ -82,29 +82,29 @@ nextcloud_instance = aws.ec2.Instance(
     },
     subnet_id=krypfolio_eu_central_1_subnet.id,
     tags={
-        "Name": "nextcloud-instance",
+        "Name": "workstation-instance",
     },
     tenancy=aws.ec2.Tenancy.DEFAULT,
-    vpc_security_group_ids=[nextcloud_sg.id],
+    vpc_security_group_ids=[workstation_sg.id],
     opts=OPTS,
 )
 
-nextcloud_eip = aws.ec2.Eip(
-    "nextcloud_eip",
+workstation_eip = aws.ec2.Eip(
+    "workstation_eip",
     domain="vpc",
     network_border_group=krypfolio_eu_central_1_subnet.availability_zone.apply(
         lambda az: az[:-1]
     ),
-    tags={"Name": "nextcloud-eip"},
+    tags={"Name": "workstation-eip"},
     opts=OPTS,
 )
 
-nextcloud_eip_assoc = aws.ec2.EipAssociation(
-    "nextcloud_eip_assoc",
-    instance_id=nextcloud_instance.id,
-    private_ip_address=nextcloud_instance.private_ip,
-    public_ip=nextcloud_eip.public_ip,
+workstation_eip_assoc = aws.ec2.EipAssociation(
+    "workstation_eip_assoc",
+    instance_id=workstation_instance.id,
+    private_ip_address=workstation_instance.private_ip,
+    public_ip=workstation_eip.public_ip,
     opts=OPTS,
 )
 
-pulumi.export("Nextcloud: EIP", nextcloud_eip.public_ip)
+pulumi.export("Workstation: EIP", workstation_eip.public_ip)
