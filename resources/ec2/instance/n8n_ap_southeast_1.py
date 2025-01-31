@@ -1,58 +1,16 @@
 import pulumi
 import pulumi_aws as aws
 
+from resources.ec2.networking import (
+    krypfolio_ap_southeast_1_subnet,
+    krypfolio_ap_southeast_1_vpc,
+)
 from resources.utils import get_options
 
 OPTS = get_options(
     profile="krypfolio", region="ap-southeast-1", type="resource", protect=False
 )
 
-
-n8n_vpc = aws.ec2.Vpc(
-    "n8n_vpc",
-    cidr_block="172.31.0.0/16",
-    enable_dns_hostnames=True,
-    instance_tenancy="default",
-    opts=OPTS,
-)
-
-n8n_gw = aws.ec2.InternetGateway(
-    "n8n_gw",
-    vpc_id=n8n_vpc.id,
-    tags={
-        "Name": "n8n-gw",
-    },
-    opts=OPTS,
-)
-
-n8n_rt = aws.ec2.RouteTable(
-    "n8n_rt",
-    routes=[
-        {
-            "cidr_block": "0.0.0.0/0",
-            "gateway_id": n8n_gw.id,
-        }
-    ],
-    vpc_id=n8n_vpc.id,
-    opts=OPTS,
-)
-
-n8n_subnet = aws.ec2.Subnet(
-    "n8n_subnet",
-    availability_zone="ap-southeast-1b",
-    cidr_block="172.31.16.0/20",
-    map_public_ip_on_launch=True,
-    private_dns_hostname_type_on_launch="ip-name",
-    vpc_id=n8n_vpc.id,
-    opts=OPTS,
-)
-
-n8n_rt_assoc = aws.ec2.RouteTableAssociation(
-    "n8n_rt_assoc",
-    route_table_id=n8n_rt.id,
-    subnet_id=n8n_subnet.id,
-    opts=OPTS,
-)
 
 n8n_sg = aws.ec2.SecurityGroup(
     "n8n_sg",
@@ -91,7 +49,7 @@ n8n_sg = aws.ec2.SecurityGroup(
         },
     ],
     name="n8n_sg",
-    vpc_id=n8n_vpc.id,
+    vpc_id=krypfolio_ap_southeast_1_vpc.id,
     opts=OPTS,
 )
 
@@ -106,7 +64,7 @@ n8n_instance = aws.ec2.Instance(
     "n8n_instance",
     ami="ami-0672fd5b9210aa093",
     associate_public_ip_address=True,
-    availability_zone=n8n_subnet.availability_zone,
+    availability_zone=krypfolio_ap_southeast_1_subnet.availability_zone,
     capacity_reservation_specification={
         "capacity_reservation_preference": "open",
     },
@@ -136,7 +94,7 @@ n8n_instance = aws.ec2.Instance(
         "volume_size": 200,
         "volume_type": "gp3",
     },
-    subnet_id=n8n_subnet.id,
+    subnet_id=krypfolio_ap_southeast_1_subnet.id,
     tags={
         "Name": "n8n-instance",
     },
@@ -148,7 +106,9 @@ n8n_instance = aws.ec2.Instance(
 n8n_eip = aws.ec2.Eip(
     "n8n_eip",
     domain="vpc",
-    network_border_group=n8n_subnet.availability_zone.apply(lambda az: az[:-1]),
+    network_border_group=krypfolio_ap_southeast_1_subnet.availability_zone.apply(
+        lambda az: az[:-1]
+    ),
     tags={"Name": "n8n-eip"},
     opts=OPTS,
 )
@@ -161,4 +121,4 @@ n8n_eip_assoc = aws.ec2.EipAssociation(
     opts=OPTS,
 )
 
-pulumi.export("n8n: EIP", n8n_eip.public_ip)
+pulumi.export("n8n: ap-southeast-1: EIP", n8n_eip.public_ip)
