@@ -1,5 +1,4 @@
 name: infra
-description: My Infrastructure
 runtime:
   name: python
   options:
