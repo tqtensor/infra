@@ -2,7 +2,7 @@ from typing import Union
 
 import pulumi
 
-from resources.providers.aws import *  # noqa
+from resources.providers import *  # noqa
 
 
 def get_options(
