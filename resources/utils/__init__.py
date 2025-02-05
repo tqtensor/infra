@@ -12,15 +12,15 @@ def get_options(
     protect: bool = True,
     provider: str = "aws",
 ) -> Union[pulumi.ResourceOptions, pulumi.InvokeOptions]:
-    if provider == "aws":
+    if provider in ["aws", "gcp"]:
         if type == "resource":
             return pulumi.ResourceOptions(
-                provider=eval(f"aws_{profile}_{region.replace('-', '_')}"),
+                provider=eval(f"{provider}_{profile}_{region.replace('-', '_')}"),
                 protect=protect,
             )
         elif type == "invoke":
             return pulumi.InvokeOptions(
-                provider=eval(f"aws_{profile}_{region.replace('-', '_')}")
+                provider=eval(f"{provider}_{profile}_{region.replace('-', '_')}")
             )
         else:
             raise ValueError("Invalid type")
