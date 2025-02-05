@@ -1,2 +1,4 @@
 environment:
   - infra/infra
+config:
+  gcp:project: gen-lang-client-0608717027

@@ -393,6 +393,23 @@ semver = ">=2.8.1"
 typing-extensions = {version = ">=4.11", markers = "python_version < \"3.11\""}
 
 [[package]]
+name = "pulumi-gcp"
+version = "8.18.0"
+description = "A Pulumi package for creating and managing Google Cloud Platform resources."
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "pulumi_gcp-8.18.0-py3-none-any.whl", hash = "sha256:eaf0045c7b0aa61d1f905567e1170aa420faf1dc3e20983a30254c36f6806df3"},
+    {file = "pulumi_gcp-8.18.0.tar.gz", hash = "sha256:74f1e767b2b413337e753962494fa9e2b6a2b73bb15aa5330de6e422689197d4"},
+]
+
+[package.dependencies]
+parver = ">=0.2.1"
+pulumi = ">=3.142.0,<4.0.0"
+semver = ">=2.8.1"
+typing-extensions = {version = ">=4.11", markers = "python_version < \"3.11\""}
+
+[[package]]
 name = "pycodestyle"
 version = "2.12.1"
 description = "Python style guide checker"
@@ -578,4 +595,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "44f34bebec1704a6116e46aaeb253a72a5f63e4200a21676bf33e214759b6cdc"
+content-hash = "ae782b80b183cfc5e9805d2ec6a07198e1eb6b59af8a1759f267fcc734170edd"
