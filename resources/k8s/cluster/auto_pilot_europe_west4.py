@@ -9,7 +9,7 @@ OPTS = get_options(
 
 auto_pilot_europe_west_4_cluster = container.Cluster(
     "auto_pilot_europe_west_4_cluster",
-    name="auto-pilot-europe-west4-cluster",
+    name="auto-pilot-europe-west-4-cluster",
     location="europe-west4",
     enable_autopilot=True,
     opts=OPTS,

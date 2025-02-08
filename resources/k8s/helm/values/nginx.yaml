@@ -1,0 +1,8 @@
+apiVersion: networking.k8s.io/v1
+controller:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 128Mi
+
+  replicaCount: 2
