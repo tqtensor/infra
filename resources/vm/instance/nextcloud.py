@@ -1,12 +1,12 @@
 import pulumi
 import pulumi_aws as aws
 
-from resources.ec2.keypair import krypfolio_eu_central_1_key_pair
-from resources.ec2.networking import (
+from resources.utils import get_options
+from resources.vm.keypair import krypfolio_eu_central_1_key_pair
+from resources.vm.networking import (
     krypfolio_eu_central_1_subnet,
     krypfolio_eu_central_1_vpc,
 )
-from resources.utils import get_options
 
 OPTS = get_options(profile="krypfolio", region="eu-central-1", type="resource")
 
