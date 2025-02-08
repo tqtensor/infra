@@ -48,7 +48,7 @@ service:
     type: ENC[AES256_GCM,data:MfK3eYC18rjB,iv:xqh7uefP+MuvEKioQggmNPyd0sSSOo1KWBTH8bQ/4hU=,tag:z8aRIPlEoC+LUv6hY/+klg==,type:str]
     port: ENC[AES256_GCM,data:8CQxFQ==,iv:NokyN/Sv5p7RAD7pFjBn52vf9ZIHCnzQ4D06cB3S43s=,tag:Hy6M1jjvy5NDCxIB37GcYA==,type:int]
 ingress:
-    enabled: ENC[AES256_GCM,data:K1wOSXY=,iv:tOjLOZiJ4JlE2NtF8j/bnqpTu+VSpjVt1HICJ8gAi1Q=,tag:fXOGB293GZIX+nmO6Q4Tqg==,type:bool]
+    enabled: ENC[AES256_GCM,data:v1H2ow==,iv:KHkc4NeUFexhApTjkQkjVa2SYYISRm+uOTxGizPZ5i4=,tag:B2GMtyGzUFbQYb+nWg+/iw==,type:bool]
     className: ENC[AES256_GCM,data:xO5K2bM=,iv:5B8kxa+Y83jVchaUpbwlnHBG0Sw9yg8CP36ErcgA6w0=,tag:66ooaHLOLU0K2CW1WI5jVg==,type:str]
     annotations:
         kubernetes.io/ingress.class: ENC[AES256_GCM,data:K5hVe5c=,iv:u1WxDDhpfgtIFF4xIoGrSOKYSx8wgExLtyE8/63TKiU=,tag:dj9WMdHyNuCX1j80oxe9Aw==,type:str]
@@ -171,8 +171,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2025-02-08T18:51:49Z"
-    mac: ENC[AES256_GCM,data:DVr3mjgpKFH2spTuVXni1SMM3FvJWQQ24rJQRwfYiHHwRnCnZER5hQuFhOh8LCDtbDwAzT6f0/pFweqR4yjbjT5vbgFUizr+kKERuYya0RqWCRnUZbHGG480ML8w68ejd5mwGQ3d3iCUtQN9eHtIzqLuxPWDSfXKrLJOGCNgjJo=,iv:XyFJ3ZH7F2mFxZMB1G+NWLaCcMus6ozIMBpxj7AkBh4=,tag:ntkv75WmD/VPEvn01f/yOQ==,type:str]
+    lastmodified: "2025-02-08T21:14:34Z"
+    mac: ENC[AES256_GCM,data:8hhiFk1D9xiQccEbGS99u8gxJlw94x092F/jTl/zqD9dYN4vRVpy73UY3FkOJb5qXqsGkFogfVpX/VmNxO9t3YEZicgqEDU1lfMEu0XfTj4phK4nrOb60TKLI7UnslJWD1tdAheiQXvYGwB9m+wZSFoCWIuYCa2VitXIcEyDl58=,iv:iEmN4kQ+VmuoVXJQJNXHdpovxJYvpAHZlb6iPIJjcho=,tag:cGqWpsWD1kZpo9LD+tDhAg==,type:str]
     pgp: []
     unencrypted_suffix: _unencrypted
     version: 3.7.3

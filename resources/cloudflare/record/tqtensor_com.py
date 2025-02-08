@@ -2,7 +2,11 @@ import pulumi_cloudflare as cloudflare
 
 from resources.constants import tqtensor_com
 from resources.utils import get_options
-from resources.vm import n8n_eu_central_1_instance, nextcloud_instance
+from resources.vm import (
+    n8n_eu_central_1_instance,
+    nextcloud_instance,
+    nginx_ip_europe_west_4,
+)
 
 OPTS = get_options(provider="cloudflare")
 
@@ -13,6 +17,16 @@ drive_tqtensor_com = cloudflare.Record(
     ttl=1,
     type="A",
     content=nextcloud_instance.public_ip,
+    zone_id=tqtensor_com.id,
+    opts=OPTS,
+)
+
+llm_tqtensor_com = cloudflare.Record(
+    "llm_tqtensor_com",
+    name="llm",
+    ttl=1,
+    type="A",
+    content=nginx_ip_europe_west_4.address,
     zone_id=tqtensor_com.id,
     opts=OPTS,
 )
