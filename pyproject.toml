@@ -11,6 +11,7 @@ package-mode = false
 pulumi = ">=3.0.0,<4.0.0"
 pulumi-aws = "^6.66.2"
 pulumi-cloudflare = "^5.47.0"
+pulumi-kubernetes = "^4.21.1"
 python = "^3.10"
 
 [tool.poetry.group.dev.dependencies]
