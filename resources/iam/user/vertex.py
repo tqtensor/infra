@@ -1,5 +1,5 @@
 import pulumi
-from pulumi_gcp import projects, serviceaccount
+import pulumi_gcp as gcp
 
 from resources.providers import gcp_pixelml_europe_central_2
 from resources.utils import get_options
@@ -9,7 +9,7 @@ OPTS = get_options(
 )
 
 
-vertex_sa = serviceaccount.Account(
+vertex_sa = gcp.serviceaccount.Account(
     "vertex_sa",
     account_id="vertex-sa-europe-central-2",
     display_name="Vertex AI Service Account",
@@ -20,14 +20,14 @@ roles = [
     "roles/storage.objectViewer",
 ]
 for role in roles:
-    projects.IAMMember(
+    gcp.projects.IAMMember(
         f"vertex_sa_{role}",
         project=gcp_pixelml_europe_central_2.project,
         role=role,
         member=vertex_sa.email.apply(lambda email: f"serviceAccount:{email}"),
     )
 
-vertex_sa_key = serviceaccount.Key(
+vertex_sa_key = gcp.serviceaccount.Key(
     "vertex_sa_key",
     service_account_id=vertex_sa.name,
     private_key_type="TYPE_GOOGLE_CREDENTIALS_FILE",
