@@ -681,6 +681,20 @@ files = [
 ]
 
 [[package]]
+name = "sopsy"
+version = "1.1.0"
+description = "SOPS Python wrapper library"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "sopsy-1.1.0-py3-none-any.whl", hash = "sha256:13158da272f43c1394f370887a56d822d3fe17cd175421782e8e3285a5107fdf"},
+    {file = "sopsy-1.1.0.tar.gz", hash = "sha256:5b25c831c96a5248de7ebec6180879c8d5cd3894ab8b1ad12409e6180567e82a"},
+]
+
+[package.dependencies]
+pyyaml = ">=6.0.1"
+
+[[package]]
 name = "toml-sort"
 version = "0.24.2"
 description = "Toml sorting library"
@@ -777,4 +791,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "d0792fa12ea7cc5732615c26ac3510cefbe2f4dcf98d77f227c0aaf7103bbda2"
+content-hash = "9cfd1026e97555ff1c908dd8c5fb76a6bfe334a8a2c4ae993e23d98ee29fd662"
