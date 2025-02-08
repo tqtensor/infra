@@ -1,7 +1,7 @@
 import pulumi
 import pulumi_aws as aws
 
-from resources.s3 import arq_bucket
+from resources.storage import arq_bucket
 from resources.utils import get_options
 
 OPTS = get_options(profile="personal", region="eu-central-1", type="resource")
