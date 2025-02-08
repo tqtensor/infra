@@ -1,0 +1,2 @@
+creation_rules:
+  - gcp_kms: projects/gen-lang-client-0608717027/locations/global/keyRings/sops/cryptoKeys/sops-key

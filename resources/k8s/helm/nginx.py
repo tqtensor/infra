@@ -11,13 +11,13 @@ OPTS = get_options(
     profile="pixelml", region="europe-west-4", type="resource", provider="gcp"
 )
 
-os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 nginx_ns = k8s.core.v1.Namespace(
-    "ingress_nginx", metadata={"name": "ingress-nginx"}, opts=OPTS
+    "nginx_ns", metadata={"name": "ingress-nginx"}, opts=OPTS
 )
 
-with open("values/nginx.yaml") as f:
+values_file_path = os.path.join(os.path.dirname(__file__), "values", "nginx.yaml")
+with open(values_file_path, "r") as f:
     chart_values = yaml.safe_load(f)
 
 nginx_chart = k8s.helm.v3.Chart(
