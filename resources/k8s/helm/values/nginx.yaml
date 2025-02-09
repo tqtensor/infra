@@ -1,0 +1,11 @@
+apiVersion: networking.k8s.io/v1
+controller:
+  replicaCount: 2
+  service:
+    loadBalancerIP: 1.1.1.1
+  publishService:
+    enabled: true
+  resources:
+    requests:
+      cpu: 250m
+      memory: 128Mi

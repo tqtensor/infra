@@ -1,10 +1,12 @@
 import pulumi_cloudflare as cloudflare
 
 from resources.constants import tqtensor_com
-from resources.ec2 import n8n_eu_central_1_instance, nextcloud_instance
 from resources.utils import get_options
+from resources.vm import n8n_eu_central_1_instance, nextcloud_instance
 
-OPTS = get_options(provider="cloudflare")
+OPTS = get_options(
+    provider="cloudflare",
+)
 
 
 drive_tqtensor_com = cloudflare.Record(

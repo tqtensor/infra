@@ -1,8 +1,9 @@
+import base64
 from typing import Union
 
 import pulumi
 
-from resources.providers.aws import *  # noqa
+from resources.providers import *  # noqa
 
 
 def get_options(
@@ -12,15 +13,15 @@ def get_options(
     protect: bool = True,
     provider: str = "aws",
 ) -> Union[pulumi.ResourceOptions, pulumi.InvokeOptions]:
-    if provider == "aws":
+    if provider in ["aws", "gcp"]:
         if type == "resource":
             return pulumi.ResourceOptions(
-                provider=eval(f"aws_{profile}_{region.replace('-', '_')}"),
+                provider=eval(f"{provider}_{profile}_{region.replace('-', '_')}"),
                 protect=protect,
             )
         elif type == "invoke":
             return pulumi.InvokeOptions(
-                provider=eval(f"aws_{profile}_{region.replace('-', '_')}")
+                provider=eval(f"{provider}_{profile}_{region.replace('-', '_')}")
             )
         else:
             raise ValueError("Invalid type")
@@ -33,3 +34,10 @@ def get_options(
             return pulumi.InvokeOptions(protect=protect)
     else:
         raise ValueError("Invalid provider")
+
+
+def encode_tls_secret_data(cert_pem, key_pem):
+    return {
+        "tls.crt": base64.b64encode(cert_pem.encode()).decode(),
+        "tls.key": base64.b64encode(key_pem.encode()).decode(),
+    }

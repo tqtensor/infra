@@ -1,2 +1,8 @@
+# Byte-compiled / optimized / DLL files
 *.pyc
+
+# Secrets
+.decrypted*
+
+# Virtualenv
 .venv
