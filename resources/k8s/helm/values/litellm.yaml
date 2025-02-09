@@ -166,7 +166,7 @@ postgresql:
 #ENC[AES256_GCM,data:pTIGWW54Kba8VWtfmbZOfQxKyg7oQ1HOnidJVunA0WJJm2Rpk1gXHyzDeOerK7SmZ25mk98T7kEipY+dBKlmiQ3OlvKsGlQyYlTeddGCxMUYL/UI2Z9PvrnxP+4=,iv:OemrKZOPzRmU4iw4CDjt7oIXVfFO7WObIb8pkGZiQlE=,tag:rxAXvaDAwwBIe2hiuyMqFA==,type:comment]
 #ENC[AES256_GCM,data:wxQJ/Y522gPneobDPraInUp73ZDNAtA2sgqx9Q0+pNKmbnw7hyysPOYviZ/RoHAI,iv:nBJh2xAHcEtum6gG03dtlYcCjGfErZKajI5OD1BXlwU=,tag:Hk/tHJ5nHV2k2QucMGDxyA==,type:comment]
 redis:
-    enabled: ENC[AES256_GCM,data:8Xoggbs=,iv:5f3dQmQ2Ek3ocpF4M75c/uI1Ab2l0E6YIqL8hCYAiNs=,tag:r9e+MVx6P5JD+G0uXjZLrA==,type:bool]
+    enabled: ENC[AES256_GCM,data:Q2ufWQ==,iv:s1DlcgX3zimLgfpOsdHKm6cHFygTFG7b2nvNu66DjGg=,tag:VVkfOVJ3080rRUOjWWRZGg==,type:bool]
     architecture: ENC[AES256_GCM,data:p1yDWl96ixUFmg==,iv:pE+mE28j4FMflejcao8KZzpwKQf8IH+XKxPJklE8vy8=,tag:6B/F/lNfoqijh34KR5Yc1A==,type:str]
 #ENC[AES256_GCM,data:nYuidT+SpCeFCSxlwEI59mzs1GBfxC+ljzriEBa/,iv:8ZpGCQb2bwVe21kDqK642sQG3Ek9dw4tWC+8/ubWqL4=,tag:Wg/sHBh0l+Z6QqYDATzfWw==,type:comment]
 migrationJob:
@@ -191,8 +191,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2025-02-09T19:39:45Z"
-    mac: ENC[AES256_GCM,data:qgbVs/a3qnW8O06OhnYWz5TodQ+DSQQEvmJErpj3xo5LyG5reP7C9AUZzmlw1KAx4e/colP/mR788NQ43YVMtIxB7iixR7eYahHlXn6f+gi/Gqx/9uqeuR77TwYL+C/e9IF5woxj7yrDSN9NF+L/LPgW6Xb8hZu9wHeAfUBVU2s=,iv:ZMUPmzwNUkALOVpS406cR1cFbu6RO7eoXkY+B6XL9JY=,tag:qghnHPMeWc4xe/6bXQe2ug==,type:str]
+    lastmodified: "2025-02-09T20:55:57Z"
+    mac: ENC[AES256_GCM,data:MhA20jC3U8Nm9wUnXJgAs+CHbSLw9gXDfRPPmtlzSNLqdx+Jjr/iNf72o0VVvWXhEAsBWdQ9C/V9+v2i2var5P8o6Yk9CmGizANKPDGFFwJqbIrSjK+mtfGQinLIB5A8VbvoKN0ArC3Wh6cRRQPbM8UUnH8dvQ0SRAQK8XislBI=,iv:K/Z0zRw6izlzwSjMyM9fditqMWplug5OO8E/DgeF7HU=,tag:bO3L9QTuy5AlJhulKERQJg==,type:str]
     pgp: []
     unencrypted_suffix: _unencrypted
     version: 3.7.3
