@@ -13,7 +13,6 @@ OPTS = get_options(
     region="europe-west-4",
     type="resource",
     provider="gcp",
-    protect=False,
 )
 
 
@@ -40,6 +39,7 @@ nginx_chart = k8s.helm.v3.Chart(
         values=chart_values,
     ),
     opts=pulumi.ResourceOptions(
-        provider=gcp_pixelml_europe_west_4, depends_on=[nginx_ns], protect=False
+        provider=gcp_pixelml_europe_west_4,
+        depends_on=[nginx_ns],
     ),
 )

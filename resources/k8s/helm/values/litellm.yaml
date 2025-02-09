@@ -54,14 +54,14 @@ ingress:
         kubernetes.io/ingress.class: ENC[AES256_GCM,data:K5hVe5c=,iv:u1WxDDhpfgtIFF4xIoGrSOKYSx8wgExLtyE8/63TKiU=,tag:dj9WMdHyNuCX1j80oxe9Aw==,type:str]
         #ENC[AES256_GCM,data:pNSn1k/8Dj3MC0BcKrem+1rov7Kcx/vQALA5objzxQ==,iv:fPLGwSCY5bL4TXsphYmvSXfTJtDL9P1kAtfMtU1YCDM=,tag:rpRLc9Fk2TNNIUg4OoAoDA==,type:comment]
     hosts:
-        - host: ENC[AES256_GCM,data:4K5TUEea7yhdJKYQhmbfdA==,iv:CAFgf2zptlxGX9tB0Os0NrZr5Fj+maU3m2jahh6qsog=,tag:7SZwxWtUDGml0a88df8Lag==,type:str]
+        - host: ENC[AES256_GCM,data:BpMSpzoTE4RhIIx0hi3ZYTGl,iv:9TGrcMd++p3wG9pHQ7IlE1htNY4q7ltrZhKSUxmNlcs=,tag:kwGLDycNalkJcyL/1Ofq3A==,type:str]
           paths:
             - path: ENC[AES256_GCM,data:oQ==,iv:QdseNP4jZt2kJ6ygjw+u1DxzSWBWXJ8PqcmoGExbt34=,tag:6No0yXevIClWZY0EuGZ+ow==,type:str]
               pathType: ENC[AES256_GCM,data:g6ppKigKZNY7eVWgJEYLHevkbhjhsg==,iv:NCN92bovoAS2FkKhsKHltH25bp4aAOZRK5IVRri7wHE=,tag:TBHZdvqEeUlFFg+SmoOxFA==,type:str]
-    tls: []
-    #ENC[AES256_GCM,data:tSDUZ1Q7vkk1ope8hCmvFeY0+K6fpUQMkO3vQ4pdz4si,iv:LYY7MgJg7Q6Hr0LYpDyl+GLCmvgpaCA6/Bfy+XN6YEw=,tag:mSfKSy3izjJlPOeVvonCow==,type:comment]
-    #ENC[AES256_GCM,data:IGIEJnTlcGuzWg==,iv:V9xz4S30VFUEwEKpdEaZvUyjqn5JQ2JLARHwFzP1fjc=,tag:QM1HrIac19e+tSAEUSVyKw==,type:comment]
-    #ENC[AES256_GCM,data:P24f3u9duRUtASxu750tLSxVYKBH3WzaMjb0,iv:3HcMNRTKCusEugFnqz2NFGOl3TR80DNOx9cvluyRmvI=,tag:cTnhcr86/VMTFlIZ8hkmrA==,type:comment]
+    tls:
+        - secretName: ENC[AES256_GCM,data:YOATGfooXo1fweNLWpZ3nU7a,iv:1A21t0u0URHnnEKHMtzF2Jofu55CXSMj9pJ5UcuMpdM=,tag:PnmQZfb1c/Nng4zhUlDcog==,type:str]
+          hosts:
+            - ENC[AES256_GCM,data:fbCetZr6mYl2uu5Wnw924bHd,iv:duTqmwuTY699OxhQSsTtgTeU3UY+1wbuF2iXdAfRRu0=,tag:B8HG3IUaTT/+b0QVXjiq1g==,type:str]
 masterkey: ENC[AES256_GCM,data:roGMUuMVXYIOSpfMRckHwLxSU/akHvY5m3l6TeG/V3c=,iv:q9X5exP9b+ZQC5LcUGhAUc/47TJzPa+UalmPZHVYUFI=,tag:QPVN/cTjXRlGPso2KA6UkA==,type:str]
 #ENC[AES256_GCM,data:5FgegR0kl40w+KewraAmf7HZpvPInaFEJJp49o+PdVEVuyr/EhiVbUJ5iPE+dnsJ/TGvLahbApqQK4Hpx1HsF+RfAo1cGOhGYjp6,iv:CyiVNdGORtYdLAvy3XhP0xsibXN+YA6r7Ti2o6n+9ss=,tag:eyMXhhrDitXmAiy3mT5kYw==,type:comment]
 #ENC[AES256_GCM,data:MeE8naN9KlMfnjNOiH4Jkwg26IdOIdbdh40MZaQdZMM58oPdRitO8mRwsip3Lu97Nj+tArp6XU9ilmYZCtELmT6nq85J8HugcMI8wcRGb+RVBy0KK4nYx4Oy,iv:yBtCpwyvwREC7NY1z7n/aLydnuFDNvIEKL2R0NC9Q0g=,tag:/fpvt52TASXwrsbQvCq8YQ==,type:comment]
@@ -171,8 +171,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2025-02-08T21:14:34Z"
-    mac: ENC[AES256_GCM,data:8hhiFk1D9xiQccEbGS99u8gxJlw94x092F/jTl/zqD9dYN4vRVpy73UY3FkOJb5qXqsGkFogfVpX/VmNxO9t3YEZicgqEDU1lfMEu0XfTj4phK4nrOb60TKLI7UnslJWD1tdAheiQXvYGwB9m+wZSFoCWIuYCa2VitXIcEyDl58=,iv:iEmN4kQ+VmuoVXJQJNXHdpovxJYvpAHZlb6iPIJjcho=,tag:cGqWpsWD1kZpo9LD+tDhAg==,type:str]
+    lastmodified: "2025-02-09T07:43:42Z"
+    mac: ENC[AES256_GCM,data:c/hbpYpXkqi8pmbo7g5+WyEAjvpi3wLxjvYw5VSbx4myGpdv6m2HDfMW8Xr8IOxbBjfFz6zm0Bmnvbig4G2YavwZGchnCaCW+icL5US+JLxay79lueXiN3bPDMCa+7AikzXwmCYVl13v5PqMMaYZfOXtvmUsNR5Be6Tzw7F2Byc=,iv:a2tolaZZmXY0VzmFExHyIZL0K1n9gqwEaCKy17hztGY=,tag:lbVEcKISWph4Ar7tBo01TQ==,type:str]
     pgp: []
     unencrypted_suffix: _unencrypted
     version: 3.7.3

@@ -554,6 +554,23 @@ semver = ">=2.8.1"
 typing-extensions = {version = ">=4.11", markers = "python_version < \"3.11\""}
 
 [[package]]
+name = "pulumi-tls"
+version = "5.1.0"
+description = "A Pulumi package to create TLS resources in Pulumi programs."
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "pulumi_tls-5.1.0-py3-none-any.whl", hash = "sha256:6419a4fbf38c1de58a774641633eb7710bc8b6b7e5d4425560e6ff7b8b1f4376"},
+    {file = "pulumi_tls-5.1.0.tar.gz", hash = "sha256:2f153cdb6a3ecb60f3d017b10dc6982be5b0f036ccdd39f8b3aad4f79b1907d9"},
+]
+
+[package.dependencies]
+parver = ">=0.2.1"
+pulumi = ">=3.142.0,<4.0.0"
+semver = ">=2.8.1"
+typing-extensions = {version = ">=4.11", markers = "python_version < \"3.11\""}
+
+[[package]]
 name = "pycodestyle"
 version = "2.12.1"
 description = "Python style guide checker"
@@ -791,4 +808,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "9cfd1026e97555ff1c908dd8c5fb76a6bfe334a8a2c4ae993e23d98ee29fd662"
+content-hash = "03d16879a23a9ced7bbab686484f2cba387547001d3df0dcd986d313c1f15b09"

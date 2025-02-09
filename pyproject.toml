@@ -12,6 +12,7 @@ pulumi = ">=3.0.0,<4.0.0"
 pulumi-aws = "^6.66.2"
 pulumi-cloudflare = "^5.47.0"
 pulumi-kubernetes = "^4.21.1"
+pulumi-tls = "^5.1.0"
 python = "^3.10"
 sopsy = "^1.1.0"
 

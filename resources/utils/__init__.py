@@ -1,3 +1,4 @@
+import base64
 from typing import Union
 
 import pulumi
@@ -33,3 +34,10 @@ def get_options(
             return pulumi.InvokeOptions(protect=protect)
     else:
         raise ValueError("Invalid provider")
+
+
+def encode_tls_secret_data(cert_pem, key_pem):
+    return {
+        "tls.crt": base64.b64encode(cert_pem.encode()).decode(),
+        "tls.key": base64.b64encode(key_pem.encode()).decode(),
+    }
