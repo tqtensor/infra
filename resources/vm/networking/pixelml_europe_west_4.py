@@ -8,7 +8,6 @@ OPTS = get_options(
     region="europe-west-4",
     type="resource",
     provider="gcp",
-    protect=False,
 )
 
 nginx_ip_europe_west_4 = gcp.compute.Address(
