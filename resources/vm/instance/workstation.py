@@ -105,3 +105,4 @@ workstation_eip_assoc = aws.ec2.EipAssociation(
 )
 
 pulumi.export("Workstation: EIP", workstation_eip.public_ip)
+pulumi.export("Workstation: Instance ID", workstation_instance.id)
