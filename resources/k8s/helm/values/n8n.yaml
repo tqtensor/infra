@@ -262,10 +262,10 @@ ingress:
     - host: n8n.tqtensor.com
       paths:
         - /
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+  tls:
+    - secretName: n8n-tls-secret
+      hosts:
+        - n8n.tqtensor.com
 
   # define a custom incressClassName, like "traefik" or "nginx"
   className: 'nginx'
