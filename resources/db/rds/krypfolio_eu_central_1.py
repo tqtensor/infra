@@ -1,3 +1,5 @@
+import json
+
 import pulumi_aws as aws
 
 from resources.utils import get_options
@@ -64,4 +66,15 @@ krypfolio_eu_central_1_rds_cluster_instance = aws.rds.ClusterInstance(
     engine_version="14.15",
     publicly_accessible=True,
     opts=OPTS,
+)
+
+krypfolio_eu_central_1_rds_credentials = json.loads(
+    aws.secretsmanager.get_secret_version(
+        secret_id=krypfolio_eu_central_1_rds_cluster.master_user_secrets.apply(
+            lambda x: x[0].secret_arn
+        ),
+        opts=get_options(
+            profile="krypfolio", region="eu-central-1", type="invoke", protect=False
+        ),
+    ).secret_string
 )
