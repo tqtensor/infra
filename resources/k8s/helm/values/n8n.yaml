@@ -5,12 +5,22 @@ n8n:
   encryption_key:
 defaults:
 
-config: {}
+config:
+  database:
+    type: postgresdb
+    postgresdb:
+      database: # PostgresDB Database - default: n8n
+      host: # PostgresDB Host - default: localhost
+      port: 5432
+      user: # PostgresDB User - default: root
 
 # existingSecret and secret are exclusive, with existingSecret taking priority.
 # existingSecret: "" # Use an existing Kubernetes secret, e.g., created by hand or Vault operator.
 # Dict with all n8n JSON config options, unlike config, the values here will end up in a secret.
-secret: {}
+secret:
+  database:
+    postgresdb:
+      password: 'big secret'
 
 # Typical Example of a config in combination with a secret.
 # config:
@@ -115,7 +125,7 @@ extraEnvSecrets: {}
 persistence:
   ## If true, use a Persistent Volume Claim, If false, use emptyDir
   ##
-  enabled: true
+  enabled: false
   # what type volume, possible options are [existing, emptyDir, dynamic] dynamic for Dynamic Volume Provisioning, existing for using an existing Claim
   type: emptyDir
   ## Persistent Volume Storage Class
