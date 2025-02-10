@@ -155,13 +155,15 @@ replicaCount: 1
 #  maxUnavailable: "50%"
 
 deploymentStrategy:
-  type: 'Recreate'
+  type: RollingUpdate
+  maxSurge: '50%'
+  maxUnavailable: '50%'
 
 image:
   repository: n8nio/n8n
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ''
+  tag: '1.77.3'
 
 imagePullSecrets: []
 nameOverride: ''
