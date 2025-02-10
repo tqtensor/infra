@@ -3,12 +3,11 @@ import pulumi_aws as aws
 
 from resources.utils import get_options
 from resources.vm.keypair import krypfolio_eu_central_1_key_pair
-from resources.vm.networking import (
-    krypfolio_eu_central_1_subnet,
-    krypfolio_eu_central_1_vpc,
-)
+from resources.vm.networking import krypfolio_eu_central_1_vpc
 
-OPTS = get_options(profile="krypfolio", region="eu-central-1", type="resource")
+OPTS = get_options(
+    profile="krypfolio", region="eu-central-1", type="resource", protect=False
+)
 
 
 workstation_sg = aws.ec2.SecurityGroup(
@@ -42,7 +41,7 @@ workstation_sg = aws.ec2.SecurityGroup(
         },
     ],
     name="workstation_sg",
-    vpc_id=krypfolio_eu_central_1_vpc.id,
+    vpc_id=krypfolio_eu_central_1_vpc.vpc_id,
     opts=OPTS,
 )
 
@@ -50,7 +49,7 @@ workstation_instance = aws.ec2.Instance(
     "workstation_instance",
     ami="ami-0745b7d4092315796",
     associate_public_ip_address=True,
-    availability_zone=krypfolio_eu_central_1_subnet.availability_zone,
+    availability_zone=krypfolio_eu_central_1_vpc.subnets[0].availability_zone,
     capacity_reservation_specification={
         "capacity_reservation_preference": "open",
     },
@@ -80,7 +79,7 @@ workstation_instance = aws.ec2.Instance(
         "volume_size": 200,
         "volume_type": "gp3",
     },
-    subnet_id=krypfolio_eu_central_1_subnet.id,
+    subnet_id=krypfolio_eu_central_1_vpc.public_subnet_ids[0],
     tags={
         "Name": "workstation-instance",
     },
@@ -92,7 +91,7 @@ workstation_instance = aws.ec2.Instance(
 workstation_eip = aws.ec2.Eip(
     "workstation_eip",
     domain="vpc",
-    network_border_group=krypfolio_eu_central_1_subnet.availability_zone.apply(
+    network_border_group=krypfolio_eu_central_1_vpc.subnets[0].availability_zone.apply(
         lambda az: az[:-1]
     ),
     tags={"Name": "workstation-eip"},
