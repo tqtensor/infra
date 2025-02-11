@@ -18,7 +18,7 @@ postgres_provider = postgresql.Provider(
     superuser=False,
 )
 
-opts = pulumi.ResourceOptions(provider=postgres_provider, protect=False)
+opts = pulumi.ResourceOptions(provider=postgres_provider)
 
 credentials_file_path = os.path.join(os.path.dirname(__file__), "credentials.yaml")
 sops = Sops(credentials_file_path)
