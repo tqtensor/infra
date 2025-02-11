@@ -5,9 +5,7 @@ import pulumi_aws as aws
 from resources.utils import get_options
 from resources.vm import krypfolio_eu_central_1_vpc
 
-OPTS = get_options(
-    profile="krypfolio", region="eu-central-1", type="resource", protect=False
-)
+OPTS = get_options(profile="krypfolio", region="eu-central-1", type="resource")
 
 
 krypfolio_eu_central_1_rds_sg = aws.ec2.SecurityGroup(
@@ -73,8 +71,6 @@ krypfolio_eu_central_1_rds_credentials = json.loads(
         secret_id=krypfolio_eu_central_1_rds_cluster.master_user_secrets.apply(
             lambda x: x[0].secret_arn
         ),
-        opts=get_options(
-            profile="krypfolio", region="eu-central-1", type="invoke", protect=False
-        ),
+        opts=get_options(profile="krypfolio", region="eu-central-1", type="invoke"),
     ).secret_string
 )
