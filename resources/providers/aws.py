@@ -18,3 +18,8 @@ aws_personal_eu_central_1 = aws.Provider(
 aws_personal_us_east_1 = aws.Provider(
     "aws-personal-us-east-1", region="us-east-1", profile="personal"
 )
+
+# PixelML AWS account
+aws_pixelml_us_east_1 = aws.Provider(
+    "aws-pixelml-us-east-1", region="us-east-1", profile="pixelml"
+)
