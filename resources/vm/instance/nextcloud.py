@@ -57,11 +57,15 @@ nextcloud_sg = aws.ec2.SecurityGroup(
     opts=OPTS,
 )
 
+nextcloud_subnet = aws.ec2.Subnet.get(
+    "nextcloud_subnet", id=krypfolio_eu_central_1_vpc.public_subnet_ids[0], opts=OPTS
+)
+
 nextcloud_instance = aws.ec2.Instance(
     "nextcloud_instance",
     ami="ami-0745b7d4092315796",
     associate_public_ip_address=True,
-    availability_zone=krypfolio_eu_central_1_vpc.subnets[0].availability_zone,
+    availability_zone=nextcloud_subnet.availability_zone,
     capacity_reservation_specification={
         "capacity_reservation_preference": "open",
     },
@@ -91,7 +95,7 @@ nextcloud_instance = aws.ec2.Instance(
         "volume_size": 200,
         "volume_type": "gp3",
     },
-    subnet_id=krypfolio_eu_central_1_vpc.public_subnet_ids[0],
+    subnet_id=nextcloud_subnet.id,
     tags={
         "Name": "nextcloud-instance",
     },
@@ -103,9 +107,7 @@ nextcloud_instance = aws.ec2.Instance(
 nextcloud_eip = aws.ec2.Eip(
     "nextcloud_eip",
     domain="vpc",
-    network_border_group=krypfolio_eu_central_1_vpc.subnets[0].availability_zone.apply(
-        lambda az: az[:-1]
-    ),
+    network_border_group=nextcloud_subnet.availability_zone.apply(lambda az: az[:-1]),
     tags={"Name": "nextcloud-eip"},
     opts=OPTS,
 )
@@ -118,4 +120,4 @@ nextcloud_eip_assoc = aws.ec2.EipAssociation(
     opts=OPTS,
 )
 
-pulumi.export("Nextcloud: EIP", nextcloud_eip.public_ip)
+pulumi.export("Nextcloud: IP", nextcloud_eip.public_ip)
