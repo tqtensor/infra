@@ -51,7 +51,7 @@ with open(values_file_path, "r") as f:
     chart_values["secret"]["database"]["postgresdb"]["password"] = db_values["password"]
     chart_values["config"]["database"]["postgresdb"]["database"] = db_values["database"]
 
-chart_file_path = os.path.join(os.path.dirname(__file__), "n8n-0.25.2.tgz")
+chart_file_path = os.path.join(os.path.dirname(__file__), "charts", "n8n-0.25.2.tgz")
 n8n_chart = k8s.helm.v3.Chart(
     "n8n",
     config=k8s.helm.v3.LocalChartOpts(
