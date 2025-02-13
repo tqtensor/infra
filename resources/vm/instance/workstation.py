@@ -43,11 +43,17 @@ workstation_sg = aws.ec2.SecurityGroup(
     opts=OPTS,
 )
 
+workstation_subnet = aws.ec2.Subnet.get(
+    "workstation_subnet",
+    id=krypfolio_eu_central_1_vpc.public_subnet_ids[0],
+    opts=OPTS,
+)
+
 workstation_instance = aws.ec2.Instance(
     "workstation_instance",
     ami="ami-0745b7d4092315796",
     associate_public_ip_address=True,
-    availability_zone=krypfolio_eu_central_1_vpc.subnets[0].availability_zone,
+    availability_zone=workstation_subnet.availability_zone,
     capacity_reservation_specification={
         "capacity_reservation_preference": "open",
     },
@@ -77,7 +83,7 @@ workstation_instance = aws.ec2.Instance(
         "volume_size": 200,
         "volume_type": "gp3",
     },
-    subnet_id=krypfolio_eu_central_1_vpc.public_subnet_ids[0],
+    subnet_id=workstation_subnet.id,
     tags={
         "Name": "workstation-instance",
     },
@@ -89,9 +95,7 @@ workstation_instance = aws.ec2.Instance(
 workstation_eip = aws.ec2.Eip(
     "workstation_eip",
     domain="vpc",
-    network_border_group=krypfolio_eu_central_1_vpc.subnets[0].availability_zone.apply(
-        lambda az: az[:-1]
-    ),
+    network_border_group=workstation_subnet.availability_zone.apply(lambda az: az[:-1]),
     tags={"Name": "workstation-eip"},
     opts=OPTS,
 )
@@ -104,5 +108,5 @@ workstation_eip_assoc = aws.ec2.EipAssociation(
     opts=OPTS,
 )
 
-pulumi.export("Workstation: EIP", workstation_eip.public_ip)
-pulumi.export("Workstation: Instance ID", workstation_instance.id)
+pulumi.export("Workstation: IP", workstation_eip.public_ip)
+pulumi.export("Workstation: ID", workstation_instance.id)

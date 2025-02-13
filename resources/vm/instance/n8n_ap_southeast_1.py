@@ -119,4 +119,4 @@ n8n_ap_southeast_1_eip_assoc = aws.ec2.EipAssociation(
     opts=OPTS,
 )
 
-pulumi.export("n8n: ap-southeast-1: EIP", n8n_ap_southeast_1_eip.public_ip)
+pulumi.export("n8n: IP", n8n_ap_southeast_1_eip.public_ip)
