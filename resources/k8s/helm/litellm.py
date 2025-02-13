@@ -3,12 +3,12 @@ import os
 import pulumi
 import pulumi_gcp as gcp
 import pulumi_kubernetes as k8s
-from sopsy import Sops
+import yaml
 
 from resources.cloudflare import litellm_origin_ca_cert, litellm_private_key
 from resources.iam import vertex_sa
 from resources.providers import gcp_pixelml_europe_west_4, k8s_provider
-from resources.utils import encode_tls_secret_data, get_options
+from resources.utils import encode_tls_secret_data, fill_in_password, get_options
 
 OPTS = get_options(
     profile="pixelml",
@@ -56,15 +56,18 @@ litellm_iam_member = gcp.serviceaccount.IAMMember(
     ),
 )
 
-values_file_path = os.path.join(os.path.dirname(__file__), "values", "litellm.yaml")
-sops = Sops(values_file_path)
-try:
-    chart_values = sops.decrypt()
-except Exception as e:
-    pulumi.log.error(f"Failed to decrypt {values_file_path}: {e}")
-    raise
+secrets_file_path = os.path.join(os.path.dirname(__file__), "secrets", "litellm.yaml")
+secret_values = fill_in_password(
+    encrypted_yaml=secrets_file_path, value_path="masterkey"
+)
 
-chart_file_path = os.path.join(os.path.dirname(__file__), "litellm-helm-0.3.0.tgz")
+values_file_path = os.path.join(os.path.dirname(__file__), "values", "litellm.yaml")
+chart_values = yaml.safe_load(open(values_file_path, "r").read())
+chart_values["masterkey"] = secret_values["masterkey"]
+
+chart_file_path = os.path.join(
+    os.path.dirname(__file__), "charts", "litellm-helm-0.3.0.tgz"
+)
 litellm_chart = k8s.helm.v3.Chart(
     "litellm-proxy",
     config=k8s.helm.v3.LocalChartOpts(

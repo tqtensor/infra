@@ -625,6 +625,23 @@ semver = ">=2.8.1"
 typing-extensions = {version = ">=4.11", markers = "python_version < \"3.11\""}
 
 [[package]]
+name = "pulumi-random"
+version = "4.17.0"
+description = "A Pulumi package to safely use randomness in Pulumi programs."
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "pulumi_random-4.17.0-py3-none-any.whl", hash = "sha256:3e3d31af5561b8156f2fa7393c42e34f7ca2e122fc2e5f2471d956e4550a6ac8"},
+    {file = "pulumi_random-4.17.0.tar.gz", hash = "sha256:96a1ad0f4eeb6164ea64a228231e8363777e01cf4dec4c02e99d1718ef99b8b7"},
+]
+
+[package.dependencies]
+parver = ">=0.2.1"
+pulumi = ">=3.142.0,<4.0.0"
+semver = ">=2.8.1"
+typing-extensions = {version = ">=4.11", markers = "python_version < \"3.11\""}
+
+[[package]]
 name = "pulumi-tls"
 version = "5.1.0"
 description = "A Pulumi package to create TLS resources in Pulumi programs."
@@ -879,4 +896,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "288048977557709fd9870a926c2f1a3c97d58aaca9b63d5cfa3aafae2c929f0d"
+content-hash = "e04fe8e8e191be4abce0e9ddb145dbda47729e67b54c259f4237406973605633"

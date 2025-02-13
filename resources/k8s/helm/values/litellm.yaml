@@ -1,198 +1,184 @@
-#ENC[AES256_GCM,data:LHlVDvfVkijx8qcrlB0NhgMfLjD+dC98Y+JpFA==,iv:UDkD2jaQAHVdFxE+9a3d4P8snUvSaGwEtsPMrjdQofw=,tag:stYsRMznfN1C+aGlmH0tWw==,type:comment]
-#ENC[AES256_GCM,data:E1SUV7kURQrr/3b8WW/UYWQq3SRPE2DEIN8fpqhX3A==,iv:ITKy+5nNZ0E7c8Cxh14r0iKrxogFcETX3U5kFZEBXK8=,tag:BdArt8lMQT0bmqNOIX+FIA==,type:comment]
-#ENC[AES256_GCM,data:KE9pThZTkJzxvtFjvXGfdF1HHb9DhLt8bTCyYZEpxDLDaL2IYptHq9TdWWAMuEy+AopfEQ==,iv:fuYpQUeqGMSzZ/SW17wi0uEGQlmhhc8VI3ascMyCMNg=,tag:mkXDnj9e5trozRHzAw89EQ==,type:comment]
-replicaCount: ENC[AES256_GCM,data:fw==,iv:n1flnxo6rUTCVA7FSRXs2f9eEu+TcC28PMamXo0jeHw=,tag:DaQfIRbUADBhSRYaRG1LJg==,type:int]
+# Default values for litellm.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+replicaCount: 1
 image:
-    #ENC[AES256_GCM,data:r35hylxm3057s5bMpd8tdDoON9vVO9k7cXHneMoArgCj3aw0/TgGR7HZspSu8l7oiz5nnpHmZ0S4PV8wLsoC/Y6pSxzJnq4QLw==,iv:Rnczf0OxRomUzr5L2UuKbbe5Kq392KRPd1Zjk0dJJb8=,tag:07tliSMDaoSUsl17h/zWYw==,type:comment]
-    repository: ENC[AES256_GCM,data:r++BWbEoDvu7W4zdJTEoVhwtJBBE5tSOiyqnCk1L+yM=,iv:IGlP6LTNKBjiH5uEaGeadxpfqxSm0qvFnwKPTYnt7K8=,tag:5ysBNFzi8rlJ5Dh+TQtoKQ==,type:str]
-    pullPolicy: ENC[AES256_GCM,data:73RV5ekN,iv:lKYorltQB2XrnIOzrbWfX+m8T9b/S7UvUL4d4eRsEi0=,tag:XTQv4F9YBhk7mCIiF0sqiw==,type:str]
-    #ENC[AES256_GCM,data:pXdrxnfJYMPy9iFv6LJe91qYU/YMipkh+umA5RrVAzpJmbjA3gIfWhNvdajYuEll4HjzPIip49vefn/3U8fP,iv:1twxoksVaVv6cnmh5jWh+xldavNPDQ1XPgDISMCZtJ8=,tag:aHmKc1HDXzF3Os5QxjSJOg==,type:comment]
-    #ENC[AES256_GCM,data:aNShwdBVo7ccz9X/Dk/lZg4dGQ==,iv:tb++TPzSZLyhDAkYRQkcLFBV3pk2PGs9wl68uGjj79Y=,tag:Er7ekpTb0dOzIibEAm9zzg==,type:comment]
-    tag: ""
+  # Use "ghcr.io/berriai/litellm-database" for optimized image with database
+  repository: ghcr.io/berriai/litellm-database
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  # tag: "main-latest"
+  tag: ''
 imagePullSecrets: []
-nameOverride: ENC[AES256_GCM,data:aW64wJqjjw==,iv:ytpbHcwkPzS7zDmqhQsP5ZE4pFJsEtEb1wAHG4QZLTg=,tag:vmcUwHZGR/uFf/xNCGxu6A==,type:str]
-fullnameOverride: ""
+nameOverride: litellm
+fullnameOverride: ''
 serviceAccount:
-    #ENC[AES256_GCM,data:QNWwy7veZH9PHttCsMIhasyAKT+thoq3Y5rdumfEMzkdew+JVgpV0gjO5Ek7dH7ZT0YhMkXX,iv:olFGEV//OGWmrKZVUGYGGNqbq0KEdsDHLx7T0pvbVzY=,tag:pQV6ratNpQFGYPteHWtmMw==,type:comment]
-    create: ENC[AES256_GCM,data:vH3ENI4=,iv:z1NtwgmJVDiRAuYpY35DHGC9/EVi77l5altzuA8nrnA=,tag:tqFpMBk23BTeqQliXAwV8g==,type:bool]
-    #ENC[AES256_GCM,data:HduwT6Iu2s3teyCtkWcAB0Ht5moONUFbu7ll/iOSRPW2jKQDJ0N+K6EO/En/er8Z8a4QE1vxwS0=,iv:o3rW9y0WGL8gjoyDNvFC96gB6vrkJV3AAswbxZJ8DIw=,tag:ZX+fyHMgokkHrG022thXNw==,type:comment]
-    automount: ENC[AES256_GCM,data:Fcjjqw==,iv:tIuTedV+RYLO7/g8Mf1/w1qU/weF4LaRTXrDw/YiDHY=,tag:3kTcS9BdGo054tPq+XKDhg==,type:bool]
-    #ENC[AES256_GCM,data:OvEztuBFGt0eM2TwxUFuBrDDxACe0EthdPHCx9jAcEGau2sPpUd3WgJw,iv:mBvZMBdSse5IYpu0sTJefXziqkBbYBEYoAv1Z0luPfs=,tag:3VLysXmopuoXVDbSc7pQUg==,type:comment]
-    annotations: {}
-    #ENC[AES256_GCM,data:WwQ7IvbDFE+6VuWJ0Cx3AcClis+aBnCazfKY929RXJ6RBF8yrzfixA==,iv:KoxUDqvnAUYWMhDgG+qmBwsB5H9Hcb6iqjR5w2KNur4=,tag:hEtFn14vYW+Hx8zGqJVUAw==,type:comment]
-    #ENC[AES256_GCM,data:XQZZxwjN8h1rZJwy9Xqkg+tb85kzG/l5K6Qm91DCF2R1Uo+7JGAxFgzPP+qdT6kzru1l8sXxPX6lL7el+TWMeCD8opM3YuVtIkMlnQ/eRQ==,iv:i/3118aL8xb29PvcLkzekDH0A2aS+QfHMrMs081N3pM=,tag:3Y0h1JxlNZOT8wCb+ZpJIw==,type:comment]
-    name: ENC[AES256_GCM,data:hqI2TFr1ZQ==,iv:8R26RGHBgraniWUdA6GEgKtHDge13I2FBg4diSM6dQE=,tag:ll61d33SOREMbSab7Vc3aQ==,type:str]
+  # Specifies whether a service account should be created
+  create: false
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: litellm
 podAnnotations: {}
 podLabels: {}
-#ENC[AES256_GCM,data:IrZJZok+VDUGFMWMQo4lXPq6SBsQWwST0N/WcUsrjGRsg6eFZPPu9xZaDJE8pwipcU6tQxA/1rUVBvJOIm2kK+Gknyd4eq5E2h1h6fVD,iv:dP8/O3AQdsa9sqWLPC6VdhLZLveeeS2MCqgmtXifrkc=,tag:O3T0J/92YZfrIaxN7gkxfg==,type:comment]
-#ENC[AES256_GCM,data:olIeoS82xp0E2HKmNzNKpYb0QURlKOueStSXrzOT0z0zwdbtJBG4HMr4zv3hV3AbgcRPcdVRh2TVmQNllb3/qbYO/wN9,iv:hddUEu3U62fPRP0Z70On4MRVp/GcWhD0jIMeBNTaN4g=,tag:NgA82GF5/x/Ik4+ZxqDpyQ==,type:comment]
+# At the time of writing, the litellm docker image requires write access to the
+#  filesystem on startup so that prisma can install some dependencies.
 podSecurityContext: {}
 securityContext: {}
-#ENC[AES256_GCM,data:SXi6Q9EV/TgH0zOW7ic=,iv:r9m+JMfHvjw1ASy82z4d7m34GB9MBtmFMQUo9BYsnsQ=,tag:t7NRIVSmkdJHA0sBmXHlnQ==,type:comment]
-#ENC[AES256_GCM,data:AimJs3dCQhM=,iv:vAXLWXkwHQE8xPu8zIj80yUcjaZfidXIJq0ycXw0+SQ=,tag:8V6hibFivPvUMEBn7HMCqA==,type:comment]
-#ENC[AES256_GCM,data:+VVPf74mh0XHqg==,iv:QuF+/xhGQOL484HdHXeucvx2IrK0FmZEeGHQPZcgc84=,tag:+VQr2j8FF3mWoEHr1WFeqQ==,type:comment]
-#ENC[AES256_GCM,data:5f8IH0fGkW54+XnaZnjcz1PTyO5gTnJRIglOhniI,iv:S2BS07Kjf1AYCXEsWl5GQWSxhzcqzmjlzfK3+kkFajs=,tag:0qtv3C2k5vhc/8U+/n+Sdw==,type:comment]
-#ENC[AES256_GCM,data:QDS0bdMSduiprKkQFanEIo9LVg==,iv:Z0OeoHYAsgIiGXXhP/9cq+bpq+5C7Fq8RCJf93k4Ab4=,tag:R1cKaxqdIh75KMnvsm5vHA==,type:comment]
-#ENC[AES256_GCM,data:Fx67KXDhSJgiQIPjBm9Syw==,iv:3RVSwWko1pJXX+zCOhwskeRjPNg29zP09+ZUwrEwbD4=,tag:TzYwW2Yc9cFIexFokzyT3g==,type:comment]
-#ENC[AES256_GCM,data:n8dBKOz9IXWFsjS2FDp+a2SdEJAgAi2xSkFsUoLvoO0xL3ClrK5I/PzxtaOFlvMuH8VPU3E/lVpQ5ISOhAmjntxf3c7weQDH4tUvLVjyFQ==,iv:y6sEQMRFuVeR2eAxyNvFMoY73S2hT/Tx9Vb1/on/vb4=,tag:4hiG1cquoY7vJ96gT7fT8w==,type:comment]
-#ENC[AES256_GCM,data:IBU59i53DR8F92Hi6rBNLzld5+q0WwjtuR8MkKCRffByBtDadcrSiOr/u/AIcZ6LA4JxeCOq4lwbiRBKEDkhzgBArYWEXDB6xpbMSg==,iv:N9fqkqfCiPoLEcxUChsFQy+itgcCO89BDM2DELa6aX4=,tag:uVLvSiXGadFhjavJ7k0RKA==,type:comment]
-#ENC[AES256_GCM,data:CKHqlMm4FDxyhQ3tF7amzjSFPexCTZCCqTUoS5IV5WCqGYEzct3Qs6FQVflNRYF+b1GpgTSNIR6GxXR8h5B4MTo13ZE0QAQC4CeUWZ+U,iv:PQ2iMo9jFaqN2JxpKI2MgCLBcrIN/2iPmo+pEMU1bRM=,tag:edyW6Yw6GVQiWhbay0OQrA==,type:comment]
+# capabilities:
+#   drop:
+#     - ALL
+# readOnlyRootFilesystem: false
+# runAsNonRoot: true
+# runAsUser: 1000
+# A list of Kubernetes Secret objects that will be exported to the LiteLLM proxy
+#  pod as environment variables.  These secrets can then be referenced in the
+#  configuration file (or "litellm" ConfigMap) with `os.environ/<Env Var Name>`
 environmentSecrets: []
-#ENC[AES256_GCM,data:21dM93Ah+4ZMXT/On5PvtIUYXL7d,iv:QR+17nlrHnpe8p2A4nfRwdf+1qoYIje9Y8mKZWdqCH4=,tag:+M6b0pCr4SvJgGtNdGVJLw==,type:comment]
-#ENC[AES256_GCM,data:AsYtJvsH7AExcdY1AUA3mbKqjeWOA/wSu7IrB6rXUmhSi3DH4RCZZuLm3tajJkCReYn+PeKSFosrwtSLqvGTKRKUs7HNW0mjojtCxkDWJV58Ug==,iv:Uq0B31IbYaDjntzmrYLJ3T+1vKht3bvlRF74zASsonE=,tag:32XS49a06iNLsWo5ccC55A==,type:comment]
-#ENC[AES256_GCM,data:cQDz2ko8qcbosCY3HP7egL4eSmKV/20/cGFfAtdsqRJRm6XIYKT7uJfRhua2Jc1StMdZZMLwEZlmoMCFl+u4enR9LmKPBxruzZmf9A4tIp8UGY5Y5g==,iv:vPCNQ9WKtvSO0bX9T7D2AVfkNp5IZbCfT4Sdyef4suo=,tag:eu1Lle2zGYyTBZ+R7lmokg==,type:comment]
-#ENC[AES256_GCM,data:CKHqlMm4FDxyhQ3tF7amzjSFPexCTZCCqTUoS5IV5WCqGYEzct3Qs6FQVflNRYF+b1GpgTSNIR6GxXR8h5B4MTo13ZE0QAQC4CeUWZ+U,iv:PQ2iMo9jFaqN2JxpKI2MgCLBcrIN/2iPmo+pEMU1bRM=,tag:edyW6Yw6GVQiWhbay0OQrA==,type:comment]
+# - litellm-env-secret
+# A list of Kubernetes ConfigMap objects that will be exported to the LiteLLM proxy
+#  pod as environment variables.  The ConfigMap kv-pairs can then be referenced in the
+#  configuration file (or "litellm" ConfigMap) with `os.environ/<Env Var Name>`
 environmentConfigMaps: []
-#ENC[AES256_GCM,data:E2eYZQcZxXIXsvzqfgeGKT3u95IDZWQH,iv:NnCah+IeMJ6r9lvIFcjKFC7YccUAnTppte2cwPk1NG4=,tag:+A6wd9n1Ksyx2ZP6A9xwOQ==,type:comment]
+# - litellm-env-configmap
 service:
-    type: ENC[AES256_GCM,data:MfK3eYC18rjB,iv:xqh7uefP+MuvEKioQggmNPyd0sSSOo1KWBTH8bQ/4hU=,tag:z8aRIPlEoC+LUv6hY/+klg==,type:str]
-    port: ENC[AES256_GCM,data:8CQxFQ==,iv:NokyN/Sv5p7RAD7pFjBn52vf9ZIHCnzQ4D06cB3S43s=,tag:Hy6M1jjvy5NDCxIB37GcYA==,type:int]
+  type: ClusterIP
+  port: 4000
 ingress:
-    enabled: ENC[AES256_GCM,data:v1H2ow==,iv:KHkc4NeUFexhApTjkQkjVa2SYYISRm+uOTxGizPZ5i4=,tag:B2GMtyGzUFbQYb+nWg+/iw==,type:bool]
-    className: ENC[AES256_GCM,data:xO5K2bM=,iv:5B8kxa+Y83jVchaUpbwlnHBG0Sw9yg8CP36ErcgA6w0=,tag:66ooaHLOLU0K2CW1WI5jVg==,type:str]
-    annotations:
-        kubernetes.io/ingress.class: ENC[AES256_GCM,data:K5hVe5c=,iv:u1WxDDhpfgtIFF4xIoGrSOKYSx8wgExLtyE8/63TKiU=,tag:dj9WMdHyNuCX1j80oxe9Aw==,type:str]
-        #ENC[AES256_GCM,data:pNSn1k/8Dj3MC0BcKrem+1rov7Kcx/vQALA5objzxQ==,iv:fPLGwSCY5bL4TXsphYmvSXfTJtDL9P1kAtfMtU1YCDM=,tag:rpRLc9Fk2TNNIUg4OoAoDA==,type:comment]
-    hosts:
-        - host: ENC[AES256_GCM,data:BpMSpzoTE4RhIIx0hi3ZYTGl,iv:9TGrcMd++p3wG9pHQ7IlE1htNY4q7ltrZhKSUxmNlcs=,tag:kwGLDycNalkJcyL/1Ofq3A==,type:str]
-          paths:
-            - path: ENC[AES256_GCM,data:oQ==,iv:QdseNP4jZt2kJ6ygjw+u1DxzSWBWXJ8PqcmoGExbt34=,tag:6No0yXevIClWZY0EuGZ+ow==,type:str]
-              pathType: ENC[AES256_GCM,data:g6ppKigKZNY7eVWgJEYLHevkbhjhsg==,iv:NCN92bovoAS2FkKhsKHltH25bp4aAOZRK5IVRri7wHE=,tag:TBHZdvqEeUlFFg+SmoOxFA==,type:str]
-    tls:
-        - secretName: ENC[AES256_GCM,data:YOATGfooXo1fweNLWpZ3nU7a,iv:1A21t0u0URHnnEKHMtzF2Jofu55CXSMj9pJ5UcuMpdM=,tag:PnmQZfb1c/Nng4zhUlDcog==,type:str]
-          hosts:
-            - ENC[AES256_GCM,data:fbCetZr6mYl2uu5Wnw924bHd,iv:duTqmwuTY699OxhQSsTtgTeU3UY+1wbuF2iXdAfRRu0=,tag:B8HG3IUaTT/+b0QVXjiq1g==,type:str]
-masterkey: ENC[AES256_GCM,data:roGMUuMVXYIOSpfMRckHwLxSU/akHvY5m3l6TeG/V3c=,iv:q9X5exP9b+ZQC5LcUGhAUc/47TJzPa+UalmPZHVYUFI=,tag:QPVN/cTjXRlGPso2KA6UkA==,type:str]
-#ENC[AES256_GCM,data:5FgegR0kl40w+KewraAmf7HZpvPInaFEJJp49o+PdVEVuyr/EhiVbUJ5iPE+dnsJ/TGvLahbApqQK4Hpx1HsF+RfAo1cGOhGYjp6,iv:CyiVNdGORtYdLAvy3XhP0xsibXN+YA6r7Ti2o6n+9ss=,tag:eyMXhhrDitXmAiy3mT5kYw==,type:comment]
-#ENC[AES256_GCM,data:MeE8naN9KlMfnjNOiH4Jkwg26IdOIdbdh40MZaQdZMM58oPdRitO8mRwsip3Lu97Nj+tArp6XU9ilmYZCtELmT6nq85J8HugcMI8wcRGb+RVBy0KK4nYx4Oy,iv:yBtCpwyvwREC7NY1z7n/aLydnuFDNvIEKL2R0NC9Q0g=,tag:/fpvt52TASXwrsbQvCq8YQ==,type:comment]
-#ENC[AES256_GCM,data:ryVlk+l5FF2qM9c85h2umQpZB+hjVmmvS28ggK8tMkOFNgodj9p55qgTkHvIqP1KtgBYHoxZXg==,iv:rRfmpnwI0giXMXXtWRx/C6lpQatFLCWtM6zMAGSZLLM=,tag:/PeiRbWIwC9ec7qcWPEfng==,type:comment]
+  enabled: true
+  className: nginx
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: litellm.unifai.dev
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+    - secretName: litellm-tls-secret
+      hosts:
+        - litellm.unifai.dev
+masterkey: changeme
+# The elements within proxy_config are rendered as config.yaml for the proxy
+#  Examples: https://github.com/BerriAI/litellm/tree/main/litellm/proxy/example_config_yaml
+#  Reference: https://docs.litellm.ai/docs/proxy/configs
 proxy_config:
-    model_list:
-        - ENC[AES256_GCM,data:cN10VWe4sXn0/31Z9aW83YV1A0aVf9PZPGJyOg2/RiqgNYPVXS6yahiF/o+9wDxySgGw3Fft,iv:lPy631gSjy4lwFdTSXZULdPqoDo0hHMXYFHRh5IjnF4=,tag:cdtxO0ZvupqSoSBVfXnkGw==,type:comment]
-        - model_name: ENC[AES256_GCM,data:d9Z3Hg5JeaPI/DMyRKuUO1eoQUbi,iv:q7Se+vE1Emo45VJlwiQePBBXYaCOQKMn/h4KUs1mPQU=,tag:RvlA1R53vBLzKSG9e53gtA==,type:str]
-          litellm_params:
-            model: ENC[AES256_GCM,data:IMHpmgj5VNusQc1UoQqdKKa7I6edfXVawTS4Nw==,iv:zAQBnrCoPEMqlC1cS+9khMTp6Ynn9rFZV3t3zkXrkI8=,tag:u+vO0Yy17Otj/aIz8HOzgg==,type:str]
-            vertex_project: ENC[AES256_GCM,data:EtJSsae/Zb2O4EotekmcB0YBItThkeQEK2A=,iv:I95GaOPxzI50HUPgDXCr6iMzyhoC99FgrGmOXP5LFxU=,tag:JqXg7jyLaSGzsOsk2Cfy/g==,type:str]
-            vertex_location: ENC[AES256_GCM,data:fIhxN+/Oyg3IrBhf,iv:yeqdbKB8FoJfzQoR4+8v0j2w4m5TT7mD/9/p3Ycx6bs=,tag:kNp/BuRN3RExQTn4MZ5/VQ==,type:str]
-        - model_name: ENC[AES256_GCM,data:u97EVe/045vlu8DtKnHB1kLBIl+59k8=,iv:58wo8i13xdJQXnaYSOQItN/1B11Vyt8thq8w3+D0AFI=,tag:Jmn89gIaQxJA8aBkTdzcig==,type:str]
-          litellm_params:
-            model: ENC[AES256_GCM,data:kChxJui5LTLM/FhQCi0KN/42XSTISKYtTdv90x72,iv:fuecKGRcWRtWlrlnTBlk8+NTy8eLt58jpN3a8xziCCw=,tag:ipIvDHwWlWRnOt61MnB1eg==,type:str]
-            vertex_project: ENC[AES256_GCM,data:EtJSsae/Zb2O4EotekmcB0YBItThkeQEK2A=,iv:I95GaOPxzI50HUPgDXCr6iMzyhoC99FgrGmOXP5LFxU=,tag:JqXg7jyLaSGzsOsk2Cfy/g==,type:str]
-            vertex_location: ENC[AES256_GCM,data:fIhxN+/Oyg3IrBhf,iv:yeqdbKB8FoJfzQoR4+8v0j2w4m5TT7mD/9/p3Ycx6bs=,tag:kNp/BuRN3RExQTn4MZ5/VQ==,type:str]
-        - model_name: ENC[AES256_GCM,data:V/rJpqz+gLHBOAAT9chMHfO2dCdMbo3Bifog/au4zqg=,iv:LT8FCwslXkzCbZ7oIPp3HM865+UxlRaY2cKhHteSKeY=,tag:ph/GlOGF/u9K/AdN28IJ0Q==,type:str]
-          litellm_params:
-            model: ENC[AES256_GCM,data:iHpjuoXQZIUdQuNcvi0xaGiHwvTPSq3OJRmNfbWej58stt04bJWKNdwjtlDo,iv:XP+G0ZfCi6pyj/VqUiat8muUwszxXLv0C8A/zdpX+lo=,tag:4LJVvc7BZPPTT30Oq0Dj5w==,type:str]
-            vertex_project: ENC[AES256_GCM,data:EtJSsae/Zb2O4EotekmcB0YBItThkeQEK2A=,iv:I95GaOPxzI50HUPgDXCr6iMzyhoC99FgrGmOXP5LFxU=,tag:JqXg7jyLaSGzsOsk2Cfy/g==,type:str]
-            vertex_location: ENC[AES256_GCM,data:iLMwF/C6yT4HKgs=,iv:0tsLH/KTeoTeNkVXWY4G6zvyx5OguPzY2/Nxl+OYoYc=,tag:wi1R1IxsIKpOmFsud3SL/Q==,type:str]
-        - model_name: ENC[AES256_GCM,data:dn+/Csw8cS9KdBfQz+zkuULuSC2YdaIX50oE,iv:q1ab5QL8xXf59OYw/9Vq97ahQtZYS4gRxMkLhMQdSpU=,tag:aCnLlt9s1z3NqYJat1y5sw==,type:str]
-          litellm_params:
-            model: ENC[AES256_GCM,data:aDdCLvJu+U/Fo4dfRUHYi/MweZ4A8PCQpiAHaAKtv2FWbHSCxX0Z,iv:W1tXSZCD8xi163YETWAgIFpMfH4UXyou19S5IlTq/qk=,tag:QwO2eBqiJvwKEc/qnRJ2AA==,type:str]
-            vertex_project: ENC[AES256_GCM,data:EtJSsae/Zb2O4EotekmcB0YBItThkeQEK2A=,iv:I95GaOPxzI50HUPgDXCr6iMzyhoC99FgrGmOXP5LFxU=,tag:JqXg7jyLaSGzsOsk2Cfy/g==,type:str]
-            vertex_location: ENC[AES256_GCM,data:+KDvReHvz+4=,iv:XaaulvpCxVxN97cYtFJtcdBTKhWkeBQLg3B5sZeyIME=,tag:qn8fFGIEocqGdN0vOlCBSA==,type:str]
-        - model_name: ENC[AES256_GCM,data:ujmZPIuRu5Gw+1te1flS1bRApUUtOM0=,iv:GILssIQFLJntHhTHLzpWqt2kzsP04AhohR3SU5vx8p8=,tag:AUAI7T9LdqkxTq/4isskPQ==,type:str]
-          litellm_params:
-            model: ENC[AES256_GCM,data:zvgFIv21QSxexOLkXj/msx6lHj0jcoZ55vKQpPFkd9oQ3TQ=,iv:BCUkmcW8XCpPIniko7co4OzGfSuD73Fhip6yeEbBC3c=,tag:f9Q5uNcOBlU2ZwWySc1QtQ==,type:str]
-            vertex_project: ENC[AES256_GCM,data:EtJSsae/Zb2O4EotekmcB0YBItThkeQEK2A=,iv:I95GaOPxzI50HUPgDXCr6iMzyhoC99FgrGmOXP5LFxU=,tag:JqXg7jyLaSGzsOsk2Cfy/g==,type:str]
-            vertex_location: ENC[AES256_GCM,data:+KDvReHvz+4=,iv:XaaulvpCxVxN97cYtFJtcdBTKhWkeBQLg3B5sZeyIME=,tag:qn8fFGIEocqGdN0vOlCBSA==,type:str]
-    general_settings:
-        master_key: ENC[AES256_GCM,data:m21SL3ASvlcpbk6b7pm9OiCVUK9mnEzKRV5M,iv:M03HqqD7yDtlyxHjeMm1HR0pjt+2SA9sJdj75sPA4NI=,tag:lSFuXWEOgVQaQeBiM7bEnQ==,type:str]
+  model_list:
+    # At least one model must exist for the proxy to start.
+    - model_name: google/gemini-pro-1.5
+      litellm_params:
+        model: vertex_ai/gemini-1.5-pro-002
+        vertex_project: gen-lang-client-0608717027
+        vertex_location: europe-west4
+    - model_name: google/gemini-flash-1.5
+      litellm_params:
+        model: vertex_ai/gemini-1.5-flash-002
+        vertex_project: gen-lang-client-0608717027
+        vertex_location: europe-west4
+    - model_name: google/gemini-2.0-flash-exp:free
+      litellm_params:
+        model: vertex_ai/gemini-2.0-flash-thinking-exp-01-21
+        vertex_project: gen-lang-client-0608717027
+        vertex_location: us-central1
+    - model_name: google/claude-3.5-sonnet-v2
+      litellm_params:
+        model: vertex_ai/claude-3-5-sonnet-v2@20241022
+        vertex_project: gen-lang-client-0608717027
+        vertex_location: us-east5
+    - model_name: google/claude-3.5-haiku
+      litellm_params:
+        model: vertex_ai/claude-3-5-haiku@20241022
+        vertex_project: gen-lang-client-0608717027
+        vertex_location: us-east5
+  general_settings:
+    master_key: os.environ/PROXY_MASTER_KEY
 resources: {}
-#ENC[AES256_GCM,data:OQMLp6w3Y9mgZyLbeMNuTgSg6FWyStscDzy7qA5g5HS9Pu9mVV5l8wEdK0GXTIzAY5uIzw+nnnzuGDtYn4m+cVrsta7rkqxZ8z+GZFEZlyNIwz7fRZCg,iv:jFFi4NWiDIY7hCbYnNA9EeuAC5zf9AyYfpQmD0x+CwI=,tag:v3uooZ3SrwSzkllbZhFhNQ==,type:comment]
-#ENC[AES256_GCM,data:NSymFzOmHH+SWkD9w0fqfxYLl/o85ifbSxrIbc5d2NhTKVVis/k8NAsI5GTVKiev1KurudKiw/dgfRrBrGa6xfAKhO2OkmxUc6APKzW/wHI+6F39yAjaqA==,iv:1Vr/lEl4X8JykelNvkvCU5YoUMQaZ3jld0ek0gHEVek=,tag:riznU9kmx2u3TwdyL6pCTQ==,type:comment]
-#ENC[AES256_GCM,data:JAEoXC2qTkHQXsLY7FNTll/cBIv7vBoMVhY+wMKnUEaEwC67jVJuisX6YkxRVdZv49FPQxZzifZh8pjhiXnvtVxOdrPkrpphj2ZDKc5mpPDf8yVAvT7Ow7s7,iv:egW+Ty+uoUzNKPv4877bqpxdEN0bjill5f9LsQhwQeA=,tag:5Jj7VnsXEu3CTAN8IicGDg==,type:comment]
-#ENC[AES256_GCM,data:7ht5jWZBkgPq2YTeplS6N5RC+2kjrFBCU0HFu3XaDe8F0N2qzA7Y1KZaNvuI7ECMYGR3L8EjIPEealCQ1XUk5hHlh0fKM8SzX9hsxaMM2T+G,iv:FBdUGPgWrvH+FGD4vHNA2l58wUSlmjIitDsPUxeL3Qk=,tag:RXccSBmxLsqb1XgeywmXpg==,type:comment]
-#ENC[AES256_GCM,data:66s6g6AXW+M=,iv:dh7FPbVyWd3EOkzs8cW8LjSkP0c8iSnRz/z87YyckwY=,tag:zWhvO8POneEzE6zvZEaR+w==,type:comment]
-#ENC[AES256_GCM,data:UrmRpWEGRaXWaqcE,iv:bliBd9nFITqDHZbY8GzQBuEzr4WBg/FE9WZ34rbCsAI=,tag:vp7qn/aIgx42wVrbj4IkHg==,type:comment]
-#ENC[AES256_GCM,data:trgv4bvNlFYCI5nhxGYKKg==,iv:AWTfxvuzks92Rd3sbsicylUiElYkUhp+ouVJtRFImno=,tag:B03+OgSDtw+iHmUkzouHSw==,type:comment]
-#ENC[AES256_GCM,data:VivPu8VDuLcelQ==,iv:ZAX7xMzprxiPBwcQcASw9VTZRPXze3dQUxYOp220Erg=,tag:QRFvE9B3lVLMLQb1NAdkjQ==,type:comment]
-#ENC[AES256_GCM,data:UrmRpWEGRaXWaqcE,iv:bliBd9nFITqDHZbY8GzQBuEzr4WBg/FE9WZ34rbCsAI=,tag:vp7qn/aIgx42wVrbj4IkHg==,type:comment]
-#ENC[AES256_GCM,data:trgv4bvNlFYCI5nhxGYKKg==,iv:AWTfxvuzks92Rd3sbsicylUiElYkUhp+ouVJtRFImno=,tag:B03+OgSDtw+iHmUkzouHSw==,type:comment]
+# We usually recommend not to specify default resources and to leave this as a conscious
+# choice for the user. This also increases chances charts run on environments with little
+# resources, such as Minikube. If you do want to specify resources, uncomment the following
+# lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+# limits:
+#   cpu: 100m
+#   memory: 128Mi
+# requests:
+#   cpu: 100m
+#   memory: 128Mi
 autoscaling:
-    enabled: ENC[AES256_GCM,data:K9Lp6A==,iv:uMMKMDcRiuf7mQeUcdJELYsEcp+KeJ1/b+qHlrRs9xE=,tag:pImzS/T8ao7SoUgoDIzRiQ==,type:bool]
-    minReplicas: ENC[AES256_GCM,data:XA==,iv:DmGT1c/14WpKlkAWIYxevnd71SU/wEQPMZCdVLNGUW4=,tag:qy3EeL4akJIOf+a/O/uPFw==,type:int]
-    maxReplicas: ENC[AES256_GCM,data:BUDu,iv:DJ4Zw87BemO2Z8AGhk1eZpMKQZaRpb9U6sRv772aytI=,tag:LR2sNsFUvHAi6KdbmUL4XQ==,type:int]
-    targetCPUUtilizationPercentage: ENC[AES256_GCM,data:xyY=,iv:lYHa3UJgpmeyPK6VSbaVf75EycYvSuFgPOs+fsoEz5s=,tag:MF98IwZAuEPGhSntwTpBAQ==,type:int]
-    #ENC[AES256_GCM,data:5x5AyxTWaQ05RsRrz/XrDKMtu0qED7iaaxAhuBf5B1HYOC9NRQ4=,iv:nXdmSq0N9/1stM/5KNlT13e5Wqost6YbkrqArE84AZE=,tag:vQXTcdjsWZ/F0mbuchgpWw==,type:comment]
-#ENC[AES256_GCM,data:8Bsix8N76YJwOeCr3tc7jpZRB/prFWBmtj1QiMhR9DYWbowz5h4FD2cEtT+QKZsDwOLeZf0ooww=,iv:VB7imGxnIal/RJ51NrrxcnE2h8a3cqfSoXkxY/sqjSU=,tag:YeITUlCKbpvgeW8LH0O3kQ==,type:comment]
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+# Additional volumes on the output Deployment definition.
 volumes: []
-#ENC[AES256_GCM,data:/wbMihlMHvWJFKSN,iv:+BgeNjgxaQCCOMU56q1/IJlnvf7dYxTrK7tDp9W1nfk=,tag:RSaJkqALLD1qa0o0W5Y9uw==,type:comment]
-#ENC[AES256_GCM,data:T3UqUjL37X/w8A==,iv:U3no1PRLT3bCszo6zDdZokmrQQ3nhbI2MnTpDiAL0jY=,tag:owsKzm2N8hlxohFaXvbN5A==,type:comment]
-#ENC[AES256_GCM,data:ey1Et9LP9K+WPWUj5KMkM9rfh5LWHjfEyg==,iv:Vkhk1yZyqkJP4iM8NPaDIkVNuv3uwvKS/PcPXQZhBJw=,tag:IWSDhcfzcPaB3McoQw81sw==,type:comment]
-#ENC[AES256_GCM,data:AGwoXUi8UE1DuiH9XRkWA6E4usM=,iv:MuVPY8GNJBEswkumYVEm1VyyTAvpCUy36McRcwM8Slk=,tag:TsSL9IzSnfxEJkMNrTjhmg==,type:comment]
-#ENC[AES256_GCM,data:3PiziyD5N4/cOE0i4SZXoR4kjJ+6I/aDe4BfzBcmoHTW8pubSD3D711g6RWeio1aHSkMwcSTaQiXLZceVg==,iv:Pvqv3aIPc93nps+HHx3bZx/8HVxOmGLZVsuTlTjvnP0=,tag:ZNrQ9LWpiG3B2CUQCZOtDA==,type:comment]
+# - name: foo
+#   secret:
+#     secretName: mysecret
+#     optional: false
+# Additional volumeMounts on the output Deployment definition.
 volumeMounts: []
-#ENC[AES256_GCM,data:/wbMihlMHvWJFKSN,iv:+BgeNjgxaQCCOMU56q1/IJlnvf7dYxTrK7tDp9W1nfk=,tag:RSaJkqALLD1qa0o0W5Y9uw==,type:comment]
-#ENC[AES256_GCM,data:CqXkFSrD56pxdkthnrOVBkprF8oU9MLq,iv:G2P2L+AhMqCqP/INeryhZ1wxdUMC1P1gZKFyF1LjDpM=,tag:VzIDilo8xbNwMGAR975doA==,type:comment]
-#ENC[AES256_GCM,data:t68Ug4s553/d4QoAWWIqRBQ=,iv:VJwjDzUW4/6Pe3GdL080EHoxBh2nKLmjQNfenk9ZW1Q=,tag:61pk65msNky6ivJAIrvIYA==,type:comment]
+# - name: foo
+#   mountPath: "/etc/foo"
+#   readOnly: true
 nodeSelector: {}
 tolerations: []
 affinity: {}
 db:
-    #ENC[AES256_GCM,data:9YOsaHlMPPKchjU80+OQhu2eZQstYAmhTNhyRtgg+zGAZV2g+z5Hhg==,iv:EVP7eMyqaj0pBisurgUVGUs+Z48F2lFuPfF/k0L4Wn0=,tag:qRiOpJmue18IsFRqyAG/vQ==,type:comment]
-    useExisting: ENC[AES256_GCM,data:kS4BeTk=,iv:a2P4PqtkGSH2rCnnMM+w7GaH2ZV4YO+lscmxfwwk1vU=,tag:/TvyO3KG74/pk+tqN2HH8A==,type:bool]
-    #ENC[AES256_GCM,data:+3jQBNNfyVdw8zLQQPm72W2NuBfmNkHLliPm6f/SiklSfhVQrv1HjoBaUwQD7FXAO4OA2a3LjQ==,iv:5nd+rHc+0ajlW0fE+XXqfuDCriqKYyGtbqMwX8VunLU=,tag:EgOwzvdOJio69MkDK3b86A==,type:comment]
-    endpoint: ENC[AES256_GCM,data:z16kwYb5LHPt,iv:RJelf0N3SYvrqT7O6Mjl1432ebWVahLiFeHhmsCmHEU=,tag:9+0EMm3bz2RK8cywSXuQxQ==,type:str]
-    database: ENC[AES256_GCM,data:DY1Fk2Qcyw==,iv:YX89McLUobOFWJUq0jxhS6ci9ge3CKUzafitEVoIPdA=,tag:ACDsRJ2tAjKBUAQZvuY4aw==,type:str]
-    url: ENC[AES256_GCM,data:3TKlOZZvuAoRBVc2k+HXZLW3AwgjN84ePEqJm+1iC+yj3QDT3lNdAxAqT48pSfvaSkwOBLXxnIRmpE4aGLU94MriVrGiWvrsBRyeT2blXGv6W8rRmC7KxA==,iv:DbBgy3BPake9mian+lyOri2jpiSXKTzB5QDNLcReDIo=,tag:XnwPO1Jl27NGjAd2o3nS+Q==,type:str]
-    secret:
-        name: ENC[AES256_GCM,data:1IJh/mLeTSk=,iv:VRMFFp6f7QGBNC+e85iFmFERAJzLrUu+rhlJQLgcuEc=,tag:GDbSc7DRKfVBkVC/VnmPXg==,type:str]
-        usernameKey: ENC[AES256_GCM,data:bmDdseP3KAE=,iv:kxdyc/V6/bUDSA4g9ng846AofmoCtJxUXKkuci1mkQI=,tag:4p3ekc4WjZTw/XD9W0n92A==,type:str]
-        passwordKey: ENC[AES256_GCM,data:QmqC3iqIqpI=,iv:26r6jAi5yPJNDCWzXCZ0X33pGGzlesttzGBr+B3arpk=,tag:81Jq9kAzowQIa5f9Aty/ag==,type:str]
-    #ENC[AES256_GCM,data:w0g7klPOM9xH0Q8Kbp0abalSLjOChEawsyLzCg2Hl/l3225sT2mCf3dv4t5YiXX6s09ywSBrDDRhNkJLQcvcQB2FnrCstg11h0cl,iv:P17pIhuuVbJDYTalcT+QfRLaAMYZdqZ2aaNsrLyZxzU=,tag:RsLVrN3o24+OrdF3dmm/AA==,type:comment]
-    #ENC[AES256_GCM,data:zhpCZpKzzCfXVGChFBnOU1ln77ssI5n2iWpxSCBJLuIj9eLN25L8zHtyrFxpk9tdY/+jC1Dm9q593ApdasijOTfa5IU=,iv:Qex5qMyHXG6wTectnn0kmvoM/iwvbZ1sx3v9eq+2nUc=,tag:obSHPsy1zckT0p0O86AysA==,type:comment]
-    #ENC[AES256_GCM,data:sdeJFYevD5u8IPHK0cX5At1otxCw,iv:wHMD6xu9aln8ABP1+rGhGhEfKHQ+0MNkNqYSpUA5ZpI=,tag:T8iMMcYU2n7T4mekQSq+Tw==,type:comment]
-    #ENC[AES256_GCM,data:CkFNtGwQD9WZoSQsy2rC0pYtevkdYZ+2Y/BLmqO0ZPxJRkz9UoHjLoZvCr+AmHeMqg==,iv:gpvwKFt0zeR6O2idrBQcbPTGNmduEalP+y3yEp03868=,tag:sBZdo9ovvN5xo5duZdDdIA==,type:comment]
-    useStackgresOperator: ENC[AES256_GCM,data:k+Hduxo=,iv:r/XJOhmwB7YVKq/KVSEVxYtaNGSMWfI+a5GOvxUTCuw=,tag:9QjiqCIXAqUhoTFnYaCWDQ==,type:bool]
-    #ENC[AES256_GCM,data:wK8GAjrPHvWHMA5lPKDuxmN5glNnmfRpEfcFOo7TRLhOzLYtPr5CKjCOsmqIQ9zpuUK9+95ZmTUn2UMcQHDPo8s5WVJdtTDMvHI=,iv:XVbHGLebM7/gZWKj7dv7vj9TBFGS9M4aZtFmE4ZLgN4=,tag:5GJ8lfaROE86taorZJRmng==,type:comment]
-    #ENC[AES256_GCM,data:rTruhQBRdYDL0IA6iJul06KHmMotMQVtdnNIXhLqBwMwCwqUxci5peUI2hRueDjMEh24y6qa1LEcOExvHgDcYGQYhQwNCe+/MqyCf2Q=,iv:Kc3mUU9Tz3siMmZS5IHfoLMWzvNCVa+d5dSiqc6Eg9M=,tag:fzUhh5tozeIvp64bo8V8Ug==,type:comment]
-    deployStandalone: ENC[AES256_GCM,data:aIGpxA==,iv:FEIwJT0SbZ8w9c9qSJqEu//AV0XiF5fhrAcLSfPkkWw=,tag:8KPdkc/FMJbfQG9sQvEUMQ==,type:bool]
-#ENC[AES256_GCM,data:k4HL3K3Ijub12uVIoiXRK4ZSHibWvA0LZH2BKPgbwbPVsKGAtjszIR8EtEIKJd9PHsWOWUnqtJDg+sSN9v9fCEsjZGowfdCabOZfjiIYpQ==,iv:ur6tSpU9OFXAgIahm4SduOn4dZR1cru0bXzW+B3PmIc=,tag:yn9PbSmgCfaKVNgn0WlFvg==,type:comment]
-#ENC[AES256_GCM,data:YYHgqFbgNZpoP5Vb,iv:V/ziDZRhx+zfv11SRPjZM4UJKZ1FZLW88Bk4GNGZRHg=,tag:kqMqO3kzXqdtBPSpiMkL+w==,type:comment]
+  # Use an existing postgres server/cluster
+  useExisting: false
+  # How to connect to the existing postgres server/cluster
+  endpoint: localhost
+  database: litellm
+  url: postgresql://$(DATABASE_USERNAME):$(DATABASE_PASSWORD)@$(DATABASE_HOST)/$(DATABASE_NAME)
+  secret:
+    name: postgres
+    usernameKey: username
+    passwordKey: password
+  # Use the Stackgres Helm chart to deploy an instance of a Stackgres cluster.
+  #  The Stackgres Operator must already be installed within the target
+  #  Kubernetes cluster.
+  # TODO: Stackgres deployment currently unsupported
+  useStackgresOperator: false
+  # Use the Postgres Helm chart to create a single node, stand alone postgres
+  #  instance.  See the "postgresql" top level key for additional configuration.
+  deployStandalone: true
+# Settings for Bitnami postgresql chart (if db.deployStandalone is true, ignored
+#  otherwise)
 postgresql:
-    architecture: ENC[AES256_GCM,data:PdkWiDbbO1ch1A==,iv:EB/ctuyz1RE9GGzyYud1nvvhqir0SnvVdRN8aUkADJo=,tag:P3FSVoxuk0gD/EePkVyXKg==,type:str]
-    auth:
-        username: ENC[AES256_GCM,data:QX1Vb/GE9Q==,iv:cmrCEu3zowUg2TS9J3hIJS99FEqJKnEl8wJUegRf96k=,tag:LGc7x+kq9CLbnWJ0NBPuIg==,type:str]
-        database: ENC[AES256_GCM,data:A5eB75UTVg==,iv:++xS4IPWEo3htOl9ZhrqILkjHPBRHFNp17uavf5eSlU=,tag:RlTPv1sQMIKj3sSgmOniAw==,type:str]
-        #ENC[AES256_GCM,data:h71VdASsUIbKhfusDJgr/Pk3pm0TofrDrnGB8Y0sJpnSu4eIH9DNSaEQQRBn+tPR6z342gyc6+w=,iv:OA2eHoCKqP1YKz3JBAR7QhSWW83FBxhWorw+DAjSx3U=,tag:wmcccOgx++95qE3gsgAxGQ==,type:comment]
-        #ENC[AES256_GCM,data:eKqn1ei3heoTrDO/+2zFDUPgv0DFUUkhvEko6qKWm9Qgd3iorJ6vknVsWyl7DXIYSk5JuazumKH8PnME8vamOBecr15SWXUlQR9fzEF8eMTyoLwO+nSmYabQCWtIGr+Y24IktNZmif1qbzGWFp8=,iv:Ur1g+bwiY9CW8L2Np3CP8H19QmyRESyHtmmg87kj+pc=,tag:E0m2oa3yjkqhfkWxIHvEjg==,type:comment]
-        password: ENC[AES256_GCM,data:1lMBZGYaykB7CRODOtxxjg==,iv:NagxMTGVh3ioNKNpyDs8g9zD36/go9yp5+7M3aQIpuo=,tag:3aqjEk5rt+BEIjDZL2VG5Q==,type:str]
-        postgres-password: ENC[AES256_GCM,data:YhunEmuTnGeoLFT6XVmwUQ==,iv:MJSPTIwijHD7fIrVT9BBW6eaUa5Nh0lmduOED5JWesc=,tag:ib35A/LkQHMcezcqafvrwA==,type:str]
-        #ENC[AES256_GCM,data:ZzHMMQl2VQZt27yKimc9fSHy4v9F8xNtFsKT9RgmgSQEWlKj1/bb7EZBhhFJ0UKdPowWMQkBGtPwe85+gWEVx+6p5KPqCJIWqB3w,iv:9CIpQQzvc8vobaIDFLQODiOU7uaLnuPSXHIK9wpbEcw=,tag:Rjc4U758x/9L6FhMAIPQEA==,type:comment]
-        #ENC[AES256_GCM,data:pJnRLntJfwCH1n8e0BWSmb/xwD+oM/W17abftfxnQYlyIKIzTxA7,iv:tfA5/QGNaTUWTZsBguudJG6CYw32hulTl+OaND4xwQU=,tag:EUWUfd+90FwWvwb3nu/LBw==,type:comment]
-        #ENC[AES256_GCM,data:aFkpflI7FJiMUSdXPsTJcjHmMQ==,iv:u9GCZtX29xIE41cP49IS9rufu+GARApYA4QtAZcGsTU=,tag:USRLNlVUd5SLXuaHFHkHKQ==,type:comment]
-        #ENC[AES256_GCM,data:8mDkAtWnuLR2wytn,iv:ScU8a4M+Sib1y4y6IzqI54XFd0aA4qOQFw9XUHmdsog=,tag:PMK8Bi5SFjrrOrhN8wuqkA==,type:comment]
-        #ENC[AES256_GCM,data:pyip2Vvq26r8zvYgcwRUQ+0R6V9z+Ief6kLcvg==,iv:A4zbpDnAp82v487Y1rJVifAWQypHqHz+wS37gTDTDT8=,tag:XChevKxBB3jABgUIUR1X6w==,type:comment]
-#ENC[AES256_GCM,data:3goGQoVTySW2/kH4cgYLiAGqkxIvjqNq1rzVSb94PtbuseDB,iv:YU4KgRTge+uSxrVKLntYLFOiXDU3KgSDKXIEXHLwlvU=,tag:L3J57P9kks5d/Dd1zkpwJw==,type:comment]
-#ENC[AES256_GCM,data:pTIGWW54Kba8VWtfmbZOfQxKyg7oQ1HOnidJVunA0WJJm2Rpk1gXHyzDeOerK7SmZ25mk98T7kEipY+dBKlmiQ3OlvKsGlQyYlTeddGCxMUYL/UI2Z9PvrnxP+4=,iv:OemrKZOPzRmU4iw4CDjt7oIXVfFO7WObIb8pkGZiQlE=,tag:rxAXvaDAwwBIe2hiuyMqFA==,type:comment]
-#ENC[AES256_GCM,data:wxQJ/Y522gPneobDPraInUp73ZDNAtA2sgqx9Q0+pNKmbnw7hyysPOYviZ/RoHAI,iv:nBJh2xAHcEtum6gG03dtlYcCjGfErZKajI5OD1BXlwU=,tag:Hk/tHJ5nHV2k2QucMGDxyA==,type:comment]
+  architecture: standalone
+  auth:
+    username: litellm
+    database: litellm
+    # You should override these on the helm command line with
+    #  `--set postgresql.auth.postgres-password=<some good password>,postgresql.auth.password=<some good password>`
+    password: HQJGdZgigJe05Mmt
+    postgres-password: HQJGdZgigJe05Mmt
+    # A secret is created by this chart (litellm-helm) with the credentials that
+    #  the new Postgres instance should use.
+    # existingSecret: ""
+    # secretKeys:
+    #   userPasswordKey: password
+# requires cache: true in config file
+# either enable this or pass a secret for REDIS_HOST, REDIS_PORT, REDIS_PASSWORD or REDIS_URL
+# with cache: true to use existing redis instance
 redis:
-    enabled: ENC[AES256_GCM,data:Q2ufWQ==,iv:s1DlcgX3zimLgfpOsdHKm6cHFygTFG7b2nvNu66DjGg=,tag:VVkfOVJ3080rRUOjWWRZGg==,type:bool]
-    architecture: ENC[AES256_GCM,data:p1yDWl96ixUFmg==,iv:pE+mE28j4FMflejcao8KZzpwKQf8IH+XKxPJklE8vy8=,tag:6B/F/lNfoqijh34KR5Yc1A==,type:str]
-#ENC[AES256_GCM,data:nYuidT+SpCeFCSxlwEI59mzs1GBfxC+ljzriEBa/,iv:8ZpGCQb2bwVe21kDqK642sQG3Ek9dw4tWC+8/ubWqL4=,tag:Wg/sHBh0l+Z6QqYDATzfWw==,type:comment]
+  enabled: true
+  architecture: standalone
+# Prisma migration job settings
 migrationJob:
-    #ENC[AES256_GCM,data:Q2SaQZqKDP7Kkxw6gSWJWf9YExbq3nySm+xr29YZgk/luYTRJfTiKcpdSw==,iv:PyUFmI+7Y1xP9FWFwe54qezMolypKnD/IGLozg+A13o=,tag:x79qhr0ONEA3ksSrJJ199g==,type:comment]
-    enabled: ENC[AES256_GCM,data:SICyPA==,iv:slBH5MbOpGMwy7RTIERkawHngjkQFU173AKSZ5ctFuY=,tag:uG0TELOv/4S8LER6nqvnfw==,type:bool]
-    #ENC[AES256_GCM,data:MiZetYyPALrh0nvaGjCbuUBrvRim9UDIZbU4VSZDEHx6zp1hDg5lm/PjL7rEn+ITew==,iv:HrUHPmv3Bvaq2rc2DooxLYn6soUG23Xore7T9OCHfFs=,tag:6VDHFVZy57QxdTE5zeVQoA==,type:comment]
-    retries: ENC[AES256_GCM,data:ZA==,iv:o/y3cjqpDzOICbAuj+BV7Gc2eJ0N66jjDu+gGqsQaZs=,tag:Vo0Hj9LztYW/EB1ptp+YlA==,type:int]
-    #ENC[AES256_GCM,data:cU8BrepHgQa19P0IEWdaxsuViuJeduZVOAYVLLkmGQ==,iv:z4HBXv1Gcrd/VBlcz0v1mmQIwP2Kr+uLHnh2moJP7Xg=,tag:0pYME/Kt2FbCl7vgMMeHBQ==,type:comment]
-    backoffLimit: ENC[AES256_GCM,data:dQ==,iv:+8L1pY4p1zQu9k4T+IgPbSkjOsUn83JPRBomyRkLJzo=,tag:PhCgJdiSYqwAbONF/owXHQ==,type:int]
-    #ENC[AES256_GCM,data:g6gb8hJgvvZEFAIFlJF1I9aniXm2XBjf5zpn2zWJWP1BgPKhMUfes6Z5zsGs6Eb9rgaIqDD7Xno1lbrN2CvvEmTdEHveHgahx9oFbntecH48hMQcRfK5S98YS2E=,iv:TEmUYKIYoeIqiBznWhloSLQfUsY7oPLylf7aqE465os=,tag:ID/peY60MgFow1FlJ4J4GA==,type:comment]
-    disableSchemaUpdate: ENC[AES256_GCM,data:qcR6Ie4=,iv:tGye2M6T8r4+QHXWW1ZkaQCUOdnBrsU6pfh30kKxrKk=,tag:/2DV6Wj+m3VtXGF85ePk9w==,type:bool]
-    annotations: {}
-#ENC[AES256_GCM,data:sEehJgOPT+eek3i5+rF2dTUpe2x1Rx0a7EQXfewnTAnTxMBJCgTTuT0jq6euLdgnfhqavyELsk4TKAC4J4Bq,iv:JFsglfW/GPHeRkTTQk7sGfvyjyLWQjP7DVGgI2Pp4UM=,tag:67btPkUYEHDRgDs3ooWtFw==,type:comment]
+  # Enable or disable the schema migration Job
+  enabled: true
+  # Number of retries for the Job in case of failure
+  retries: 3
+  # Backoff limit for Job restarts
+  backoffLimit: 4
+  # Skip schema migrations for specific environments. When True, the job will exit with code 0.
+  disableSchemaUpdate: false
+  annotations: {}
+# Additional environment variables to be added to the deployment
 envVars: {}
-#ENC[AES256_GCM,data:NEC4cgNTWogN7/yJ9DFYoHmNpmw=,iv:mj3d3DXunxayl4HM+7w4ce8afFx1ACETHk+VIhRJkQ4=,tag:AIFhVN78CD9hXGq84BUvAA==,type:comment]
-sops:
-    kms: []
-    gcp_kms:
-        - resource_id: projects/gen-lang-client-0608717027/locations/global/keyRings/sops/cryptoKeys/sops-key
-          created_at: "2025-02-08T18:36:07Z"
-          enc: CiQAQJcnO2+YzggDJQiXhpYv3Ed4n7dzxiwjA8YTWWv3cA1/cucSSQDtE9mnjlj6KIyoJNo5zAe2WTeqQg5EUULR9DYqX3pEFI/GNMXrsXLcUCmytH6SicmFmlsWk6t8Fbq3fnyX2rAkHUe0EFSeD+o=
-    azure_kv: []
-    hc_vault: []
-    age: []
-    lastmodified: "2025-02-09T20:55:57Z"
-    mac: ENC[AES256_GCM,data:MhA20jC3U8Nm9wUnXJgAs+CHbSLw9gXDfRPPmtlzSNLqdx+Jjr/iNf72o0VVvWXhEAsBWdQ9C/V9+v2i2var5P8o6Yk9CmGizANKPDGFFwJqbIrSjK+mtfGQinLIB5A8VbvoKN0ArC3Wh6cRRQPbM8UUnH8dvQ0SRAQK8XislBI=,iv:K/Z0zRw6izlzwSjMyM9fditqMWplug5OO8E/DgeF7HU=,tag:bO3L9QTuy5AlJhulKERQJg==,type:str]
-    pgp: []
-    unencrypted_suffix: _unencrypted
-    version: 3.7.3
+# USE_DDTRACE: "true"
