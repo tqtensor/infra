@@ -1,4 +1,5 @@
 import base64
+import os
 from pathlib import Path
 from typing import Dict, Union
 
@@ -6,6 +7,7 @@ import pulumi
 import pulumi_random as random
 import yaml
 from sopsy import Sops
+from sopsy.errors import SopsyCommandFailedError
 
 from resources.providers import *  # noqa
 
@@ -52,17 +54,28 @@ def fill_in_password(encrypted_yaml: str, value_path: str) -> dict:
     is_updated = False
 
     # Decrypt the encrypted YAML file using sops
-    sops = Sops(encrypted_yaml)
+    sops_decoder = Sops(encrypted_yaml)
     try:
-        credentials = sops.decrypt()
+        credentials = sops_decoder.decrypt()
+    except SopsyCommandFailedError:
+        credentials = yaml.safe_load(open(encrypted_yaml, "r").read())
     except Exception as e:
         pulumi.log.error(f"Failed to decrypt {encrypted_yaml}: {e}")
         raise
 
     # Generate a random password
     password = random.RandomPassword(
-        "password", length=32, special=True, override_special="!#$%&-_=+[]<>?"
+        "password_{yaml_file_name}_{value_path}".format(
+            yaml_file_name=os.path.basename(encrypted_yaml).split(".")[0],
+            value_path=value_path.replace(".", "_"),
+        ),
+        length=32,
+        special=True,
+        override_special="!#$%&-_=+[]<>?",
     )
+
+    # Get the raw string value from the password Output
+    password_value = password.result.apply(lambda x: x)
 
     # Traverse the value path
     current = credentials
@@ -76,17 +89,23 @@ def fill_in_password(encrypted_yaml: str, value_path: str) -> dict:
 
     # Set the password at the final location
     if current.get(path_parts[-1]) == "changeme":
-        current[path_parts[-1]] = password.result
+        current[path_parts[-1]] = password_value
+        pulumi.log.info(f"Updated {value_path} with a new password")
         is_updated = True
 
     if not is_updated:
         return credentials
 
-    # Write updated YAML back to file
-    yaml_content = yaml.dump(credentials)
-    Path(encrypted_yaml).write_text(yaml_content)
+    # Wait for the Output to resolve before writing to YAML
+    def write_credentials(creds: dict) -> dict:
+        # Re-encrypt the file in place
+        credentials_content = yaml.dump(creds)
+        Path(encrypted_yaml).write_text(credentials_content)
+        sops_encoder = Sops(encrypted_yaml, in_place=True)
+        sops_encoder.encrypt()
+        return creds
 
-    # Re-encrypt the file in place
-    sops = Sops(encrypted_yaml, in_place=True)
-    sops.encrypt()
+    credentials = pulumi.Output.all(credentials).apply(
+        lambda args: write_credentials(args[0])
+    )
     return credentials
