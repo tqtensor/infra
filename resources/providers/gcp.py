@@ -19,3 +19,10 @@ gcp_pixelml_europe_west_4 = gcp.Provider(
 gcp_pixelml_us_east_1 = gcp.Provider(
     "gcp_pixelml_us_east_1", region="us-east1", project="gen-lang-client-0608717027"
 )
+
+# personal-280202 account
+gcp_personal_asia_southeast_1 = gcp.Provider(
+    "gcp_personal_asia_southeast_1",
+    region="asia-southeast1",
+    project="personal-280202",
+)
