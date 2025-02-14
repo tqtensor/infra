@@ -79,7 +79,17 @@ proxy_config:
         model: vertex_ai/gemini-1.5-flash-002
         vertex_project: gen-lang-client-0608717027
         vertex_location: europe-west4
-    - model_name: google/gemini-2.0-flash-exp:free
+    - model_name: google/gemini-pro-2.0
+      litellm_params:
+        model: vertex_ai/gemini-2.0-pro-exp-02-05
+        vertex_project: gen-lang-client-0608717027
+        vertex_location: us-central1
+    - model_name: google/gemini-flash-2.0
+      litellm_params:
+        model: vertex_ai/gemini-2.0-flash-001
+        vertex_project: gen-lang-client-0608717027
+        vertex_location: us-central1
+    - model_name: google/gemini-2.0-flash-thinking
       litellm_params:
         model: vertex_ai/gemini-2.0-flash-thinking-exp-01-21
         vertex_project: gen-lang-client-0608717027
@@ -96,6 +106,8 @@ proxy_config:
         vertex_location: us-east5
   general_settings:
     master_key: os.environ/PROXY_MASTER_KEY
+  litellm_settings:
+    drop_params: true
 resources: {}
 # We usually recommend not to specify default resources and to leave this as a conscious
 # choice for the user. This also increases chances charts run on environments with little
