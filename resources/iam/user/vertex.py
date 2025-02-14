@@ -1,3 +1,6 @@
+import base64
+
+import pulumi
 import pulumi_gcp as gcp
 
 from resources.providers import gcp_pixelml_europe_west_4
@@ -24,3 +27,16 @@ for role in roles:
         role=role,
         member=vertex_sa.email.apply(lambda email: f"serviceAccount:{email}"),
     )
+
+vertex_sa_key = gcp.serviceaccount.Key(
+    "vertex_sa_key",
+    service_account_id=vertex_sa.name,
+    public_key_type="TYPE_X509_PEM_FILE",
+    opts=OPTS,
+)
+
+decoded_private_key = vertex_sa_key.private_key.apply(
+    lambda key: base64.b64decode(key).decode("utf-8")
+)
+
+pulumi.export("Vertex: SA", pulumi.Output.secret(decoded_private_key))
