@@ -3,18 +3,15 @@ import os
 import pulumi
 import pulumi_postgresql as postgresql
 
-from resources.db.rds import (
-    krypfolio_eu_central_1_rds_cluster_instance,
-    krypfolio_eu_central_1_rds_credentials,
-)
+from resources.db.rds import krp_ec1_rds_cluster_instance, krp_ec1_rds_credentials
 from resources.utils import fill_in_password
 
 postgres_provider = postgresql.Provider(
     "postgres_provider",
-    host=krypfolio_eu_central_1_rds_cluster_instance.endpoint,
+    host=krp_ec1_rds_cluster_instance.endpoint,
     port=5432,
-    username=krypfolio_eu_central_1_rds_credentials["username"],
-    password=krypfolio_eu_central_1_rds_credentials["password"],
+    username=krp_ec1_rds_credentials["username"],
+    password=krp_ec1_rds_credentials["password"],
     superuser=False,
 )
 
