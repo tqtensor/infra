@@ -5,9 +5,7 @@ from resources.utils import get_options
 from resources.vm.keypair import pixelml_us_east_1_key_pair
 from resources.vm.networking import pixelml_us_east_1_vpc
 
-OPTS = get_options(
-    profile="pixelml", region="us-east-1", type="resource", protect=False
-)
+OPTS = get_options(profile="pixelml", region="us-east-1", type="resource")
 
 
 workstation_gpu_sg = aws.ec2.SecurityGroup(
