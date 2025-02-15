@@ -2,9 +2,7 @@ import pulumi_awsx as awsx
 
 from resources.utils import get_options
 
-OPTS = get_options(
-    profile="pixelml", region="us-east-1", type="resource", protect=False
-)
+OPTS = get_options(profile="pixelml", region="us-east-1", type="resource")
 
 
 pixelml_us_east_1_vpc = awsx.ec2.Vpc(

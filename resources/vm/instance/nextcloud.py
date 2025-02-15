@@ -5,9 +5,7 @@ from resources.utils import get_options
 from resources.vm.keypair import krypfolio_eu_central_1_key_pair
 from resources.vm.networking import krypfolio_eu_central_1_vpc
 
-OPTS = get_options(
-    profile="krypfolio", region="eu-central-1", type="resource", protect=False
-)
+OPTS = get_options(profile="krypfolio", region="eu-central-1", type="resource")
 
 
 nextcloud_sg = aws.ec2.SecurityGroup(

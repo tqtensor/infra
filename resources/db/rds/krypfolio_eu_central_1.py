@@ -1,5 +1,6 @@
 import json
 
+import pulumi
 import pulumi_aws as aws
 
 from resources.utils import get_options
@@ -74,3 +75,5 @@ krypfolio_eu_central_1_rds_credentials = json.loads(
         opts=get_options(profile="krypfolio", region="eu-central-1", type="invoke"),
     ).secret_string
 )
+
+pulumi.export("RDS: endpoint", krypfolio_eu_central_1_rds_cluster.endpoint)
