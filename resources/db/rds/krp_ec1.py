@@ -47,6 +47,7 @@ krp_ec1_rds_cluster = aws.rds.Cluster(
     master_username="tqtensor",
     manage_master_user_password=True,
     storage_encrypted=True,
+    enable_http_endpoint=True,
     serverlessv2_scaling_configuration=aws.rds.ClusterServerlessv2ScalingConfigurationArgs(
         max_capacity=1,
         min_capacity=0.5,
@@ -76,4 +77,5 @@ krp_ec1_rds_credentials = json.loads(
     ).secret_string
 )
 
+pulumi.export("RDS: ARN", krp_ec1_rds_cluster.arn)
 pulumi.export("RDS: endpoint", krp_ec1_rds_cluster.endpoint)
