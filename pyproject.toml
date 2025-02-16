@@ -8,6 +8,7 @@ requires = ["poetry-core"]
 package-mode = false
 
 [tool.poetry.dependencies]
+pg8000 = "^1.31.2"
 pulumi = ">=3.0.0,<4.0.0"
 pulumi-aws = "^6.66.2"
 pulumi-awsx = "^2.21.0"

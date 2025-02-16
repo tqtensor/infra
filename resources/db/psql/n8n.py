@@ -3,19 +3,10 @@ import os
 import pulumi
 import pulumi_postgresql as postgresql
 
-from resources.db.rds import krp_ec1_rds_cluster_instance, krp_ec1_rds_credentials
+from resources.db.psql.providers import krp_ec1_postgres_provider
 from resources.utils import fill_in_password
 
-postgres_provider = postgresql.Provider(
-    "postgres_provider",
-    host=krp_ec1_rds_cluster_instance.endpoint,
-    port=5432,
-    username=krp_ec1_rds_credentials["username"],
-    password=krp_ec1_rds_credentials["password"],
-    superuser=False,
-)
-
-opts = pulumi.ResourceOptions(provider=postgres_provider)
+OPTS = pulumi.ResourceOptions(provider=krp_ec1_postgres_provider)
 
 
 def create_db_and_user(username: str):
@@ -27,7 +18,7 @@ def create_db_and_user(username: str):
     db = postgresql.Database(
         f"n8n_{username}_db",
         name=f"n8n_{username}_db",
-        opts=opts,
+        opts=OPTS,
     )
 
     role = postgresql.Role(
@@ -35,7 +26,7 @@ def create_db_and_user(username: str):
         name=f"n8n_{username}_user",
         password=credentials[username]["password"],
         login=True,
-        opts=opts,
+        opts=OPTS,
     )
 
     grant_privileges = postgresql.Grant(
@@ -44,7 +35,7 @@ def create_db_and_user(username: str):
         role=role.name,
         object_type="database",
         privileges=["CREATE", "CONNECT"],
-        opts=opts,
+        opts=OPTS,
     )
     return db, role, grant_privileges
 
