@@ -16,6 +16,7 @@ OPTS = get_options(
     region="europe-west-4",
     type="resource",
     provider="gcp",
+    protect=False,
 )
 
 
@@ -69,12 +70,13 @@ chart_values["masterkey"] = secret_values["masterkey"]
 chart_file_path = os.path.join(
     os.path.dirname(__file__), "charts", "litellm-helm-0.3.0.tgz"
 )
-litellm_chart = k8s.helm.v3.Chart(
+litellm_release = k8s.helm.v3.Release(
     "litellm-proxy",
-    config=k8s.helm.v3.LocalChartOpts(
-        path=chart_file_path,
+    k8s.helm.v3.ReleaseArgs(
+        chart=chart_file_path,
         namespace=litellm_ns.metadata["name"],
         values=chart_values,
+        version="0.3.0",
     ),
     opts=pulumi.ResourceOptions(
         provider=gcp_pixelml_europe_west_4,

@@ -13,6 +13,7 @@ OPTS = get_options(
     region="europe-west-4",
     type="resource",
     provider="gcp",
+    protect=False,
 )
 
 
@@ -27,13 +28,13 @@ with open(values_file_path, "r") as f:
         "loadBalancerIP"
     ] = nginx_ip_europe_west_4.address
 
-nginx_chart = k8s.helm.v3.Chart(
+nginx_release = k8s.helm.v3.Release(
     "ingress-nginx",
-    config=k8s.helm.v3.ChartOpts(
+    k8s.helm.v3.ReleaseArgs(
         chart="ingress-nginx",
         version="4.12.0",
-        fetch_opts=k8s.helm.v3.FetchOpts(
-            repo="https://kubernetes.github.io/ingress-nginx"
+        repository_opts=k8s.helm.v3.RepositoryOptsArgs(
+            repo="https://kubernetes.github.io/ingress-nginx",
         ),
         namespace=nginx_ns.metadata["name"],
         values=chart_values,
