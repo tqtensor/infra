@@ -5,6 +5,7 @@ import pg8000.native
 import pulumi
 import pulumi_aws as aws
 import pulumi_postgresql as postgresql
+from pulumi import Output
 
 from resources.db.psql.providers import krp_ec1_postgres_provider
 from resources.db.rds import krp_ec1_rds_cluster_instance
@@ -78,7 +79,7 @@ def create_table(host: str, user: str, password: str, database: str, table: str)
         )
 
 
-bedrock_tbl = pulumi.Output.all(
+bedrock_tbl = Output.all(
     krp_ec1_rds_cluster_instance.endpoint,
     bedrock_role.name,
     bedrock_role.password,
@@ -101,7 +102,7 @@ bedrock_secret = aws.secretsmanager.Secret(
 bedrock_secret_version = aws.secretsmanager.SecretVersion(
     "bedrock_secret_version",
     secret_id=bedrock_secret.id,
-    secret_string=pulumi.Output.all(bedrock_role.name, bedrock_role.password).apply(
+    secret_string=Output.all(bedrock_role.name, bedrock_role.password).apply(
         lambda args: json.dumps(
             {
                 "username": args[0],

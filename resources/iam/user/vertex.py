@@ -2,6 +2,7 @@ import base64
 
 import pulumi
 import pulumi_gcp as gcp
+from pulumi import Output
 
 from resources.providers import gcp_pixelml_europe_west_4
 from resources.utils import get_options
@@ -39,4 +40,4 @@ decoded_private_key = vertex_sa_key.private_key.apply(
     lambda key: base64.b64decode(key).decode("utf-8")
 )
 
-pulumi.export("Vertex: SA", pulumi.Output.secret(decoded_private_key))
+pulumi.export("Vertex: SA", Output.secret(decoded_private_key))

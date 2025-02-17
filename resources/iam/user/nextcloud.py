@@ -1,5 +1,6 @@
 import pulumi
 import pulumi_aws as aws
+from pulumi import Output
 
 from resources.utils import get_options
 
@@ -12,7 +13,7 @@ nextcloud_user = aws.iam.User(
 
 nextcloud_s3_policy = aws.iam.Policy(
     "nextcloud_s3_policy",
-    policy=pulumi.Output.json_dumps(
+    policy=Output.json_dumps(
         {
             "Version": "2012-10-17",
             "Statement": [
