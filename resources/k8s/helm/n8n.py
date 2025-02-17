@@ -15,6 +15,7 @@ OPTS = get_options(
     region="europe-west-4",
     type="resource",
     provider="gcp",
+    protect=False,
 )
 
 
@@ -49,15 +50,17 @@ with open(values_file_path, "r") as f:
     chart_values["config"]["database"]["postgresdb"]["database"] = db_values["database"]
 
 chart_file_path = os.path.join(os.path.dirname(__file__), "charts", "n8n-0.25.2.tgz")
-n8n_chart = k8s.helm.v3.Chart(
+n8n_release = k8s.helm.v3.Release(
     "n8n",
-    config=k8s.helm.v3.LocalChartOpts(
-        path=chart_file_path,
+    k8s.helm.v3.ReleaseArgs(
+        chart=chart_file_path,
         namespace=n8n_ns.metadata["name"],
         values=chart_values,
+        version="0.25.2",
     ),
     opts=pulumi.ResourceOptions(
         provider=gcp_pixelml_europe_west_4,
-        depends_on=[n8n_ns],
+        depends_on=[n8n_ns, n8n_tls_secret],
+        protect=True,
     ),
 )
