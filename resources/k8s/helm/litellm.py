@@ -4,6 +4,7 @@ import pulumi
 import pulumi_gcp as gcp
 import pulumi_kubernetes as k8s
 import yaml
+from pulumi import Output
 
 from resources.cloudflare import litellm_origin_ca_cert, litellm_private_key
 from resources.iam import vertex_sa
@@ -25,7 +26,7 @@ litellm_ns = k8s.core.v1.Namespace(
 litellm_tls_secret = k8s.core.v1.Secret(
     "litellm_tls_secret",
     metadata={"name": "litellm-tls-secret", "namespace": litellm_ns.metadata["name"]},
-    data=pulumi.Output.all(
+    data=Output.all(
         litellm_origin_ca_cert.certificate, litellm_private_key.private_key_pem
     ).apply(lambda args: encode_tls_secret_data(args[0], args[1])),
     opts=OPTS,
@@ -45,7 +46,7 @@ litellm_iam_member = gcp.serviceaccount.IAMMember(
     "litellm_iam_member",
     service_account_id=vertex_sa.name,
     role="roles/iam.workloadIdentityUser",
-    member=pulumi.Output.concat(
+    member=Output.concat(
         "serviceAccount:",
         gcp_pixelml_europe_west_4.project,
         ".svc.id.goog[",

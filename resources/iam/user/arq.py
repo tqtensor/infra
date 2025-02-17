@@ -1,5 +1,6 @@
 import pulumi
 import pulumi_aws as aws
+from pulumi import Output
 
 from resources.storage import arq_bucket
 from resources.utils import get_options
@@ -11,7 +12,7 @@ arq_user = aws.iam.User("arq_user", name="arq-user", opts=OPTS)
 
 arq_s3_policy = aws.iam.Policy(
     "arq_s3_policy",
-    policy=pulumi.Output.json_dumps(
+    policy=Output.json_dumps(
         {
             "Version": "2012-10-17",
             "Statement": [
