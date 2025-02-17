@@ -9,8 +9,8 @@ from resources.vm import krypfolio_eu_central_1_vpc
 OPTS = get_options(profile="krypfolio", region="eu-central-1", type="resource")
 
 
-krypfolio_eu_central_1_rds_sg = aws.ec2.SecurityGroup(
-    "krypfolio_eu_central_1_rds_sg",
+krp_ec1_rds_sg = aws.ec2.SecurityGroup(
+    "krp_ec1_rds_sg",
     vpc_id=krypfolio_eu_central_1_vpc.vpc_id,
     ingress=[
         aws.ec2.SecurityGroupIngressArgs(
@@ -31,14 +31,14 @@ krypfolio_eu_central_1_rds_sg = aws.ec2.SecurityGroup(
     opts=OPTS,
 )
 
-krypfolio_eu_central_1_rds_subnet_group = aws.rds.SubnetGroup(
-    "krypfolio_eu_central_1_rds_subnet_group",
+krp_ec1_rds_subnet_group = aws.rds.SubnetGroup(
+    "krp_ec1_rds_subnet_group",
     subnet_ids=krypfolio_eu_central_1_vpc.public_subnet_ids,
     opts=OPTS,
 )
 
-krypfolio_eu_central_1_rds_cluster = aws.rds.Cluster(
-    "krypfolio_eu_central_1_rds_cluster",
+krp_ec1_rds_cluster = aws.rds.Cluster(
+    "krp_ec1_rds_cluster",
     cluster_identifier="krypfolio-eu-central-1-rds-cluster",
     engine=aws.rds.EngineType.AURORA_POSTGRESQL,
     engine_mode=aws.rds.EngineMode.PROVISIONED,
@@ -47,19 +47,20 @@ krypfolio_eu_central_1_rds_cluster = aws.rds.Cluster(
     master_username="tqtensor",
     manage_master_user_password=True,
     storage_encrypted=True,
+    enable_http_endpoint=True,
     serverlessv2_scaling_configuration=aws.rds.ClusterServerlessv2ScalingConfigurationArgs(
         max_capacity=1,
         min_capacity=0.5,
     ),
-    vpc_security_group_ids=[krypfolio_eu_central_1_rds_sg.id],
-    db_subnet_group_name=krypfolio_eu_central_1_rds_subnet_group.name,
+    vpc_security_group_ids=[krp_ec1_rds_sg.id],
+    db_subnet_group_name=krp_ec1_rds_subnet_group.name,
     skip_final_snapshot=True,
     opts=OPTS,
 )
 
-krypfolio_eu_central_1_rds_cluster_instance = aws.rds.ClusterInstance(
-    "krypfolio_eu_central_1_rds_cluster_instance",
-    cluster_identifier=krypfolio_eu_central_1_rds_cluster.id,
+krp_ec1_rds_cluster_instance = aws.rds.ClusterInstance(
+    "krp_ec1_rds_cluster_instance",
+    cluster_identifier=krp_ec1_rds_cluster.id,
     instance_class="db.serverless",
     engine=aws.rds.EngineType.AURORA_POSTGRESQL,
     engine_version="14.15",
@@ -67,13 +68,14 @@ krypfolio_eu_central_1_rds_cluster_instance = aws.rds.ClusterInstance(
     opts=OPTS,
 )
 
-krypfolio_eu_central_1_rds_credentials = json.loads(
+krp_ec1_rds_credentials = json.loads(
     aws.secretsmanager.get_secret_version(
-        secret_id=krypfolio_eu_central_1_rds_cluster.master_user_secrets.apply(
+        secret_id=krp_ec1_rds_cluster.master_user_secrets.apply(
             lambda x: x[0].secret_arn
         ),
         opts=get_options(profile="krypfolio", region="eu-central-1", type="invoke"),
     ).secret_string
 )
 
-pulumi.export("RDS: endpoint", krypfolio_eu_central_1_rds_cluster.endpoint)
+pulumi.export("RDS: ARN", krp_ec1_rds_cluster.arn)
+pulumi.export("RDS: endpoint", krp_ec1_rds_cluster.endpoint)

@@ -6,6 +6,7 @@ from typing import Dict, Union
 import pulumi
 import pulumi_random as random
 import yaml
+from pulumi import Output
 from sopsy import Sops
 from sopsy.errors import SopsyCommandFailedError
 
@@ -105,7 +106,5 @@ def fill_in_password(encrypted_yaml: str, value_path: str) -> dict:
         sops_encoder.encrypt()
         return creds
 
-    credentials = pulumi.Output.all(credentials).apply(
-        lambda args: write_credentials(args[0])
-    )
+    credentials = Output.all(credentials).apply(lambda args: write_credentials(args[0]))
     return credentials
