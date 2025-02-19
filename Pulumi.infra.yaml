@@ -1,4 +1,7 @@
-environment:
-  - infra/infra
+secretsprovider: awskms:///arn:aws:kms:us-east-1:100874337694:key/c7fd5cab-3baf-40c1-a129-3d4a58c70cd3
+encryptedkey: AQICAHhZfWILurHAsFqnvtAb0hx4XSK8Hq5vHmUDi3UArtcCpgFxD+UZqxiTQDRNFABYA9C0AAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM04Ax3kjKaKY5Ow04AgEQgDvHbmtCGW7w3ugMn3IAAvfnyO/e6XWMsMvXG0tqjiDZeY5YngYXV44lyn2Pqc3u4OtYVNuecM/RdcK0wg==
 config:
   gcp:project: gen-lang-client-0608717027
+  infra:accountId: 5b2f50a9a58974fa222a4966649c3705
+  cloudflare:apiToken:
+    secure: v1:uX5HEEoMP3p2GITt:brYG4Z+smpViqILsfpT2wNt1nybWtrFfSU4IPa7/5V0InDVckFCySXj23ZLzY1aekiLmpmq3124=
