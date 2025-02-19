@@ -1,2 +1,3 @@
 creation_rules:
-  - gcp_kms: projects/gen-lang-client-0608717027/locations/global/keyRings/sops/cryptoKeys/sops-key
+  - kms: arn:aws:kms:us-east-1:100874337694:key/c7fd5cab-3baf-40c1-a129-3d4a58c70cd3
+    aws_profile: personal
