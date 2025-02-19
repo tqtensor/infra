@@ -6,21 +6,22 @@ from pulumi import Output
 from resources.iam import n8n_role
 from resources.utils import get_options
 
-OPTS = get_options(profile="personal", region="eu-central-1", type="resource")
+EC1_OPTS = get_options(profile="personal", region="eu-central-1", type="resource")
+UE1_OPTS = get_options(profile="personal", region="us-east-1", type="resource")
 
 
 arq_bucket = aws.s3.Bucket(
     "arq_bucket",
     bucket="tqtensor-arq-bucket-eu",
     acl="private",
-    opts=OPTS,
+    opts=EC1_OPTS,
 )
 
 n8n_bucket = aws.s3.Bucket(
     "n8n_bucket",
     bucket="tqtensor-n8n-bucket-eu",
     acl="private",
-    opts=OPTS,
+    opts=EC1_OPTS,
 )
 
 n8n_bucket_policy = aws.s3.BucketPolicy(
@@ -49,5 +50,12 @@ n8n_bucket_policy = aws.s3.BucketPolicy(
             }
         )
     ),
-    opts=OPTS,
+    opts=EC1_OPTS,
+)
+
+pulumi_bucket = aws.s3.Bucket(
+    "pulumi_bucket",
+    bucket="tqtensor-pulumi-bucket-us",
+    acl="private",
+    opts=UE1_OPTS,
 )
