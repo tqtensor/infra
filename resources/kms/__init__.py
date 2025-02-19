@@ -1,1 +1,1 @@
-from .sops import *  # noqa
+from .pulumi_secrets import *  # noqa
