@@ -4,9 +4,7 @@ import pulumi_aws as aws
 
 from resources.utils import get_options
 
-OPTS = get_options(
-    profile="krypfolio", region="eu-central-1", type="resource", protect=False
-)
+OPTS = get_options(profile="krypfolio", region="eu-central-1", type="resource")
 
 
 n8n_policy_llm_model = aws.iam.Policy(
@@ -19,7 +17,7 @@ n8n_policy_llm_model = aws.iam.Policy(
                     "Action": ["bedrock:InvokeModel"],
                     "Effect": "Allow",
                     "Resource": [
-                        "arn:aws:bedrock:eu-central-1::foundation-model/anthropic.claude-3-haiku-20240307-v1:0",
+                        "arn:aws:bedrock:eu-central-1::foundation-model/anthropic.claude-3-5-sonnet-20240620-v1:0",
                         "arn:aws:bedrock:eu-central-1::foundation-model/amazon.titan-embed-text-v1",
                     ],
                     "Sid": "BedrockInvokeModelStatement",
