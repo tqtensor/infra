@@ -19,26 +19,27 @@ def get_options(
     type: str = "resource",
     protect: bool = True,
     provider: str = "aws",
+    kwargs: dict = {},
 ) -> Union[pulumi.ResourceOptions, pulumi.InvokeOptions]:
     if provider in ["aws", "gcp"]:
         if type == "resource":
             return pulumi.ResourceOptions(
                 provider=eval(f"{provider}_{profile}_{region.replace('-', '_')}"),
                 protect=protect,
+                **kwargs,
             )
         elif type == "invoke":
             return pulumi.InvokeOptions(
-                provider=eval(f"{provider}_{profile}_{region.replace('-', '_')}")
+                provider=eval(f"{provider}_{profile}_{region.replace('-', '_')}"),
+                **kwargs,
             )
         else:
             raise ValueError("Invalid type")
     elif provider == "cloudflare":
         if type == "resource":
-            return pulumi.ResourceOptions(
-                protect=protect,
-            )
+            return pulumi.ResourceOptions(protect=protect, **kwargs)
         elif type == "invoke":
-            return pulumi.InvokeOptions(protect=protect)
+            return pulumi.InvokeOptions(protect=protect, **kwargs)
     else:
         raise ValueError("Invalid provider")
 
