@@ -12,7 +12,7 @@ from resources.db.rds import krp_ec1_rds_cluster_instance
 from resources.providers import aws_krypfolio_eu_central_1
 from resources.utils import fill_in_password
 
-OPTS = pulumi.ResourceOptions(provider=krp_ec1_postgres_provider, protect=False)
+OPTS = pulumi.ResourceOptions(provider=krp_ec1_postgres_provider)
 
 
 bedrock_db = postgresql.Database("bedrock_db", name="bedrock_db", opts=OPTS)
@@ -97,7 +97,7 @@ bedrock_tbl = Output.all(
 
 bedrock_secret = aws.secretsmanager.Secret(
     "bedrock-db-credentials",
-    opts=pulumi.ResourceOptions(provider=aws_krypfolio_eu_central_1, protect=False),
+    opts=pulumi.ResourceOptions(provider=aws_krypfolio_eu_central_1),
 )
 bedrock_secret_version = aws.secretsmanager.SecretVersion(
     "bedrock_secret_version",
@@ -110,5 +110,5 @@ bedrock_secret_version = aws.secretsmanager.SecretVersion(
             }
         )
     ),
-    opts=pulumi.ResourceOptions(provider=aws_krypfolio_eu_central_1, protect=False),
+    opts=pulumi.ResourceOptions(provider=aws_krypfolio_eu_central_1),
 )
