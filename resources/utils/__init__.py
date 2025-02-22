@@ -1,5 +1,6 @@
 import base64
 import os
+import re
 from pathlib import Path
 from typing import Dict, Union
 
@@ -109,3 +110,9 @@ def fill_in_password(encrypted_yaml: str, value_path: str) -> dict:
 
     credentials = Output.all(credentials).apply(lambda args: write_credentials(args[0]))
     return credentials
+
+
+def normalize_email(email: str) -> str:
+    username = email.split("@")[0]
+    username = re.sub(r"[^a-zA-Z0-9]", "", username)
+    return f"{username}@{email.split('@')[1]}".strip().lower()
