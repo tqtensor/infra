@@ -3,9 +3,7 @@ import pulumi_aws as aws
 
 from resources.utils import get_options
 
-OPTS = get_options(
-    profile="personal", region="us-east-1", type="resource", protect=False
-)
+OPTS = get_options(profile="personal", region="us-east-1", type="resource")
 
 
 pulumi_secrets_key = aws.kms.Key(

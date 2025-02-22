@@ -5,13 +5,10 @@ from pulumi import Output
 from resources.db.psql import bedrock_secret
 from resources.db.rds import krp_ec1_rds_cluster
 from resources.iam import n8n_role
-from resources.providers import aws_krypfolio_eu_central_1
 from resources.storage import n8n_bucket
 from resources.utils import get_options
 
-OPTS = get_options(
-    profile="krypfolio", region="eu-central-1", type="resource", protect=False
-)
+OPTS = get_options(profile="krypfolio", region="eu-central-1", type="resource")
 
 
 n8n_kb_agent = aws.bedrock.AgentKnowledgeBase(
@@ -74,12 +71,15 @@ n8n_kb_data_source = aws.bedrock.AgentDataSource(
         },
         "parsing_configuration": {
             "bedrock_foundation_model_configuration": {
-                "model_arn": "arn:aws:bedrock:eu-central-1::foundation-model/anthropic.claude-3-haiku-20240307-v1:0",
+                "model_arn": "arn:aws:bedrock:eu-central-1::foundation-model/anthropic.claude-3-5-sonnet-20240620-v1:0",
             },
             "parsing_strategy": "BEDROCK_FOUNDATION_MODEL",
         },
     },
-    opts=pulumi.ResourceOptions(
-        provider=aws_krypfolio_eu_central_1, depends_on=[n8n_kb_agent], protect=False
+    opts=get_options(
+        profile="krypfolio",
+        region="eu-central-1",
+        type="resource",
+        kwargs={"depends_on": [n8n_kb_agent]},
     ),
 )
