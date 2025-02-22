@@ -10,9 +10,7 @@ from resources.storage import n8n_bucket
 from resources.utils import get_options
 
 PER_EC1_OPTS = get_options(profile="personal", region="eu-central-1", type="resource")
-KRP_EC1_OPTS = get_options(
-    profile="krypfolio", region="eu-central-1", type="resource", protect=False
-)
+KRP_EC1_OPTS = get_options(profile="krypfolio", region="eu-central-1", type="resource")
 
 
 n8n_policy_llm_model = aws.iam.Policy(

@@ -8,9 +8,7 @@ from resources.iam import n8n_role
 from resources.storage import n8n_bucket
 from resources.utils import get_options
 
-OPTS = get_options(
-    profile="krypfolio", region="eu-central-1", type="resource", protect=False
-)
+OPTS = get_options(profile="krypfolio", region="eu-central-1", type="resource")
 
 
 n8n_kb_agent = aws.bedrock.AgentKnowledgeBase(
@@ -82,7 +80,6 @@ n8n_kb_data_source = aws.bedrock.AgentDataSource(
         profile="krypfolio",
         region="eu-central-1",
         type="resource",
-        protect=False,
         kwargs={"depends_on": [n8n_kb_agent]},
     ),
 )
