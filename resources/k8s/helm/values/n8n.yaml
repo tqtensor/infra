@@ -109,7 +109,7 @@ secret:
 # Set additional environment variables on the Deployment
 extraEnv:
   # Set this if running behind a reverse proxy and the external port is different from the port n8n runs on
-  WEBHOOK_URL: https://n8n.tqtensor.com
+  WEBHOOK_URL: https://workflow.example.com
   N8N_ENCRYPTION_KEY: rLhfWDL7Wykog77z72XGkiL31K0kTe3
 
 # Set additional environment from existing secrets
@@ -272,13 +272,13 @@ ingress:
     kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: n8n.tqtensor.com
+    - host: workflow.example.com
       paths:
         - /
   tls:
-    - secretName: n8n-tls-secret
+    - secretName: host-domain-cert
       hosts:
-        - n8n.tqtensor.com
+        - workflow.example.com
 
   # define a custom incressClassName, like "traefik" or "nginx"
   className: 'nginx'
