@@ -9,10 +9,10 @@ import pulumi_random as random
 from resources.db.psql.providers import krp_ec1_postgres_provider
 from resources.utils import normalize_email
 
+OPTS = pulumi.ResourceOptions(provider=krp_ec1_postgres_provider, protect=False)
 
-def create_db_and_user(username: str, protect: bool = True):
-    opts = pulumi.ResourceOptions(provider=krp_ec1_postgres_provider, protect=protect)
 
+def create_db_and_user(username: str):
     password = random.RandomPassword(
         f"password_n8n_{username}_user",
         length=32,
@@ -23,7 +23,7 @@ def create_db_and_user(username: str, protect: bool = True):
     db = postgresql.Database(
         f"n8n_{username}_db",
         name=f"n8n_{username}_db",
-        opts=opts,
+        opts=OPTS,
     )
 
     role = postgresql.Role(
@@ -31,7 +31,7 @@ def create_db_and_user(username: str, protect: bool = True):
         name=f"n8n_{username}_user",
         password=password,
         login=True,
-        opts=opts,
+        opts=OPTS,
     )
 
     grant_privileges = postgresql.Grant(
@@ -40,7 +40,7 @@ def create_db_and_user(username: str, protect: bool = True):
         role=role.name,
         object_type="database",
         privileges=["CREATE", "CONNECT"],
-        opts=opts,
+        opts=OPTS,
     )
     return db, role, grant_privileges, password
 
@@ -64,6 +64,6 @@ for participant in participants:
     n8n_{username}_user,
     n8n_{username}_grant_privileges,
     n8n_{username}_password,
-) = create_db_and_user(username="{username}", protect=False)
+) = create_db_and_user(username=username)
 """
     )
