@@ -77,6 +77,5 @@ n8n_release = k8s.helm.v3.Release(
     opts=pulumi.ResourceOptions(
         provider=gcp_pixelml_europe_west_4,
         depends_on=[n8n_ns, n8n_tls_secret],
-        protect=True,
     ),
 )
