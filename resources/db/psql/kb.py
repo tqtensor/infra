@@ -9,16 +9,16 @@ from pulumi import Output
 
 from resources.db.psql.providers import krp_ec1_postgres_provider
 from resources.db.rds import krp_ec1_rds_cluster_instance
-from resources.providers import aws_krypfolio_eu_central_1
-from resources.utils import fill_in_password
+from resources.utils import fill_in_password, get_options
 
-OPTS = pulumi.ResourceOptions(provider=krp_ec1_postgres_provider)
+EC1_OPTS = get_options(profile="krypfolio", region="eu-central-1", type="resource")
+PSQL_OPTS = pulumi.ResourceOptions(provider=krp_ec1_postgres_provider)
 
 
-bedrock_db = postgresql.Database("bedrock_db", name="bedrock_db", opts=OPTS)
+bedrock_db = postgresql.Database("bedrock_db", name="bedrock_db", opts=PSQL_OPTS)
 
 vector_extension = postgresql.Extension(
-    "vector_extension", database=bedrock_db.name, name="vector", opts=OPTS
+    "vector_extension", database=bedrock_db.name, name="vector", opts=PSQL_OPTS
 )
 
 credentials_file_path = os.path.join(os.path.dirname(__file__), "credentials.yaml")
@@ -30,7 +30,7 @@ bedrock_role = postgresql.Role(
     name="bedrock_user",
     login=True,
     password=credentials["bedrock_user"]["password"],
-    opts=OPTS,
+    opts=PSQL_OPTS,
 )
 
 bedrock_db_grant = postgresql.Grant(
@@ -39,7 +39,7 @@ bedrock_db_grant = postgresql.Grant(
     role=bedrock_role.name,
     object_type="database",
     privileges=["ALL"],
-    opts=OPTS,
+    opts=PSQL_OPTS,
 )
 
 bedrock_schema_grant = postgresql.Grant(
@@ -49,7 +49,7 @@ bedrock_schema_grant = postgresql.Grant(
     role=bedrock_role.name,
     object_type="schema",
     privileges=["ALL"],
-    opts=OPTS,
+    opts=PSQL_OPTS,
 )
 
 
@@ -97,7 +97,7 @@ bedrock_tbl = Output.all(
 
 bedrock_secret = aws.secretsmanager.Secret(
     "bedrock-db-credentials",
-    opts=pulumi.ResourceOptions(provider=aws_krypfolio_eu_central_1),
+    opts=EC1_OPTS,
 )
 bedrock_secret_version = aws.secretsmanager.SecretVersion(
     "bedrock_secret_version",
@@ -110,5 +110,5 @@ bedrock_secret_version = aws.secretsmanager.SecretVersion(
             }
         )
     ),
-    opts=pulumi.ResourceOptions(provider=aws_krypfolio_eu_central_1),
+    opts=EC1_OPTS,
 )

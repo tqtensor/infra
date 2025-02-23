@@ -2,16 +2,19 @@ import os
 from pathlib import Path
 
 import pandas as pd
+import pulumi
 import pulumi_cloudflare as cloudflare
 import pulumi_tls as tls
 
 from resources.cloudflare import *  # noqa
 from resources.utils import normalize_email
 
+OPTS = pulumi.ResourceOptions(protect=False)
+
 
 def create_tls(username: str, record: cloudflare.Record):
     private_key = tls.PrivateKey(
-        f"n8n_{username}_private_key", algorithm="RSA", rsa_bits=2048
+        f"n8n_{username}_private_key", algorithm="RSA", rsa_bits=2048, opts=OPTS
     )
 
     csr = tls.CertRequest(
@@ -20,6 +23,7 @@ def create_tls(username: str, record: cloudflare.Record):
         subject=tls.CertRequestSubjectArgs(
             common_name=record.hostname,
         ),
+        opts=OPTS,
     )
 
     origin_ca_cert = cloudflare.OriginCaCertificate(
@@ -28,6 +32,7 @@ def create_tls(username: str, record: cloudflare.Record):
         hostnames=[record.hostname],
         request_type="origin-rsa",
         requested_validity=365,  # 1 year
+        opts=OPTS,
     )
     return origin_ca_cert, private_key
 

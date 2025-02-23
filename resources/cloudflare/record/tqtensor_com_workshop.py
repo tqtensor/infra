@@ -8,7 +8,7 @@ from resources.constants import tqtensor_com
 from resources.utils import get_options, normalize_email
 from resources.vm import nginx_ip_europe_west_4
 
-OPTS = get_options(provider="cloudflare")
+OPTS = get_options(provider="cloudflare", protect=False)
 
 
 def create_record(username: str):
