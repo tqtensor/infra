@@ -40,10 +40,10 @@ versions = gcp.container.get_aws_versions(
     project=gcp_pixelml_europe_west_1.project, location="europe-west1"
 )
 
-cluster_name = "federated-eu-west-1-cluster"
+cluster_name = "federated-aws-eu-west-1-cluster"
 
-federated_eu_west_1_cluster = gcp.container.AwsCluster(
-    "federated_eu_west_1_cluster",
+federated_aws_eu_west_1_cluster = gcp.container.AwsCluster(
+    "federated_aws_eu_west_1_cluster",
     name=cluster_name,
     aws_region="eu-central-1",
     location="europe-west1",
