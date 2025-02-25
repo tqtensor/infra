@@ -10,8 +10,8 @@ OPTS = get_options(
     provider="gcp",
 )
 
-nginx_ip_europe_west_4 = gcp.compute.Address(
-    "nginx_ip_europe_west_4",
+nginx_ip_eu_west_4 = gcp.compute.Address(
+    "nginx_ip_eu_west_4",
     name="nginx-controller-ip",
     network_tier="PREMIUM",
     project=gcp_pixelml_europe_west_4.project,
