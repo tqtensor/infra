@@ -4,6 +4,9 @@ import pulumi_aws as aws
 aws_krypfolio_eu_central_1 = aws.Provider(
     "aws-krypfolio-eu-central-1", region="eu-central-1", profile="krypfolio"
 )
+aws_krypfolio_eu_north_1 = aws.Provider(
+    "aws-krypfolio-eu-north-1", region="eu-north-1", profile="krypfolio"
+)
 aws_krypfolio_us_east_1 = aws.Provider(
     "aws-krypfolio-us-east-1", region="us-east-1", profile="krypfolio"
 )
