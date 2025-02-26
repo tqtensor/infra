@@ -6,7 +6,7 @@ import yaml
 
 from resources.providers import gcp_pixelml_europe_west_4
 from resources.utils import get_options
-from resources.vm import nginx_ip_europe_west_4
+from resources.vm import nginx_ip_eu_west_4
 
 OPTS = get_options(
     profile="pixelml",
@@ -23,9 +23,7 @@ nginx_ns = k8s.core.v1.Namespace(
 values_file_path = os.path.join(os.path.dirname(__file__), "values", "nginx.yaml")
 with open(values_file_path, "r") as f:
     chart_values = yaml.safe_load(f)
-    chart_values["controller"]["service"][
-        "loadBalancerIP"
-    ] = nginx_ip_europe_west_4.address
+    chart_values["controller"]["service"]["loadBalancerIP"] = nginx_ip_eu_west_4.address
 
 nginx_release = k8s.helm.v3.Release(
     "ingress-nginx",

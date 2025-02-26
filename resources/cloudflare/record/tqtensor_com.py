@@ -2,10 +2,20 @@ import pulumi_cloudflare as cloudflare
 
 from resources.constants import tqtensor_com
 from resources.utils import get_options
-from resources.vm import nextcloud_instance, nginx_ip_europe_west_4
+from resources.vm import nextcloud_instance, nginx_ip_eu_west_4
 
 OPTS = get_options(provider="cloudflare")
 
+airbyte_tqtensor_com = cloudflare.Record(
+    "airbyte_tqtensor_com",
+    name="airbyte",
+    ttl=1,
+    type="A",
+    content=nginx_ip_eu_west_4.address,
+    zone_id=tqtensor_com.id,
+    proxied=True,
+    opts=OPTS,
+)
 
 drive_tqtensor_com = cloudflare.Record(
     "drive_tqtensor_com",
@@ -22,7 +32,7 @@ n8n_tqtensor_com = cloudflare.Record(
     name="n8n",
     ttl=1,
     type="A",
-    content=nginx_ip_europe_west_4.address,
+    content=nginx_ip_eu_west_4.address,
     zone_id=tqtensor_com.id,
     proxied=True,
     opts=OPTS,
@@ -33,7 +43,7 @@ nextcloud_tqtensor_com = cloudflare.Record(
     name="nextcloud",
     ttl=1,
     type="A",
-    content=nginx_ip_europe_west_4.address,
+    content=nginx_ip_eu_west_4.address,
     zone_id=tqtensor_com.id,
     proxied=True,
     opts=OPTS,
