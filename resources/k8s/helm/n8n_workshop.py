@@ -40,7 +40,7 @@ def deploy_n8n(
     tls_secret = k8s.core.v1.Secret(
         f"n8n_{username}_tls_secret",
         metadata={
-            "name": f"n8n-{username}-tls-secret",
+            "name": "n8n-tls-secret",
             "namespace": ns.metadata["name"],
         },
         data=Output.all(origin_ca_cert.certificate, private_key.private_key_pem).apply(
