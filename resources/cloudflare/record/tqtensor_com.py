@@ -27,6 +27,17 @@ drive_tqtensor_com = cloudflare.Record(
     opts=OPTS,
 )
 
+grokking_tqtensor_com = cloudflare.Record(
+    "grokking_tqtensor_com",
+    name="grokking",
+    ttl=1,
+    type="A",
+    content=nginx_ip_eu_west_4.address,
+    zone_id=tqtensor_com.id,
+    proxied=True,
+    opts=OPTS,
+)
+
 n8n_tqtensor_com = cloudflare.Record(
     "n8n_tqtensor_com",
     name="n8n",
