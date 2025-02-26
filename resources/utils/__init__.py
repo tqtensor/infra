@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Dict, Union
 
 import pulumi
+import pulumi_gcp as gcp
 import pulumi_random as random
 import yaml
 from pulumi import Output
@@ -116,3 +117,37 @@ def normalize_email(email: str) -> str:
     username = email.split("@")[0]
     username = re.sub(r"[^a-zA-Z0-9]", "", username)
     return f"{username}@{email.split('@')[1]}".strip().lower()
+
+
+def create_kubeconfig(cluster: gcp.container.Cluster):
+    return Output.all(
+        cluster.name,
+        cluster.endpoint,
+        cluster.master_auth,
+        cluster.project,
+        cluster.location,
+    ).apply(
+        lambda args: f"""apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: {args[2]['cluster_ca_certificate']}
+    server: https://{args[1]}
+  name: {args[3]}_{args[4]}_{args[0]}
+contexts:
+- context:
+    cluster: {args[3]}_{args[4]}_{args[0]}
+    user: {args[3]}_{args[4]}_{args[0]}
+  name: {args[3]}_{args[4]}_{args[0]}
+current-context: {args[3]}_{args[4]}_{args[0]}
+kind: Config
+preferences: {{}}
+users:
+- name: {args[3]}_{args[4]}_{args[0]}
+  user:
+    exec:
+      apiVersion: client.authentication.k8s.io/v1beta1
+      command: gke-gcloud-auth-plugin
+      installHint: Install gke-gcloud-auth-plugin for use with kubectl by following https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+      provideClusterInfo: true
+"""
+    )
