@@ -1,3 +1,4 @@
+import base64
 import os
 
 import pulumi
@@ -7,7 +8,7 @@ import yaml
 from pulumi import Output
 
 from resources.cloudflare import litellm_origin_ca_cert, litellm_private_key
-from resources.iam import vertex_sa
+from resources.iam import bedrock_access_key, vertex_sa
 from resources.k8s.providers import k8s_provider_eu_west_4
 from resources.providers import gcp_pixelml_europe_west_4
 from resources.utils import encode_tls_secret_data, fill_in_password
@@ -17,6 +18,20 @@ OPTS = pulumi.ResourceOptions(provider=k8s_provider_eu_west_4)
 
 litellm_ns = k8s.core.v1.Namespace(
     "litellm_ns", metadata={"name": "litellm"}, opts=OPTS
+)
+
+litellm_env_secret = k8s.core.v1.Secret(
+    "litellm_env_secret",
+    metadata={"name": "litellm-env-secret", "namespace": litellm_ns.metadata["name"]},
+    data=Output.all(bedrock_access_key.id, bedrock_access_key.secret).apply(
+        lambda args: {
+            "BEDROCK_AWS_ACCESS_KEY_ID": base64.b64encode(args[0].encode()).decode(),
+            "BEDROCK_AWS_SECRET_ACCESS_KEY": base64.b64encode(
+                args[1].encode()
+            ).decode(),
+        }
+    ),
+    opts=OPTS,
 )
 
 litellm_tls_secret = k8s.core.v1.Secret(
