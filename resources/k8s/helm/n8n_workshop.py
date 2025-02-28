@@ -13,16 +13,10 @@ from pulumi import Output
 from resources.cloudflare import *  # noqa
 from resources.db import krp_ec1_rds_cluster_instance
 from resources.db.psql import *  # noqa
-from resources.providers import gcp_pixelml_europe_west_4
-from resources.utils import encode_tls_secret_data, get_options, normalize_email
+from resources.k8s.providers import k8s_provider_eu_west_4
+from resources.utils import encode_tls_secret_data, normalize_email
 
-OPTS = get_options(
-    profile="pixelml",
-    region="europe-west-4",
-    type="resource",
-    provider="gcp",
-    protect=False,
-)
+OPTS = pulumi.ResourceOptions(provider=k8s_provider_eu_west_4)
 
 
 def deploy_n8n(
@@ -96,12 +90,13 @@ def deploy_n8n(
         f"n8n-{username}",
         k8s.helm.v3.ReleaseArgs(
             chart=chart_file_path,
+            name="n8n",
             namespace=ns.metadata["name"],
             values=chart_values,
             version="0.25.2",
         ),
         opts=pulumi.ResourceOptions(
-            provider=gcp_pixelml_europe_west_4,
+            provider=k8s_provider_eu_west_4,
             depends_on=[ns, tls_secret],
             protect=False,
         ),

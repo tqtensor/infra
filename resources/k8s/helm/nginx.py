@@ -5,24 +5,13 @@ import pulumi_gcp as gcp
 import pulumi_kubernetes as k8s
 import yaml
 
-from resources.k8s.cluster import (
-    auto_pilot_asia_east_1_cluster,
-    auto_pilot_eu_west_4_cluster,
-)
-from resources.utils import create_kubeconfig
+from resources.k8s.providers import k8s_provider_asia_east_1, k8s_provider_eu_west_4
 from resources.vm import nginx_ip_asia_east_1, nginx_ip_eu_west_4
 
 
-def deploy_nginx(
-    region: str, cluster: gcp.container.Cluster, public_ip: gcp.compute.Address
-):
-    k8s_provider = k8s.Provider(
-        "k8s_provider_{}".format(region.replace("-", "_")),
-        kubeconfig=create_kubeconfig(cluster=cluster),
-    )
-
+def deploy_nginx(region: str, provider: k8s.Provider, public_ip: gcp.compute.Address):
     opts = pulumi.ResourceOptions(
-        provider=k8s_provider,
+        provider=provider,
     )
 
     nginx_ns = k8s.core.v1.Namespace(
@@ -40,6 +29,7 @@ def deploy_nginx(
         f"ingress-nginx-{region}",
         k8s.helm.v3.ReleaseArgs(
             chart="ingress-nginx",
+            name="ingress-nginx",
             version="4.12.0",
             repository_opts=k8s.helm.v3.RepositoryOptsArgs(
                 repo="https://kubernetes.github.io/ingress-nginx",
@@ -48,7 +38,7 @@ def deploy_nginx(
             values=chart_values,
         ),
         opts=pulumi.ResourceOptions(
-            provider=k8s_provider,
+            provider=provider,
             depends_on=[nginx_ns],
         ),
     )
@@ -56,11 +46,12 @@ def deploy_nginx(
 
 deploy_nginx(
     region="asia-east-1",
-    cluster=auto_pilot_asia_east_1_cluster,
+    provider=k8s_provider_asia_east_1,
     public_ip=nginx_ip_asia_east_1,
 )
+
 deploy_nginx(
     region="europe-west-4",
-    cluster=auto_pilot_eu_west_4_cluster,
+    provider=k8s_provider_eu_west_4,
     public_ip=nginx_ip_eu_west_4,
 )

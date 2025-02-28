@@ -8,15 +8,11 @@ from pulumi import Output
 
 from resources.cloudflare import litellm_origin_ca_cert, litellm_private_key
 from resources.iam import vertex_sa
-from resources.providers import gcp_pixelml_europe_west_4, k8s_provider
-from resources.utils import encode_tls_secret_data, fill_in_password, get_options
+from resources.k8s.providers import k8s_provider_eu_west_4
+from resources.providers import gcp_pixelml_europe_west_4
+from resources.utils import encode_tls_secret_data, fill_in_password
 
-OPTS = get_options(
-    profile="pixelml",
-    region="europe-west-4",
-    type="resource",
-    provider="gcp",
-)
+OPTS = pulumi.ResourceOptions(provider=k8s_provider_eu_west_4)
 
 
 litellm_ns = k8s.core.v1.Namespace(
@@ -39,7 +35,7 @@ litellm_sa = k8s.core.v1.ServiceAccount(
         annotations={"iam.gke.io/gcp-service-account": vertex_sa.email},
         namespace=litellm_ns.metadata["name"],
     ),
-    opts=pulumi.ResourceOptions(provider=k8s_provider),
+    opts=OPTS,
 )
 
 litellm_iam_member = gcp.serviceaccount.IAMMember(
@@ -73,12 +69,13 @@ litellm_release = k8s.helm.v3.Release(
     "litellm-proxy",
     k8s.helm.v3.ReleaseArgs(
         chart=chart_file_path,
+        name="litellm-proxy",
         namespace=litellm_ns.metadata["name"],
         values=chart_values,
         version="0.3.0",
     ),
     opts=pulumi.ResourceOptions(
-        provider=gcp_pixelml_europe_west_4,
+        provider=k8s_provider_eu_west_4,
         depends_on=[litellm_ns, litellm_tls_secret],
     ),
 )

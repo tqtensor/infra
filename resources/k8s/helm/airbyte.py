@@ -8,15 +8,10 @@ from pulumi import Output
 
 from resources.cloudflare import airbyte_origin_ca_cert, airbyte_private_key
 from resources.db import airbyte_db, airbyte_user, krp_ec1_rds_cluster_instance
-from resources.providers import gcp_pixelml_europe_west_4
-from resources.utils import encode_tls_secret_data, get_options
+from resources.k8s.providers import k8s_provider_eu_west_4
+from resources.utils import encode_tls_secret_data
 
-OPTS = get_options(
-    profile="pixelml",
-    region="europe-west-4",
-    type="resource",
-    provider="gcp",
-)
+OPTS = pulumi.ResourceOptions(provider=k8s_provider_eu_west_4)
 
 
 airbyte_ns = k8s.core.v1.Namespace(
@@ -72,6 +67,7 @@ airbyte_release = k8s.helm.v3.Release(
     k8s.helm.v3.ReleaseArgs(
         chart="airbyte",
         version="1.5.0",
+        name="airbyte",
         repository_opts=k8s.helm.v3.RepositoryOptsArgs(
             repo="https://airbytehq.github.io/helm-charts",
         ),
@@ -79,7 +75,7 @@ airbyte_release = k8s.helm.v3.Release(
         values=chart_values,
     ),
     opts=pulumi.ResourceOptions(
-        provider=gcp_pixelml_europe_west_4,
+        provider=k8s_provider_eu_west_4,
         depends_on=[airbyte_ns],
     ),
 )
