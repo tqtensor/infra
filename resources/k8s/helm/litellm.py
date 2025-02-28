@@ -9,11 +9,11 @@ from pulumi import Output
 
 from resources.cloudflare import litellm_origin_ca_cert, litellm_private_key
 from resources.iam import bedrock_access_key, vertex_sa
-from resources.k8s.providers import k8s_provider_eu_west_4
+from resources.k8s.providers import k8s_provider_auto_pilot_eu_west_4
 from resources.providers import gcp_pixelml_europe_west_4
 from resources.utils import encode_tls_secret_data, fill_in_password
 
-OPTS = pulumi.ResourceOptions(provider=k8s_provider_eu_west_4)
+OPTS = pulumi.ResourceOptions(provider=k8s_provider_auto_pilot_eu_west_4)
 
 
 litellm_ns = k8s.core.v1.Namespace(
@@ -90,7 +90,7 @@ litellm_release = k8s.helm.v3.Release(
         version="0.3.0",
     ),
     opts=pulumi.ResourceOptions(
-        provider=k8s_provider_eu_west_4,
+        provider=k8s_provider_auto_pilot_eu_west_4,
         depends_on=[litellm_ns, litellm_tls_secret],
     ),
 )

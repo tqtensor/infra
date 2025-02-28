@@ -8,10 +8,10 @@ from pulumi import Output
 
 from resources.cloudflare import airbyte_origin_ca_cert, airbyte_private_key
 from resources.db import airbyte_db, airbyte_user, krp_ec1_rds_cluster_instance
-from resources.k8s.providers import k8s_provider_eu_west_4
+from resources.k8s.providers import k8s_provider_auto_pilot_eu_west_4
 from resources.utils import encode_tls_secret_data
 
-OPTS = pulumi.ResourceOptions(provider=k8s_provider_eu_west_4)
+OPTS = pulumi.ResourceOptions(provider=k8s_provider_auto_pilot_eu_west_4)
 
 
 airbyte_ns = k8s.core.v1.Namespace(
@@ -75,7 +75,7 @@ airbyte_release = k8s.helm.v3.Release(
         values=chart_values,
     ),
     opts=pulumi.ResourceOptions(
-        provider=k8s_provider_eu_west_4,
+        provider=k8s_provider_auto_pilot_eu_west_4,
         depends_on=[airbyte_ns],
     ),
 )

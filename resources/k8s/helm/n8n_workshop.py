@@ -13,10 +13,10 @@ from pulumi import Output
 from resources.cloudflare import *  # noqa
 from resources.db import krp_ec1_rds_cluster_instance
 from resources.db.psql import *  # noqa
-from resources.k8s.providers import k8s_provider_eu_west_4
+from resources.k8s.providers import k8s_provider_auto_pilot_eu_west_4
 from resources.utils import encode_tls_secret_data, normalize_email
 
-OPTS = pulumi.ResourceOptions(provider=k8s_provider_eu_west_4)
+OPTS = pulumi.ResourceOptions(provider=k8s_provider_auto_pilot_eu_west_4)
 
 
 def deploy_n8n(
@@ -96,7 +96,7 @@ def deploy_n8n(
             version="0.25.2",
         ),
         opts=pulumi.ResourceOptions(
-            provider=k8s_provider_eu_west_4,
+            provider=k8s_provider_auto_pilot_eu_west_4,
             depends_on=[ns, tls_secret],
             protect=False,
         ),
