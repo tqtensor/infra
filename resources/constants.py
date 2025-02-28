@@ -26,8 +26,3 @@ unifai_dev = cloudflare.Zone.get(
     id="e37a9e60005d57df4859fa4817c8128a",
     account_id=pulumi.Config().require("accountId"),
 )
-
-pulumi.export("Cloudflare: krypfolio.com", krypfolio_com.id)
-pulumi.export("Cloudflare: mservice.dev", mservice_dev.id)
-pulumi.export("Cloudflare: tqtensor.com", tqtensor_com.id)
-pulumi.export("Cloudflare: unifai.dev", unifai_dev.id)

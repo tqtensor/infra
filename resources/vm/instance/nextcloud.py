@@ -118,4 +118,4 @@ nextcloud_eip_assoc = aws.ec2.EipAssociation(
     opts=OPTS,
 )
 
-pulumi.export("Nextcloud: IP", nextcloud_eip.public_ip)
+pulumi.export("VM: Nextcloud: IP", nextcloud_eip.public_ip)
