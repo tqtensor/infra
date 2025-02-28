@@ -23,5 +23,5 @@ bedrock_access_key = aws.iam.AccessKey(
     "bedrock_access_key", user=bedrock_user.name, opts=OPTS
 )
 
-pulumi.export("Bedrock: access_key_id", bedrock_access_key.id)
-pulumi.export("Bedrock: secret_access_key", bedrock_access_key.secret)
+pulumi.export("IAM: Bedrock: access_key_id", bedrock_access_key.id)
+pulumi.export("IAM: Bedrock: secret_access_key", bedrock_access_key.secret)

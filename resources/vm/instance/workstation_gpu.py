@@ -110,5 +110,5 @@ workstation_gpu_eip_assoc = aws.ec2.EipAssociation(
     opts=OPTS,
 )
 
-pulumi.export("WorkstationGPU: IP", workstation_gpu_eip.public_ip)
-pulumi.export("WorkstationGPU: ID", workstation_gpu_instance.id)
+pulumi.export("VM: workstationGPU: IP", workstation_gpu_eip.public_ip)
+pulumi.export("VM: workstationGPU: ID", workstation_gpu_instance.id)

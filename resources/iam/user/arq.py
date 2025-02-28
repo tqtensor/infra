@@ -41,5 +41,5 @@ arq_policy_attachment = aws.iam.UserPolicyAttachment(
 
 arq_access_key = aws.iam.AccessKey("arq_access_key", user=arq_user.name, opts=OPTS)
 
-pulumi.export("Arq: access_key_id", arq_access_key.id)
-pulumi.export("Arq: secret_access_key", arq_access_key.secret)
+pulumi.export("IAM: Arq: access_key_id", arq_access_key.id)
+pulumi.export("IAM: Arq: secret_access_key", arq_access_key.secret)

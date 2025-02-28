@@ -120,4 +120,4 @@ n8n_eip_assoc = aws.ec2.EipAssociation(
     opts=OPTS,
 )
 
-pulumi.export("n8n: IP", n8n_eip.public_ip)
+pulumi.export("VM: n8n: IP", n8n_eip.public_ip)
