@@ -5,7 +5,10 @@ import pulumi_gcp as gcp
 import pulumi_kubernetes as k8s
 import yaml
 
-from resources.k8s.providers import k8s_provider_asia_east_1, k8s_provider_eu_west_4
+from resources.k8s.providers import (
+    k8s_provider_asia_east_1,
+    k8s_provider_auto_pilot_eu_west_4,
+)
 from resources.vm import nginx_ip_asia_east_1, nginx_ip_eu_west_4
 
 
@@ -52,6 +55,6 @@ deploy_nginx(
 
 deploy_nginx(
     region="europe-west-4",
-    provider=k8s_provider_eu_west_4,
+    provider=k8s_provider_auto_pilot_eu_west_4,
     public_ip=nginx_ip_eu_west_4,
 )

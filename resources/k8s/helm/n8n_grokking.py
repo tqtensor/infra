@@ -15,10 +15,10 @@ from resources.db import (
     n8n_grokking_db,
     n8n_grokking_user,
 )
-from resources.k8s.providers import k8s_provider_eu_west_4
+from resources.k8s.providers import k8s_provider_auto_pilot_eu_west_4
 from resources.utils import encode_tls_secret_data
 
-OPTS = pulumi.ResourceOptions(provider=k8s_provider_eu_west_4)
+OPTS = pulumi.ResourceOptions(provider=k8s_provider_auto_pilot_eu_west_4)
 
 
 n8n_grokking_ns = k8s.core.v1.Namespace(
@@ -81,7 +81,7 @@ n8n_grokking_release = k8s.helm.v3.Release(
         version="0.25.2",
     ),
     opts=pulumi.ResourceOptions(
-        provider=k8s_provider_eu_west_4,
+        provider=k8s_provider_auto_pilot_eu_west_4,
         depends_on=[n8n_grokking_ns, n8n_grokking_tls_secret],
     ),
 )
