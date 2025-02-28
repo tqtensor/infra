@@ -178,7 +178,9 @@ global:
       ## JOB_KUBE_NODE_SELECTORS
       ## pod node selector of the sync job and the default pod node selector fallback for others jobs
       # -- Node labels for pod assignment
-      nodeSelector: {}
+      nodeSelector:
+        cloud.google.com/compute-class: Performance
+        cloud.google.com/machine-family: c3d
 
       ## JOB_KUBE_TOLERATIONS
       # -- Node tolerations for pod assignment
@@ -305,7 +307,9 @@ webapp:
     requests: {}
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
-  nodeSelector: {}
+  nodeSelector:
+    cloud.google.com/compute-class: Performance
+    cloud.google.com/machine-family: c3d
 
   # -- Tolerations for webapp pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -515,7 +519,9 @@ pod-sweeper:
     requests: {}
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
-  nodeSelector: {}
+  nodeSelector:
+    cloud.google.com/compute-class: Performance
+    cloud.google.com/machine-family: c3d
 
   # -- Tolerations for pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -542,7 +548,7 @@ pod-sweeper:
 server:
   enabled: true
   # -- Number of server replicas
-  replicaCount: 3
+  replicacount: 1
 
   image:
     # -- The repository to use for the airbyte server image.
@@ -625,7 +631,9 @@ server:
     requests: {}
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
-  nodeSelector: {}
+  nodeSelector:
+    cloud.google.com/compute-class: Performance
+    cloud.google.com/machine-family: c3d
 
   # -- Tolerations for server pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -724,7 +732,7 @@ server:
 worker:
   enabled: true
   # -- Number of worker replicas
-  replicaCount: 3
+  replicacount: 1
 
   image:
     # -- The repository to use for the airbyte worker image.
@@ -805,7 +813,9 @@ worker:
     requests: {}
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
-  nodeSelector: {}
+  nodeSelector:
+    cloud.google.com/compute-class: Performance
+    cloud.google.com/machine-family: c3d
 
   # -- Tolerations for worker pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -940,7 +950,9 @@ workload-launcher:
     requests: {}
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
-  nodeSelector: {}
+  nodeSelector:
+    cloud.google.com/compute-class: Performance
+    cloud.google.com/machine-family: c3d
 
   # -- Tolerations for workload launcher pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -1093,7 +1105,9 @@ connector-rollout-worker:
     requests: {}
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
-  nodeSelector: {}
+  nodeSelector:
+    cloud.google.com/compute-class: Performance
+    cloud.google.com/machine-family: c3d
 
   # -- Tolerations for connector rollout worker pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -1207,7 +1221,9 @@ metrics:
     requests: {}
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
-  nodeSelector: {}
+  nodeSelector:
+    cloud.google.com/compute-class: Performance
+    cloud.google.com/machine-family: c3d
 
   # -- Tolerations for metrics-reporter pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -1261,7 +1277,9 @@ airbyte-bootloader:
   podLabels: {}
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
-  nodeSelector: {}
+  nodeSelector:
+    cloud.google.com/compute-class: Performance
+    cloud.google.com/machine-family: c3d
 
   # -- Tolerations for worker pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -1463,7 +1481,9 @@ temporal:
     enabled: false
 
   # -- Node labels for temporal pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
-  nodeSelector: {}
+  nodeSelector:
+    cloud.google.com/compute-class: Performance
+    cloud.google.com/machine-family: c3d
 
   # -- Tolerations for temporal pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -1589,7 +1609,9 @@ temporal-ui:
     enabled: false
 
   # -- Node labels for temporal-ui pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
-  nodeSelector: {}
+  nodeSelector:
+    cloud.google.com/compute-class: Performance
+    cloud.google.com/machine-family: c3d
 
   # -- Tolerations for temporal-ui pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -1689,7 +1711,9 @@ postgresql:
     # -- The order in which the hooks are executed. If weight is lower, it has higher priority
     helm.sh/hook-weight: '-1'
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
-  nodeSelector: {}
+  nodeSelector:
+    cloud.google.com/compute-class: Performance
+    cloud.google.com/machine-family: c3d
 
   # -- Tolerations for postgresql pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -1729,7 +1753,9 @@ minio:
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
   ##
-  nodeSelector: {}
+  nodeSelector:
+    cloud.google.com/compute-class: Performance
+    cloud.google.com/machine-family: c3d
 
   # -- Tolerations for minio pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   ##
@@ -1830,7 +1856,9 @@ cron:
     requests: {}
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
-  nodeSelector: {}
+  nodeSelector:
+    cloud.google.com/compute-class: Performance
+    cloud.google.com/machine-family: c3d
 
   # -- Tolerations for cron pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -2009,7 +2037,9 @@ connector-builder-server:
     port: 80
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
-  nodeSelector: {}
+  nodeSelector:
+    cloud.google.com/compute-class: Performance
+    cloud.google.com/machine-family: c3d
 
   # -- Tolerations for webapp pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -2061,7 +2091,9 @@ keycloak:
       type: RuntimeDefault
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
-  nodeSelector: {}
+  nodeSelector:
+    cloud.google.com/compute-class: Performance
+    cloud.google.com/machine-family: c3d
 
   # -- Tolerations for webapp pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -2108,7 +2140,9 @@ keycloak-setup:
       type: RuntimeDefault
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
-  nodeSelector: {}
+  nodeSelector:
+    cloud.google.com/compute-class: Performance
+    cloud.google.com/machine-family: c3d
 
   # -- Tolerations for webapp pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -2202,7 +2236,9 @@ workload-api-server:
     level: 'INFO'
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
-  nodeSelector: {}
+  nodeSelector:
+    cloud.google.com/compute-class: Performance
+    cloud.google.com/machine-family: c3d
 
   # -- Tolerations for webapp pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -2320,7 +2356,9 @@ featureflag-server:
     level: 'INFO'
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
-  nodeSelector: {}
+  nodeSelector:
+    cloud.google.com/compute-class: Performance
+    cloud.google.com/machine-family: c3d
 
   # -- Tolerations for webapp pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
