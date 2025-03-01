@@ -45,7 +45,7 @@ asia_east_1_default_pool = gcp.container.NodePool(
 )
 
 asia_east_1_gpu_pool = gcp.container.NodePool(
-    "asia_east_1_",
+    "asia_east_1_gpu_pool",
     name="asia-east-1-gpu-pool",
     cluster=asia_east_1_cluster.name,
     initial_node_count=0,
