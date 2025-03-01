@@ -1,10 +1,13 @@
 import pulumi_aws as aws
+import pulumi_gcp as gcp
 
 from resources.utils import get_options
 
 EC1_OPTS = get_options(profile="personal", region="eu-central-1", type="resource")
 UE1_OPTS = get_options(profile="personal", region="us-east-1", type="resource")
-
+UW4_OPTS = get_options(
+    profile="personal", region="eu-west-4", type="resource", provider="gcp"
+)
 
 arq_bucket = aws.s3.Bucket(
     "arq_bucket",
@@ -38,4 +41,29 @@ pulumi_bucket = aws.s3.Bucket(
     bucket="tqtensor-pulumi-bucket-us",
     acl="private",
     opts=UE1_OPTS,
+)
+
+archive_bucket = gcp.storage.Bucket(
+    "archive_bucket",
+    name="tqtensor-archive",
+    location="EU",
+    autoclass=gcp.storage.BucketAutoclassArgs(
+        enabled=True,
+    ),
+    opts=UW4_OPTS,
+)
+
+sharing_bucket = gcp.storage.Bucket(
+    "sharing_bucket",
+    name="tqtensor-sharing",
+    location="EU",
+    opts=UW4_OPTS,
+)
+
+sharing_bucket_iam_binding = gcp.storage.BucketIAMBinding(
+    "sharing_bucket_iam_binding",
+    bucket=sharing_bucket.name,
+    role="roles/storage.objectViewer",
+    members=["allUsers"],
+    opts=UW4_OPTS,
 )
