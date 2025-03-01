@@ -40,4 +40,4 @@ decoded_private_key = vertex_sa_key.private_key.apply(
     lambda key: base64.b64decode(key).decode("utf-8")
 )
 
-pulumi.export("Vertex: SA", Output.secret(decoded_private_key))
+pulumi.export("IAM: Vertex: SA", Output.secret(decoded_private_key))

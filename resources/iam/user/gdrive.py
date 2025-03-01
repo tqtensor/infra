@@ -31,4 +31,4 @@ decoded_private_key = gdrive_sa_key.private_key.apply(
     lambda key: base64.b64decode(key).decode("utf-8")
 )
 
-pulumi.export("GDrive: SA", Output.secret(decoded_private_key))
+pulumi.export("IAM: GDrive: SA", Output.secret(decoded_private_key))
