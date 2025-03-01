@@ -3,7 +3,7 @@ import pulumi_gcp as gcp
 from resources.utils import get_options
 
 OPTS = get_options(
-    profile="pixelml", region="europe-west-4", type="resource", provider="gcp"
+    profile="pixelml", region="eu-west-4", type="resource", provider="gcp"
 )
 
 

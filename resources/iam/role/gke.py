@@ -5,7 +5,7 @@ import pulumi_gcp as gcp
 from pulumi import Output
 
 from resources.kms import gke_key
-from resources.providers import gcp_pixelml_europe_west_1
+from resources.providers import gcp_pixelml_eu_west_1
 from resources.utils import get_options
 
 OPTS = get_options(
@@ -17,9 +17,7 @@ gke_api_role = aws.iam.Role(
     "gke_api_role",
     name="gke-api-role",
     assume_role_policy=Output.all(
-        gcp.organizations.get_project(
-            project_id=gcp_pixelml_europe_west_1.project
-        ).number
+        gcp.organizations.get_project(project_id=gcp_pixelml_eu_west_1.project).number
     ).apply(
         lambda args: json.dumps(
             {
