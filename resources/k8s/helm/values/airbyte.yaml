@@ -179,8 +179,8 @@ global:
       ## pod node selector of the sync job and the default pod node selector fallback for others jobs
       # -- Node labels for pod assignment
       nodeSelector:
-        cloud.google.com/compute-class: Performance
-        cloud.google.com/machine-family: c3d
+        cloud.google.com/compute-class: Balanced
+        # cloud.google.com/machine-family: c3d
 
       ## JOB_KUBE_TOLERATIONS
       # -- Node tolerations for pod assignment
@@ -308,8 +308,8 @@ webapp:
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
   nodeSelector:
-    cloud.google.com/compute-class: Performance
-    cloud.google.com/machine-family: c3d
+    cloud.google.com/compute-class: Balanced
+    # cloud.google.com/machine-family: c3d
 
   # -- Tolerations for webapp pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -520,8 +520,8 @@ pod-sweeper:
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
   nodeSelector:
-    cloud.google.com/compute-class: Performance
-    cloud.google.com/machine-family: c3d
+    cloud.google.com/compute-class: Balanced
+    # cloud.google.com/machine-family: c3d
 
   # -- Tolerations for pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -632,8 +632,8 @@ server:
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
   nodeSelector:
-    cloud.google.com/compute-class: Performance
-    cloud.google.com/machine-family: c3d
+    cloud.google.com/compute-class: Balanced
+    # cloud.google.com/machine-family: c3d
 
   # -- Tolerations for server pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -814,8 +814,8 @@ worker:
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
   nodeSelector:
-    cloud.google.com/compute-class: Performance
-    cloud.google.com/machine-family: c3d
+    cloud.google.com/compute-class: Balanced
+    # cloud.google.com/machine-family: c3d
 
   # -- Tolerations for worker pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -951,8 +951,8 @@ workload-launcher:
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
   nodeSelector:
-    cloud.google.com/compute-class: Performance
-    cloud.google.com/machine-family: c3d
+    cloud.google.com/compute-class: Balanced
+    # cloud.google.com/machine-family: c3d
 
   # -- Tolerations for workload launcher pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -1106,8 +1106,8 @@ connector-rollout-worker:
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
   nodeSelector:
-    cloud.google.com/compute-class: Performance
-    cloud.google.com/machine-family: c3d
+    cloud.google.com/compute-class: Balanced
+    # cloud.google.com/machine-family: c3d
 
   # -- Tolerations for connector rollout worker pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -1222,8 +1222,8 @@ metrics:
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
   nodeSelector:
-    cloud.google.com/compute-class: Performance
-    cloud.google.com/machine-family: c3d
+    cloud.google.com/compute-class: Balanced
+    # cloud.google.com/machine-family: c3d
 
   # -- Tolerations for metrics-reporter pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -1278,8 +1278,8 @@ airbyte-bootloader:
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
   nodeSelector:
-    cloud.google.com/compute-class: Performance
-    cloud.google.com/machine-family: c3d
+    cloud.google.com/compute-class: Balanced
+    # cloud.google.com/machine-family: c3d
 
   # -- Tolerations for worker pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -1482,8 +1482,8 @@ temporal:
 
   # -- Node labels for temporal pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
   nodeSelector:
-    cloud.google.com/compute-class: Performance
-    cloud.google.com/machine-family: c3d
+    cloud.google.com/compute-class: Balanced
+    # cloud.google.com/machine-family: c3d
 
   # -- Tolerations for temporal pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -1610,8 +1610,8 @@ temporal-ui:
 
   # -- Node labels for temporal-ui pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
   nodeSelector:
-    cloud.google.com/compute-class: Performance
-    cloud.google.com/machine-family: c3d
+    cloud.google.com/compute-class: Balanced
+    # cloud.google.com/machine-family: c3d
 
   # -- Tolerations for temporal-ui pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -1712,8 +1712,8 @@ postgresql:
     helm.sh/hook-weight: '-1'
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
   nodeSelector:
-    cloud.google.com/compute-class: Performance
-    cloud.google.com/machine-family: c3d
+    cloud.google.com/compute-class: Balanced
+    # cloud.google.com/machine-family: c3d
 
   # -- Tolerations for postgresql pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -1754,8 +1754,8 @@ minio:
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
   ##
   nodeSelector:
-    cloud.google.com/compute-class: Performance
-    cloud.google.com/machine-family: c3d
+    cloud.google.com/compute-class: Balanced
+    # cloud.google.com/machine-family: c3d
 
   # -- Tolerations for minio pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   ##
@@ -1857,8 +1857,8 @@ cron:
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
   nodeSelector:
-    cloud.google.com/compute-class: Performance
-    cloud.google.com/machine-family: c3d
+    cloud.google.com/compute-class: Balanced
+    # cloud.google.com/machine-family: c3d
 
   # -- Tolerations for cron pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -2038,8 +2038,8 @@ connector-builder-server:
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
   nodeSelector:
-    cloud.google.com/compute-class: Performance
-    cloud.google.com/machine-family: c3d
+    cloud.google.com/compute-class: Balanced
+    # cloud.google.com/machine-family: c3d
 
   # -- Tolerations for webapp pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -2092,8 +2092,8 @@ keycloak:
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
   nodeSelector:
-    cloud.google.com/compute-class: Performance
-    cloud.google.com/machine-family: c3d
+    cloud.google.com/compute-class: Balanced
+    # cloud.google.com/machine-family: c3d
 
   # -- Tolerations for webapp pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -2141,8 +2141,8 @@ keycloak-setup:
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
   nodeSelector:
-    cloud.google.com/compute-class: Performance
-    cloud.google.com/machine-family: c3d
+    cloud.google.com/compute-class: Balanced
+    # cloud.google.com/machine-family: c3d
 
   # -- Tolerations for webapp pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -2237,8 +2237,8 @@ workload-api-server:
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
   nodeSelector:
-    cloud.google.com/compute-class: Performance
-    cloud.google.com/machine-family: c3d
+    cloud.google.com/compute-class: Balanced
+    # cloud.google.com/machine-family: c3d
 
   # -- Tolerations for webapp pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -2357,8 +2357,8 @@ featureflag-server:
 
   # -- Node labels for pod assignment, see https://kubernetes.io/docs/user-guide/node-selection/
   nodeSelector:
-    cloud.google.com/compute-class: Performance
-    cloud.google.com/machine-family: c3d
+    cloud.google.com/compute-class: Balanced
+    # cloud.google.com/machine-family: c3d
 
   # -- Tolerations for webapp pod assignment, see https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
