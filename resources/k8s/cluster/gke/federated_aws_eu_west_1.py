@@ -3,7 +3,7 @@ from pulumi import Output
 
 from resources.iam import gke_api_role, gke_control_plane_profile, gke_node_pool_profile
 from resources.kms import gke_key
-from resources.providers import gcp_pixelml_europe_west_1
+from resources.providers import gcp_pixelml_eu_west_1
 from resources.utils import get_options
 from resources.vm import pixelml_eu_central_1_vpc
 
@@ -30,14 +30,14 @@ required_services = [
 for service in required_services:
     gcp.projects.Service(
         f"enable-{service}",
-        project=gcp_pixelml_europe_west_1.project,
+        project=gcp_pixelml_eu_west_1.project,
         service=service,
         disable_dependent_services=True,
         opts=OPTS,
     )
 
 versions = gcp.container.get_aws_versions(
-    project=gcp_pixelml_europe_west_1.project, location="europe-west1"
+    project=gcp_pixelml_eu_west_1.project, location="europe-west1"
 )
 
 cluster_name = "federated-aws-eu-west-1-cluster"
@@ -80,9 +80,7 @@ federated_aws_eu_west_1_cluster = gcp.container.AwsCluster(
         ],
     },
     fleet=Output.all(
-        gcp.organizations.get_project(
-            project_id=gcp_pixelml_europe_west_1.project
-        ).number
+        gcp.organizations.get_project(project_id=gcp_pixelml_eu_west_1.project).number
     ).apply(lambda args: {"project": args[0]}),
     networking=Output.all(pixelml_eu_central_1_vpc.vpc_id).apply(
         lambda args: {

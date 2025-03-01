@@ -45,7 +45,7 @@ def deploy_nginx(region: str, provider: k8s.Provider, public_ip: gcp.compute.Add
 
 
 deploy_nginx(
-    region="europe-west-4",
+    region="eu-west-4",
     provider=k8s_provider_auto_pilot_eu_west_4,
     public_ip=nginx_ip_eu_west_4,
 )
