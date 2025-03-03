@@ -78,7 +78,7 @@ chart_values = yaml.safe_load(open(values_file_path, "r").read())
 chart_values["masterkey"] = secret_values["masterkey"]
 
 chart_file_path = os.path.join(
-    os.path.dirname(__file__), "charts", "litellm-helm-0.3.0.tgz"
+    os.path.dirname(__file__), "charts", "litellm-helm-0.4.1.tgz"
 )
 litellm_release = k8s.helm.v3.Release(
     "litellm-proxy",
@@ -87,7 +87,7 @@ litellm_release = k8s.helm.v3.Release(
         name="litellm-proxy",
         namespace=litellm_ns.metadata["name"],
         values=chart_values,
-        version="0.3.0",
+        version="0.4.1",
     ),
     opts=pulumi.ResourceOptions(
         provider=k8s_provider_auto_pilot_eu_west_4,
