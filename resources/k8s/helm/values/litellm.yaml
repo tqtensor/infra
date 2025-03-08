@@ -105,6 +105,18 @@ proxy_config:
         aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
         aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
         aws_region_name: us-east-1
+    - model_name: bedrock/nova-lite-v1
+      litellm_params:
+        model: bedrock/converse/us.amazon.nova-lite-v1:0
+        aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
+        aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
+        aws_region_name: us-east-1
+    - model_name: bedrock/nova-pro-v1
+      litellm_params:
+        model: bedrock/converse/us.amazon.nova-pro-v1:0
+        aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
+        aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
+        aws_region_name: us-east-1
   general_settings:
     master_key: os.environ/PROXY_MASTER_KEY
   litellm_settings:
