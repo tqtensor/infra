@@ -3,13 +3,11 @@ import pulumi_aws as aws
 
 from resources.utils import get_options
 
-OPTS = get_options(
-    profile="pixelml", region="us-east-1", type="resource", protect=False
-)
+OPTS = get_options(profile="pixelml", region="us-east-1", type="resource")
 
 
 bedrock_user = aws.iam.User(
-    "bedrock_user", name="bedrock-user", force_destroy=True, opts=OPTS
+    "bedrock_user", name="victor25k-bedrock-user", force_destroy=True, opts=OPTS
 )
 
 bedrock_policy_attachment = aws.iam.UserPolicyAttachment(
