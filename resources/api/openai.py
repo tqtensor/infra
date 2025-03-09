@@ -1,4 +1,5 @@
 import pulumi_azure_native as az
+from pulumi import Output
 
 from resources.providers.az import az_quickqr_sweden
 from resources.utils import get_options
@@ -22,6 +23,17 @@ openai_account = az.cognitiveservices.Account(
     resource_group_name=openai_resource_group.name,
     sku=az.cognitiveservices.SkuArgs(name="S0"),
     opts=OPTS,
+)
+
+openai_account_details = az.cognitiveservices.get_account_output(
+    account_name=openai_account.name,
+    resource_group_name=openai_resource_group.name,
+)
+
+openai_keys = Output.all(openai_account.name, openai_resource_group.name).apply(
+    lambda args: az.cognitiveservices.list_account_keys(
+        resource_group_name=args[1], account_name=args[0]
+    )
 )
 
 gpt_o3_mini_deployment = az.cognitiveservices.Deployment(
