@@ -36,9 +36,9 @@ with open(values_file_path, "r") as f:
     chart_values["env"] = [
         {
             "name": "API_KEY",
-            "value": random.RandomPassword(
-                "tei_api_key", special=False, length=32
-            ).result,
+            "value": "hf-{}".format(
+                random.RandomPassword("tei_api_key", special=False, length=64).result
+            ),
         }
     ]
 
