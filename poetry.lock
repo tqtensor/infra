@@ -812,6 +812,24 @@ semver = ">=2.8.1"
 typing-extensions = {version = ">=4.11", markers = "python_version < \"3.11\""}
 
 [[package]]
+name = "pulumi-azure-native"
+version = "2.89.1"
+description = "A native Pulumi package for creating and managing Azure resources."
+optional = false
+python-versions = ">=3.9"
+groups = ["main"]
+files = [
+    {file = "pulumi_azure_native-2.89.1-py3-none-any.whl", hash = "sha256:ba1f04adbc033d41a733507ab343afde4c0cacedcc8c444de48a64585ea11e2f"},
+    {file = "pulumi_azure_native-2.89.1.tar.gz", hash = "sha256:b8fdb1aa515de81d5c999e09c1b274f6e1a8645e7effbb07eeed3686bbcc3c2b"},
+]
+
+[package.dependencies]
+parver = ">=0.2.1"
+pulumi = ">=3.142.0,<4.0.0"
+semver = ">=2.8.1"
+typing-extensions = {version = ">=4.11", markers = "python_version < \"3.11\""}
+
+[[package]]
 name = "pulumi-cloudflare"
 version = "5.47.0"
 description = "A Pulumi package for creating and managing Cloudflare cloud resources."
@@ -1283,4 +1301,4 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "7e7074cb57d48d2a1a0afd01607cfcad2a89fce568f96fd84ad721725acaf256"
+content-hash = "88c4ef80fbd823fa4c58e2ae0b45db12bc5f0bd8399d403df3b296a2e5b0b1fd"
