@@ -117,6 +117,12 @@ proxy_config:
         aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
         aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
         aws_region_name: us-east-1
+    - model_name: azure/o3-mini
+      litellm_params:
+        model: azure/o3-mini
+        api_base: os.environ/AZURE_API_BASE
+        api_key: os.environ/AZURE_API_KEY
+        api_version: 2024-12-01-preview
   general_settings:
     master_key: os.environ/PROXY_MASTER_KEY
   litellm_settings:
@@ -154,13 +160,13 @@ tolerations: []
 affinity: {}
 db:
   # Use an existing postgres server/cluster
-  useExisting: false
+  useExisting: true
   # How to connect to the existing postgres server/cluster
   endpoint: localhost
   database: litellm
   url: postgresql://$(DATABASE_USERNAME):$(DATABASE_PASSWORD)@$(DATABASE_HOST)/$(DATABASE_NAME)
   secret:
-    name: postgres
+    name: litellm-postgres-secret
     usernameKey: username
     passwordKey: password
   # Use the Stackgres Helm chart to deploy an instance of a Stackgres cluster.
@@ -170,7 +176,7 @@ db:
   useStackgresOperator: false
   # Use the Postgres Helm chart to create a single node, stand alone postgres
   #  instance.  See the "postgresql" top level key for additional configuration.
-  deployStandalone: true
+  deployStandalone: false
 # Settings for Bitnami postgresql chart (if db.deployStandalone is true, ignored
 #  otherwise)
 postgresql:

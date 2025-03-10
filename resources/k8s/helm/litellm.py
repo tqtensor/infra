@@ -7,7 +7,9 @@ import pulumi_kubernetes as k8s
 import yaml
 from pulumi import Output
 
+from resources.api import openai_account_details, openai_keys
 from resources.cloudflare import litellm_origin_ca_cert, litellm_private_key
+from resources.db import krp_ec1_rds_cluster_instance, litellm_db, litellm_user
 from resources.iam import bedrock_access_key, vertex_sa
 from resources.k8s.providers import k8s_provider_auto_pilot_eu_west_4
 from resources.providers import gcp_pixelml_eu_west_4
@@ -23,12 +25,37 @@ litellm_ns = k8s.core.v1.Namespace(
 litellm_env_secret = k8s.core.v1.Secret(
     "litellm_env_secret",
     metadata={"name": "litellm-env-secret", "namespace": litellm_ns.metadata["name"]},
-    data=Output.all(bedrock_access_key.id, bedrock_access_key.secret).apply(
+    data=Output.all(
+        bedrock_access_key.id,
+        bedrock_access_key.secret,
+        openai_account_details.properties.endpoint,
+        openai_keys,
+    ).apply(
         lambda args: {
             "BEDROCK_AWS_ACCESS_KEY_ID": base64.b64encode(args[0].encode()).decode(),
             "BEDROCK_AWS_SECRET_ACCESS_KEY": base64.b64encode(
                 args[1].encode()
             ).decode(),
+            "AZURE_API_BASE": base64.b64encode(args[2].encode()).decode(),
+            "AZURE_API_KEY": base64.b64encode(args[3].key1.encode()).decode(),
+        }
+    ),
+    opts=OPTS,
+)
+
+litellm_postgres_secret = k8s.core.v1.Secret(
+    "litellm_postgres_secret",
+    metadata={
+        "name": "litellm-postgres-secret",
+        "namespace": litellm_ns.metadata["name"],
+    },
+    data=Output.all(
+        litellm_user.name,
+        litellm_user.password,
+    ).apply(
+        lambda args: {
+            "username": base64.b64encode(args[0].encode()).decode(),
+            "password": base64.b64encode(args[1].encode()).decode(),
         }
     ),
     opts=OPTS,
@@ -76,6 +103,8 @@ secret_values = fill_in_password(
 values_file_path = os.path.join(os.path.dirname(__file__), "values", "litellm.yaml")
 chart_values = yaml.safe_load(open(values_file_path, "r").read())
 chart_values["masterkey"] = secret_values["masterkey"]
+chart_values["db"]["endpoint"] = krp_ec1_rds_cluster_instance.endpoint
+chart_values["db"]["database"] = litellm_db.name
 
 chart_file_path = os.path.join(
     os.path.dirname(__file__), "charts", "litellm-helm-0.4.1.tgz"
