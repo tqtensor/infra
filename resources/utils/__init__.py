@@ -74,8 +74,7 @@ def fill_in_password(encrypted_yaml: str, value_path: str) -> dict:
             value_path=value_path.replace(".", "_"),
         ),
         length=32,
-        special=True,
-        override_special="!#$%&-_=+[]<>?",
+        special=False,
     )
 
     # Get the raw string value from the password Output
