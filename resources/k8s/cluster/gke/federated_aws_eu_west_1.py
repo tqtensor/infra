@@ -12,7 +12,6 @@ OPTS = get_options(
     region="europe-west-1",
     type="resource",
     provider="gcp",
-    protect=False,
 )
 
 

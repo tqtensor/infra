@@ -2,10 +2,12 @@ import pulumi
 import pulumi_aws as aws
 
 from resources.utils import get_options
-from resources.vm.keypair import krypfolio_eu_central_1_key_pair
-from resources.vm.networking import krypfolio_eu_central_1_vpc
+from resources.vm.keypair import krypfolio_eu_north_1_key_pair
+from resources.vm.networking import krypfolio_eu_north_1_vpc
 
-OPTS = get_options(profile="krypfolio", region="eu-central-1", type="resource")
+OPTS = get_options(
+    profile="krypfolio", region="eu-north-1", type="resource", protect=False
+)
 
 
 workstation_sg = aws.ec2.SecurityGroup(
@@ -39,19 +41,19 @@ workstation_sg = aws.ec2.SecurityGroup(
         },
     ],
     name="workstation_sg",
-    vpc_id=krypfolio_eu_central_1_vpc.vpc_id,
+    vpc_id=krypfolio_eu_north_1_vpc.vpc_id,
     opts=OPTS,
 )
 
 workstation_subnet = aws.ec2.Subnet.get(
     "workstation_subnet",
-    id=krypfolio_eu_central_1_vpc.public_subnet_ids[0],
+    id=krypfolio_eu_north_1_vpc.public_subnet_ids[0],
     opts=OPTS,
 )
 
 workstation_instance = aws.ec2.Instance(
     "workstation_instance",
-    ami="ami-0745b7d4092315796",
+    ami="ami-089146c5626baa6bf",
     associate_public_ip_address=True,
     availability_zone=workstation_subnet.availability_zone,
     capacity_reservation_specification={
@@ -62,8 +64,8 @@ workstation_instance = aws.ec2.Instance(
     },
     ebs_optimized=True,
     instance_initiated_shutdown_behavior="stop",
-    instance_type=aws.ec2.InstanceType.C5_X_LARGE,
-    key_name=krypfolio_eu_central_1_key_pair.key_name,
+    instance_type=aws.ec2.InstanceType.C5_2_X_LARGE,
+    key_name=krypfolio_eu_north_1_key_pair.key_name,
     maintenance_options={
         "auto_recovery": "default",
     },

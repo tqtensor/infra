@@ -4,9 +4,7 @@ from pulumi import Output
 from resources.providers.az import az_quickqr_sweden
 from resources.utils import get_options
 
-OPTS = get_options(
-    profile="quickqr", region="sweden", type="resource", provider="az", protect=False
-)
+OPTS = get_options(profile="quickqr", region="sweden", type="resource", provider="az")
 
 
 openai_resource_group = az.resources.ResourceGroup(
