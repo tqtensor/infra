@@ -8,9 +8,7 @@ from resources.kms import gke_key
 from resources.providers import gcp_pixelml_eu_west_1
 from resources.utils import get_options
 
-OPTS = get_options(
-    profile="pixelml", region="eu-central-1", type="resource", protect=False
-)
+OPTS = get_options(profile="pixelml", region="eu-central-1", type="resource")
 
 
 gke_api_role = aws.iam.Role(
