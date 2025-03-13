@@ -1,6 +1,8 @@
 import base64
+import json
 import os
 import re
+import subprocess
 from pathlib import Path
 from typing import Dict, Union
 
@@ -150,3 +152,38 @@ users:
       provideClusterInfo: true
 """
     )
+
+
+def create_docker_config(provider: str, server: str):
+    # Ensure .docker directory exists
+    docker_dir = Path.home() / ".docker"
+    docker_dir.mkdir(exist_ok=True, parents=True)
+    docker_config_path = docker_dir / "config.json"
+
+    if provider.lower() == "gcp":
+        # For GCP, we'll use the gcloud credential helper
+        config = {"credHelpers": {server: "gcloud"}}
+
+        # Create the config file
+        with open(docker_config_path, "w") as f:
+            json.dump(config, f, indent=2)
+
+        print(f"Docker config created at {docker_config_path}")
+        print(f"Configured credential helper for {server}")
+
+        # Verify gcloud auth is set up
+        try:
+            subprocess.check_call(
+                ["gcloud", "auth", "print-access-token"], stdout=subprocess.DEVNULL
+            )
+            print(
+                f"Remember to run 'gcloud auth configure-docker {server}' to set up Docker authentication."
+            )
+        except subprocess.CalledProcessError:
+            print(
+                "Warning: gcloud doesn't seem to be authenticated. Run 'gcloud auth login' first."
+            )
+    else:
+        raise ValueError(
+            f"Unsupported provider: {provider}. Currently only 'gcp' is supported."
+        )
