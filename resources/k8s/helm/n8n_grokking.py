@@ -11,7 +11,7 @@ from resources.cloudflare import (
     grokking_tqtensor_com,
 )
 from resources.db import (
-    krp_ec1_rds_cluster_instance,
+    krp_eu_central_1_rds_cluster_instance,
     n8n_grokking_db,
     n8n_grokking_user,
 )
@@ -49,7 +49,7 @@ with open(values_file_path, "r") as f:
         }
 
     values = Output.all(
-        krp_ec1_rds_cluster_instance.endpoint,
+        krp_eu_central_1_rds_cluster_instance.endpoint,
         n8n_grokking_user.name,
         n8n_grokking_user.password,
         n8n_grokking_db.name,

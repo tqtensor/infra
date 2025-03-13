@@ -9,7 +9,7 @@ from pulumi import Output
 
 from resources.api import openai_account_details, openai_keys
 from resources.cloudflare import litellm_origin_ca_cert, litellm_private_key
-from resources.db import krp_ec1_rds_cluster_instance, litellm_db, litellm_user
+from resources.db import krp_eu_central_1_rds_cluster_instance, litellm_db, litellm_user
 from resources.iam import bedrock_access_key, vertex_sa
 from resources.k8s.providers import k8s_provider_auto_pilot_eu_west_4
 from resources.providers import gcp_pixelml_eu_west_4
@@ -103,7 +103,7 @@ secret_values = fill_in_password(
 values_file_path = os.path.join(os.path.dirname(__file__), "values", "litellm.yaml")
 chart_values = yaml.safe_load(open(values_file_path, "r").read())
 chart_values["masterkey"] = secret_values["masterkey"]
-chart_values["db"]["endpoint"] = krp_ec1_rds_cluster_instance.endpoint
+chart_values["db"]["endpoint"] = krp_eu_central_1_rds_cluster_instance.endpoint
 chart_values["db"]["database"] = litellm_db.name
 
 chart_file_path = os.path.join(

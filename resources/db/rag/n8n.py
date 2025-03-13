@@ -3,7 +3,7 @@ import pulumi_aws as aws
 from pulumi import Output
 
 from resources.db.psql import bedrock_secret
-from resources.db.rds import krp_ec1_rds_cluster
+from resources.db.rds import krp_eu_central_1_rds_cluster
 from resources.iam import n8n_role
 from resources.storage import n8n_bucket
 from resources.utils import get_options
@@ -21,7 +21,9 @@ n8n_kb_agent = aws.bedrock.AgentKnowledgeBase(
     },
     name="n8n-kb-agent",
     role_arn=n8n_role.arn,
-    storage_configuration=Output.all(bedrock_secret.arn, krp_ec1_rds_cluster.arn).apply(
+    storage_configuration=Output.all(
+        bedrock_secret.arn, krp_eu_central_1_rds_cluster.arn
+    ).apply(
         lambda args: {
             "rds_configuration": {
                 "credentials_secret_arn": args[0],
