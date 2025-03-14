@@ -5,7 +5,7 @@ import pulumi_aws as aws
 from pulumi import Output
 
 from resources.db import bedrock_secret
-from resources.db.rds import krp_ec1_rds_cluster
+from resources.db.rds import krp_eu_central_1_rds_cluster
 from resources.storage import n8n_bucket
 from resources.utils import get_options
 
@@ -38,7 +38,7 @@ n8n_policy_llm_model = aws.iam.Policy(
 n8n_policy_rds = aws.iam.Policy(
     "n8n_policy_rds",
     name="n8n-policy-rds",
-    policy=Output.all(krp_ec1_rds_cluster.arn).apply(
+    policy=Output.all(krp_eu_central_1_rds_cluster.arn).apply(
         lambda args: json.dumps(
             {
                 "Statement": [

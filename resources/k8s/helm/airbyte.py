@@ -7,7 +7,7 @@ import yaml
 from pulumi import Output
 
 from resources.cloudflare import airbyte_origin_ca_cert, airbyte_private_key
-from resources.db import airbyte_db, airbyte_user, krp_ec1_rds_cluster_instance
+from resources.db import airbyte_db, airbyte_user, krp_eu_central_1_rds_cluster_instance
 from resources.k8s.providers import k8s_provider_auto_pilot_eu_west_4
 from resources.utils import encode_tls_secret_data
 
@@ -53,7 +53,7 @@ with open(values_file_path, "r") as f:
         }
 
     values = Output.all(
-        krp_ec1_rds_cluster_instance.endpoint,
+        krp_eu_central_1_rds_cluster_instance.endpoint,
         airbyte_user.name,
         airbyte_db.name,
     ).apply(lambda args: prepare_values(args[0], args[1], args[2]))

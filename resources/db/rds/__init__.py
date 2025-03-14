@@ -1,1 +1,1 @@
-from .krp_ec1 import *  # noqa
+from .krypfolio_eu_central_1 import *  # noqa

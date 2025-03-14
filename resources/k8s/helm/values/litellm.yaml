@@ -117,6 +117,12 @@ proxy_config:
         aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
         aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
         aws_region_name: us-east-1
+    - model_name: bedrock/deepseek-r1
+      litellm_params:
+        model: bedrock/converse/us.deepseek.r1-v1:0
+        aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
+        aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
+        aws_region_name: us-west-2
     - model_name: azure/o3-mini
       litellm_params:
         model: azure/o3-mini

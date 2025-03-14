@@ -6,7 +6,11 @@ import yaml
 from pulumi import Output
 
 from resources.cloudflare import n8n_origin_ca_cert, n8n_private_key, n8n_tqtensor_com
-from resources.db import krp_ec1_rds_cluster_instance, n8n_dolphin_db, n8n_dolphin_user
+from resources.db import (
+    krp_eu_central_1_rds_cluster_instance,
+    n8n_dolphin_db,
+    n8n_dolphin_user,
+)
 from resources.k8s.providers import k8s_provider_auto_pilot_eu_west_4
 from resources.utils import encode_tls_secret_data
 
@@ -39,7 +43,7 @@ with open(values_file_path, "r") as f:
         }
 
     values = Output.all(
-        krp_ec1_rds_cluster_instance.endpoint,
+        krp_eu_central_1_rds_cluster_instance.endpoint,
         n8n_dolphin_user.name,
         n8n_dolphin_user.password,
         n8n_dolphin_db.name,

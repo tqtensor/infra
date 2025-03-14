@@ -8,7 +8,7 @@ import pulumi_postgresql as postgresql
 from pulumi import Output
 
 from resources.db.psql.providers import krp_ec1_postgres_provider
-from resources.db.rds import krp_ec1_rds_cluster_instance
+from resources.db.rds import krp_eu_central_1_rds_cluster_instance
 from resources.utils import fill_in_password, get_options
 
 EC1_OPTS = get_options(profile="krypfolio", region="eu-central-1", type="resource")
@@ -80,7 +80,7 @@ def create_table(host: str, user: str, password: str, database: str, table: str)
 
 
 bedrock_tbl = Output.all(
-    krp_ec1_rds_cluster_instance.endpoint,
+    krp_eu_central_1_rds_cluster_instance.endpoint,
     bedrock_role.name,
     bedrock_role.password,
     bedrock_db.name,
