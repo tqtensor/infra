@@ -112,3 +112,23 @@ RUN --mount=type=cache,target=${PIP_CACHE_DIR} \
     pip install \
     --find-links=/tmp/wheels/ \
     -r /tmp/requirements.txt
+
+# The final stage
+ENV NB_USER=tqtensor \
+    NB_UID=1000 \
+    HOME=/home/jupyterhub \
+    NB_USER=tqtensor
+
+RUN useradd \
+    --no-log-init \
+    -u ${NB_UID} \
+    -g ${NB_GID} \
+    --home-dir ${HOME} \
+    ${NB_USER}
+
+WORKDIR ${HOME}
+USER ${NB_USER}
+
+EXPOSE 8888
+ENTRYPOINT ["tini", "--"]
+CMD ["jupyter", "lab"]
