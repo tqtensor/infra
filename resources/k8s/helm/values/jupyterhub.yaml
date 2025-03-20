@@ -39,8 +39,6 @@ hub:
     Authenticator:
       admin_users:
         - victortang212@gmail.com
-        - sean@pixelml.com
-        - ricardo@pixelml.com
     DummyAuthenticator:
       password: changeme
   service:
@@ -401,7 +399,13 @@ singleuser:
     hub.jupyter.org/network-access-hub: 'true'
   extraFiles: {}
   extraEnv: {}
-  lifecycleHooks: {}
+  lifecycleHooks:
+    postStart:
+      exec:
+        command:
+          - 'sh'
+          - '-c'
+          - "if [ ! -d 'promptimize' ]; then git clone https://github.com/tqtensor/promptimize.git; else cd promptimize && git pull; fi"
   initContainers: []
   extraContainers: []
   allowPrivilegeEscalation: false
@@ -417,7 +421,7 @@ singleuser:
       pvcName:
       subPath: '{username}'
     capacity: 10Gi
-    homeMountPath: /home/jovyan
+    homeMountPath: /home/jupyterhub
     dynamic:
       storageClass:
       pvcNameTemplate:
@@ -425,21 +429,21 @@ singleuser:
       storageAccessModes: [ReadWriteOnce]
       subPath:
   image:
-    name: quay.io/jupyterhub/k8s-singleuser-sample
-    tag: '4.1.0'
+    name: europe-west4-docker.pkg.dev/gen-lang-client-0608717027/pixelml-eu-west-4-registry/jupyterhub
+    tag: latest
     pullPolicy:
     pullSecrets: []
   startTimeout: 300
   cpu:
     limit:
-    guarantee:
+    guarantee: 2
   memory:
     limit:
-    guarantee: 1G
+    guarantee: 2G
   extraResource:
     limits: {}
     guarantees: {}
-  cmd: jupyterhub-singleuser
+  cmd: /opt/miniconda3/envs/tqtensor/bin/jupyterhub-singleuser
   defaultUrl:
   extraPodConfig: {}
   profileList: []

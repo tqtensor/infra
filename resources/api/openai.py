@@ -34,6 +34,46 @@ openai_keys = Output.all(openai_account.name, openai_resource_group.name).apply(
     )
 )
 
+gpt_4o_deployment = az.cognitiveservices.Deployment(
+    "gpt_4o_deployment",
+    account_name=openai_account.name,
+    deployment_name="gpt-4o",
+    properties={
+        "model": {
+            "format": "OpenAI",
+            "name": "gpt-4o",
+            "version": "2024-11-20",
+        },
+        "version_upgrade_option": az.cognitiveservices.DeploymentModelVersionUpgradeOption.ONCE_NEW_DEFAULT_VERSION_AVAILABLE,
+    },
+    resource_group_name=openai_resource_group.name,
+    sku={
+        "capacity": 100,
+        "name": "GlobalStandard",
+    },
+    opts=OPTS,
+)
+
+gpt_o1_deployment = az.cognitiveservices.Deployment(
+    "gpt_o1_deployment",
+    account_name=openai_account.name,
+    deployment_name="o1",
+    properties={
+        "model": {
+            "format": "OpenAI",
+            "name": "o1",
+            "version": "2024-12-17",
+        },
+        "version_upgrade_option": az.cognitiveservices.DeploymentModelVersionUpgradeOption.ONCE_NEW_DEFAULT_VERSION_AVAILABLE,
+    },
+    resource_group_name=openai_resource_group.name,
+    sku={
+        "capacity": 100,
+        "name": "GlobalStandard",
+    },
+    opts=OPTS,
+)
+
 gpt_o3_mini_deployment = az.cognitiveservices.Deployment(
     "gpt_o3_mini_deployment",
     account_name=openai_account.name,
