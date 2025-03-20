@@ -11,6 +11,11 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     unzip \
     wget
 
+# Install Docker
+RUN curl -fsSL https://get.docker.com -o get-docker.sh \
+    && sh get-docker.sh \
+    && rm get-docker.sh
+
 # Install Pulumi
 RUN curl -fsSL https://get.pulumi.com | sh
 
