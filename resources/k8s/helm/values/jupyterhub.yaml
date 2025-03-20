@@ -405,7 +405,7 @@ singleuser:
         command:
           - 'sh'
           - '-c'
-          - "if [ ! -d 'promptimize' ]; then git clone https://github.com/tqtensor/promptimize.git; else cd promptimize && git pull; fi"
+          - "if [ ! -d 'promptimize' ]; then git clone https://github.com/tqtensor/promptimize.git; else cd promptimize && git reset --hard && git pull; fi"
   initContainers: []
   extraContainers: []
   allowPrivilegeEscalation: false
@@ -443,7 +443,7 @@ singleuser:
   extraResource:
     limits: {}
     guarantees: {}
-  cmd: /opt/miniconda3/envs/tqtensor/bin/jupyterhub-singleuser
+  cmd: jupyterhub-singleuser
   defaultUrl:
   extraPodConfig: {}
   profileList: []
