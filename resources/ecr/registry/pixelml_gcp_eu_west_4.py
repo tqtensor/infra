@@ -16,3 +16,13 @@ pixelml_eu_west_4_registry = gcp.artifactregistry.Repository(
     location=gcp_pixelml_eu_west_4.region,
     opts=OPTS,
 )
+
+pixelml_eu_west_4_registry_public_access = gcp.artifactregistry.RepositoryIamMember(
+    "pixelml_eu_west_4_registry_public_access",
+    project=gcp_pixelml_eu_west_4.project,
+    location=gcp_pixelml_eu_west_4.region,
+    repository=pixelml_eu_west_4_registry.repository_id,
+    role="roles/artifactregistry.reader",
+    member="allUsers",
+    opts=OPTS,
+)
