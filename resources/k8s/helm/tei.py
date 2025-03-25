@@ -7,10 +7,10 @@ import yaml
 from pulumi import Output
 
 from resources.cloudflare import tei_origin_ca_cert, tei_private_key, tei_unifai_dev
-from resources.k8s.providers import k8s_provider_auto_pilot_asia_east_1
+from resources.k8s.providers import k8s_provider_auto_pilot_eu_west_4
 from resources.utils import encode_tls_secret_data
 
-OPTS = pulumi.ResourceOptions(provider=k8s_provider_auto_pilot_asia_east_1)
+OPTS = pulumi.ResourceOptions(provider=k8s_provider_auto_pilot_eu_west_4)
 
 
 tei_ns = k8s.core.v1.Namespace(
@@ -28,6 +28,9 @@ tei_tls_secret = k8s.core.v1.Secret(
     opts=OPTS,
 )
 
+# Create a random API key
+tei_api_key = random.RandomPassword("tei_api_key", special=False, length=64)
+
 values_file_path = os.path.join(os.path.dirname(__file__), "values", "tei.yaml")
 with open(values_file_path, "r") as f:
     chart_values = yaml.safe_load(f)
@@ -36,9 +39,7 @@ with open(values_file_path, "r") as f:
     chart_values["env"] = [
         {
             "name": "API_KEY",
-            "value": "hf-{}".format(
-                random.RandomPassword("tei_api_key", special=False, length=64).result
-            ),
+            "value": Output.concat("hf-", tei_api_key.result),
         }
     ]
 
@@ -55,7 +56,14 @@ tei_release = k8s.helm.v3.Release(
         values=chart_values,
     ),
     opts=pulumi.ResourceOptions(
-        provider=k8s_provider_auto_pilot_asia_east_1,
+        provider=k8s_provider_auto_pilot_eu_west_4,
         depends_on=[tei_ns],
+    ),
+)
+
+pulumi.export(
+    "API: tei_api_key",
+    Output.concat("hf-", tei_api_key.result).apply(
+        lambda key: pulumi.Output.secret(key)
     ),
 )
