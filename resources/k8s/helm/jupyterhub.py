@@ -1,5 +1,7 @@
 import os
+from pathlib import Path
 
+import pandas as pd
 import pulumi
 import pulumi_kubernetes as k8s
 import yaml
@@ -41,6 +43,17 @@ with open(values_file_path, "r") as f:
     chart_values["hub"]["config"]["DummyAuthenticator"]["password"] = secret_values[
         "dummy_password"
     ]
+
+    # Inject list of participants
+    participants = pd.read_csv(
+        Path(os.path.dirname(__file__)) / "artifacts" / "participants.csv"
+    )
+    participants = (
+        participants[participants["approval_status"] == "approved"]["email"]
+        .unique()
+        .tolist()
+    )
+    chart_values["hub"]["config"]["Authenticator"]["allowed_users"] = participants
 
 jupyterhub_release = k8s.helm.v3.Release(
     "jupyterhub",
