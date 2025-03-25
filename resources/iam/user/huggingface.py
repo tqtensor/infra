@@ -15,8 +15,7 @@ huggingface_sa = gcp.serviceaccount.Account(
 )
 
 roles = [
-    "roles/aiplatform.user",
-    "roles/storage.objectViewer",
+    "roles/artifactregistry.reader",
 ]
 for role in roles:
     gcp.projects.IAMMember(
