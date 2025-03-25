@@ -39,6 +39,7 @@ hub:
     Authenticator:
       admin_users:
         - victortang212@gmail.com
+      allowed_users: []
     DummyAuthenticator:
       password: changeme
   service:
