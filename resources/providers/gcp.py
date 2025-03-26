@@ -37,6 +37,12 @@ gcp_pixelml_us_east_1 = gcp.Provider(
     project="gen-lang-client-0608717027",
     user_project_override=True,
 )
+gcp_pixelml_us_central_1 = gcp.Provider(
+    "gcp_pixelml_us_central_1",
+    region="us-central1",
+    project="gen-lang-client-0608717027",
+    user_project_override=True,
+)
 
 # personal-280202 account
 gcp_personal_asia_southeast_1 = gcp.Provider(

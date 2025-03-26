@@ -4,11 +4,11 @@ import pathlib
 import pulumi_docker_build as docker_build
 from pulumi import Output
 
-from resources.ecr.registry import pixelml_eu_west_4_registry
-from resources.providers import gcp_pixelml_eu_west_4
+from resources.ecr.registry import pixelml_us_central_1_registry
+from resources.providers import gcp_pixelml_us_central_1
 from resources.utils import create_docker_config
 
-_ = Output.all(gcp_pixelml_eu_west_4.region).apply(
+_ = Output.all(gcp_pixelml_us_central_1.region).apply(
     lambda args: create_docker_config(
         provider="gcp", server=args[0] + "-docker.pkg.dev"
     )
@@ -22,19 +22,19 @@ devcontainer_image = docker_build.Image(
     "devcontainer_image",
     tags=[
         Output.concat(
-            gcp_pixelml_eu_west_4.region,
+            gcp_pixelml_us_central_1.region,
             "-docker.pkg.dev/",
-            gcp_pixelml_eu_west_4.project,
+            gcp_pixelml_us_central_1.project,
             "/",
-            pixelml_eu_west_4_registry.repository_id,
+            pixelml_us_central_1_registry.repository_id,
             f"/devcontainer:{image_tag}",
         ),
         Output.concat(
-            gcp_pixelml_eu_west_4.region,
+            gcp_pixelml_us_central_1.region,
             "-docker.pkg.dev/",
-            gcp_pixelml_eu_west_4.project,
+            gcp_pixelml_us_central_1.project,
             "/",
-            pixelml_eu_west_4_registry.repository_id,
+            pixelml_us_central_1_registry.repository_id,
             "/devcontainer:latest",
         ),
     ],
