@@ -12,12 +12,12 @@ echo "Mounting completed."
 mkdir -p $MNT_DIR/hf
 
 # Export needed environment variables
+export BITSANDBYTES_NOWELCOME=1
 export HF_HOME=$MNT_DIR/hf
 export HF_HUB_ENABLE_HF_TRANSFER=1
-export SAFETENSORS_FAST_GPU=1
-export BITSANDBYTES_NOWELCOME=1
 export PIP_DISABLE_PIP_VERSION_CHECK=1
 export PIP_NO_CACHE_DIR=1
+export SAFETENSORS_FAST_GPU=1
 
 # Download model weights
 echo "Downloading from HuggingFace Hub."
