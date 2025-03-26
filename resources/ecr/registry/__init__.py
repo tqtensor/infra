@@ -1,1 +1,1 @@
-from .pixelml_gcp_eu_west_4 import *  # noqa
+from .pixelml_gcp_us_central_1 import *  # noqa
