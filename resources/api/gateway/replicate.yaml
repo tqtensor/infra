@@ -1,0 +1,145 @@
+swagger: '2.0'
+info:
+  title: replicate
+  version: 1.0.0
+schemes:
+  - https
+produces:
+  - application/json
+x-google-backend:
+  address: APP_URL
+paths:
+  /predictions:
+    post:
+      summary: Create a prediction
+      operationId: createPrediction
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            additionalProperties: false
+            properties:
+              input:
+                description: "The model's input as a JSON object. The input schema depends on what model you are running. Files should be passed as HTTP URLs or data URLs."
+                type: object
+              stream:
+                description: '**This field is deprecated.** Request a URL to receive streaming output using server-sent events (SSE).'
+                type: boolean
+              webhook:
+                description: 'An HTTPS URL for receiving a webhook when the prediction has new output.'
+                type: string
+              webhook_events_filter:
+                description: 'Control which events trigger webhook requests.'
+                items:
+                  type: string
+                type: array
+            required:
+              - input
+            type: object
+      responses:
+        '201':
+          description: 'Prediction has been created with the final output.'
+          schema:
+            properties:
+              id:
+                type: string
+              model:
+                description: 'The name of the model that created the prediction'
+                type: string
+              version:
+                description: 'The ID of the model version that created the prediction'
+                type: string
+              input:
+                description: 'The prediction input'
+                additionalProperties: true
+                type: object
+              output:
+                description: 'The prediction output'
+                type: object
+              logs:
+                description: 'The log output from the model'
+                type: string
+              error:
+                description: "An error string if the model status is 'failed'"
+                type: string
+              status:
+                type: string
+                enum:
+                  ['starting', 'processing', 'succeeded', 'failed', 'canceled']
+              created_at:
+                description: 'The time that the prediction was created'
+                format: date-time
+                type: string
+              started_at:
+                description: 'The time that the model began the prediction'
+                format: date-time
+                type: string
+              completed_at:
+                description: 'The time that the model completed the prediction and all outputs were uploaded'
+                format: date-time
+                type: string
+              data_removed:
+                description: 'Whether the prediction output has been deleted'
+                type: boolean
+              metrics:
+                description: 'Additional metrics associated with the prediction'
+                additionalProperties: true
+                type: object
+              urls:
+                description: 'API endpoints for working with the prediction'
+                type: object
+                properties:
+                  get:
+                    description: 'Retrieve the latest state of the prediction'
+                    format: uri
+                    type: string
+                  cancel:
+                    description: 'Cancel the prediction'
+                    format: uri
+                    type: string
+                  stream:
+                    description: 'An event source to stream the output of the prediction'
+                    format: uri
+                    type: string
+                required:
+                  - get
+                  - cancel
+            required:
+              - id
+              - model
+              - version
+              - input
+              - output
+              - data_removed
+              - error
+              - status
+              - created_at
+              - urls
+            type: object
+        '202':
+          description: 'Prediction has been created but does not yet have all outputs'
+          schema:
+            properties:
+              id:
+                type: string
+              status:
+                type: string
+              urls:
+                type: object
+                properties:
+                  get:
+                    format: uri
+                    type: string
+                  cancel:
+                    format: uri
+                    type: string
+                  stream:
+                    format: uri
+                    type: string
+                required:
+                  - get
+                  - cancel
+            type: object
