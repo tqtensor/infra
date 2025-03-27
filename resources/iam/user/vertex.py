@@ -14,7 +14,7 @@ OPTS = get_options(
 
 vertex_sa = gcp.serviceaccount.Account(
     "vertex_sa",
-    account_id="vertex-sa-europe-west-4",
+    account_id="vertex-sa-eu-west-4",
     opts=OPTS,
 )
 
