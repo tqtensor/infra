@@ -2,6 +2,7 @@ import pulumi_gcp as gcp
 from pulumi import Output
 
 from resources.ecr import whisper_diarization_image_uri
+from resources.iam import cloudrun_sa
 from resources.providers import gcp_pixelml_us_central_1
 from resources.utils import get_options
 
@@ -29,7 +30,7 @@ whisper_diarization = gcp.cloudrun.Service(
     project=Output.all(
         gcp_pixelml_us_central_1.project,
     ).apply(lambda args: args[0]),
-    template=Output.all(whisper_diarization_image_uri).apply(
+    template=Output.all(whisper_diarization_image_uri, cloudrun_sa.email).apply(
         lambda args: {
             "metadata": {
                 "annotations": {
@@ -75,7 +76,7 @@ whisper_diarization = gcp.cloudrun.Service(
                 "node_selector": {
                     "run.googleapis.com/accelerator": "nvidia-l4",
                 },
-                "service_account_name": "859438098239-compute@developer.gserviceaccount.com",
+                "service_account_name": args[1],
                 "timeout_seconds": 300,
             },
         }
