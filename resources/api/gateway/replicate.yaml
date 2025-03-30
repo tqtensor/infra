@@ -8,6 +8,14 @@ produces:
   - application/json
 x-google-backend:
   address: APP_URL
+  deadline: 600
+securityDefinitions:
+  ApiKeyAuth:
+    type: apiKey
+    in: header
+    name: X-API-Key
+security:
+  - ApiKeyAuth: []
 paths:
   /predictions:
     post:
