@@ -140,8 +140,3 @@ whisper_diarization_image_uri = clone_public_image(
     source_image="r8.im/thomasmol/whisper-diarization",
     image_digest="d8bc5908738ebd84a9bb7d77d94b9c5e5a3d867886791d7171ddb60455b4c6af",
 )["image_uri"]
-
-moondream2_image_uri = clone_public_image(
-    source_image="r8.im/lucataco/moondream2",
-    image_digest="72ccb656353c348c1385df54b237eeb7bfa874bf11486cf0b9473e691b662d31",
-)["image_uri"]
