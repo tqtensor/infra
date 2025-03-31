@@ -55,7 +55,7 @@ def encode_tls_secret_data(cert_pem: str, key_pem: str) -> Dict[str, str]:
     }
 
 
-def fill_in_password(encrypted_yaml: str, value_path: str) -> dict:
+def fill_in_password(encrypted_yaml: str, value_path: str):
     # Set update flag
     is_updated = False
 
@@ -102,7 +102,7 @@ def fill_in_password(encrypted_yaml: str, value_path: str) -> dict:
         return credentials
 
     # Wait for the Output to resolve before writing to YAML
-    def write_credentials(creds: dict) -> dict:
+    def write_credentials(creds: dict):
         # Re-encrypt the file in place
         credentials_content = yaml.dump(creds)
         Path(encrypted_yaml).write_text(credentials_content)
@@ -114,7 +114,7 @@ def fill_in_password(encrypted_yaml: str, value_path: str) -> dict:
     return credentials
 
 
-def normalize_email(email: str) -> str:
+def normalize_email(email: str):
     username = email.split("@")[0]
     username = re.sub(r"[^a-zA-Z0-9]", "", username)
     return f"{username}@{email.split('@')[1]}".strip().lower()

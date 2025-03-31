@@ -4,7 +4,7 @@ from pulumi import Output
 
 from resources.db.psql import bedrock_secret
 from resources.db.rds import krp_eu_central_1_rds_cluster
-from resources.iam import n8n_role
+from resources.iam.role import n8n_role
 from resources.storage import n8n_bucket
 from resources.utils import get_options
 
