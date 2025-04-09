@@ -429,7 +429,7 @@ singleuser:
       storageAccessModes: [ReadWriteOnce]
       subPath:
   image:
-    name: us-central1-docker.pkg.dev/gen-lang-client-0608717027/pixelml-eu-west-4-registry/jupyterhub
+    name: us-central1-docker.pkg.dev/gen-lang-client-0608717027/pixelml-us-central-1-registry/jupyterhub
     tag: latest
     pullPolicy:
     pullSecrets: []
