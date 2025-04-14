@@ -399,13 +399,7 @@ singleuser:
     hub.jupyter.org/network-access-hub: 'true'
   extraFiles: {}
   extraEnv: {}
-  lifecycleHooks:
-    postStart:
-      exec:
-        command:
-          - 'sh'
-          - '-c'
-          - "if [ ! -d 'promptimize' ]; then git clone https://github.com/tqtensor/promptimize.git; else cd promptimize && git reset --hard && git pull; fi"
+  lifecycleHooks: {}
   initContainers: []
   extraContainers: []
   allowPrivilegeEscalation: false
