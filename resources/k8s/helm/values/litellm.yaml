@@ -129,6 +129,12 @@ proxy_config:
         api_base: os.environ/AZURE_API_BASE
         api_key: os.environ/AZURE_API_KEY
         api_version: 2024-12-01-preview
+    - model_name: azure/gpt-45-preview
+      litellm_params:
+        model: azure/gpt-4.5-preview
+        api_base: os.environ/AZURE_API_BASE
+        api_key: os.environ/AZURE_API_KEY
+        api_version: 2024-12-01-preview
     - model_name: azure/o1
       litellm_params:
         model: azure/o1
