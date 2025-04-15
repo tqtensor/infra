@@ -168,16 +168,10 @@ def create_docker_config(provider: str, server: str):
         with open(docker_config_path, "w") as f:
             json.dump(config, f, indent=2)
 
-        print(f"Docker config created at {docker_config_path}")
-        print(f"Configured credential helper for {server}")
-
         # Verify gcloud auth is set up
         try:
             subprocess.check_call(
                 ["gcloud", "auth", "print-access-token"], stdout=subprocess.DEVNULL
-            )
-            print(
-                f"Remember to run 'gcloud auth configure-docker {server}' to set up Docker authentication."
             )
         except subprocess.CalledProcessError:
             print(

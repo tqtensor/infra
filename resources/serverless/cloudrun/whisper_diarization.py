@@ -2,7 +2,7 @@ import pulumi_gcp as gcp
 from pulumi import Output
 
 from resources.constants import ind_cloudrun_sa
-from resources.ecr import whisper_diarization_image_uri
+from resources.ecr import replicate_image_uris
 from resources.providers import gcp_pixelml_us_central_1
 from resources.utils import get_options
 
@@ -30,7 +30,12 @@ whisper_diarization = gcp.cloudrun.Service(
     project=Output.all(
         gcp_pixelml_us_central_1.project,
     ).apply(lambda args: args[0]),
-    template=Output.all(whisper_diarization_image_uri, ind_cloudrun_sa.email).apply(
+    template=Output.all(
+        replicate_image_uris["whisper-diarization"][
+            "d8bc5908738ebd84a9bb7d77d94b9c5e5a3d867886791d7171ddb60455b4c6af"
+        ],
+        ind_cloudrun_sa.email,
+    ).apply(
         lambda args: {
             "metadata": {
                 "annotations": {
