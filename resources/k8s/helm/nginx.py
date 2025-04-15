@@ -1,4 +1,4 @@
-import os
+from pathlib import Path
 
 import pulumi
 import pulumi_gcp as gcp
@@ -20,7 +20,7 @@ def deploy_nginx(region: str, provider: k8s.Provider, public_ip: gcp.compute.Add
         opts=opts,
     )
 
-    values_file_path = os.path.join(os.path.dirname(__file__), "values", "nginx.yaml")
+    values_file_path = Path(__file__).parent / "values" / "nginx.yaml"
     with open(values_file_path, "r") as f:
         chart_values = yaml.safe_load(f)
         chart_values["controller"]["service"]["loadBalancerIP"] = public_ip.address

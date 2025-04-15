@@ -1,5 +1,5 @@
 import base64
-import os
+from pathlib import Path
 
 import pulumi
 import pulumi_gcp as gcp
@@ -95,20 +95,18 @@ litellm_iam_member = gcp.serviceaccount.IAMMember(
     ),
 )
 
-secrets_file_path = os.path.join(os.path.dirname(__file__), "secrets", "litellm.yaml")
+secrets_file_path = Path(__file__).parent / "secrets" / "litellm.yaml"
 secret_values = fill_in_password(
     encrypted_yaml=secrets_file_path, value_path="masterkey"
 )
 
-values_file_path = os.path.join(os.path.dirname(__file__), "values", "litellm.yaml")
+values_file_path = Path(__file__).parent / "values" / "litellm.yaml"
 chart_values = yaml.safe_load(open(values_file_path, "r").read())
 chart_values["masterkey"] = secret_values["masterkey"]
 chart_values["db"]["endpoint"] = krp_eu_central_1_rds_cluster_instance.endpoint
 chart_values["db"]["database"] = litellm_db.name
 
-chart_file_path = os.path.join(
-    os.path.dirname(__file__), "charts", "litellm-helm-0.4.1.tgz"
-)
+chart_file_path = Path(__file__).parent / "charts" / "litellm-helm-0.4.1.tgz"
 litellm_release = k8s.helm.v3.Release(
     "litellm-proxy",
     k8s.helm.v3.ReleaseArgs(

@@ -1,5 +1,5 @@
 import json
-import os
+from pathlib import Path
 
 import pg8000.native
 import pulumi
@@ -21,7 +21,7 @@ vector_extension = postgresql.Extension(
     "vector_extension", database=bedrock_db.name, name="vector", opts=PSQL_OPTS
 )
 
-credentials_file_path = os.path.join(os.path.dirname(__file__), "credentials.yaml")
+credentials_file_path = Path(__file__).parent / "credentials.yaml"
 credentials = fill_in_password(
     encrypted_yaml=credentials_file_path, value_path="roles.bedrock_user.password"
 )["roles"]
