@@ -1,5 +1,5 @@
 import base64
-import os
+from pathlib import Path
 
 import pulumi_gcp as gcp
 import yaml
@@ -27,7 +27,7 @@ def create_api_gateway(api_name: str, cloudrun_service: gcp.cloudrun.Service):
         opts=OPTS,
     )
 
-    api_config_file_path = os.path.join(os.path.dirname(__file__), "replicate.yaml")
+    api_config_file_path = Path(__file__).parent / "replicate.yaml"
     config_document = yaml.safe_load(open(api_config_file_path, "r"))
     config_document["info"]["title"] = api_name
     config_document["x-google-backend"]["address"] = cloudrun_service.statuses[0].url

@@ -1,4 +1,4 @@
-import os
+from pathlib import Path
 
 import pulumi
 import pulumi_kubernetes as k8s
@@ -31,7 +31,7 @@ tei_tls_secret = k8s.core.v1.Secret(
 # Create a random API key
 tei_api_key = random.RandomPassword("tei_api_key", special=False, length=64)
 
-values_file_path = os.path.join(os.path.dirname(__file__), "values", "tei.yaml")
+values_file_path = Path(__file__).parent / "values" / "tei.yaml"
 with open(values_file_path, "r") as f:
     chart_values = yaml.safe_load(f)
     chart_values["ingress"]["hosts"][0]["host"] = tei_unifai_dev.hostname

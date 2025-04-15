@@ -1,4 +1,4 @@
-import os
+from pathlib import Path
 
 import pulumi
 import pulumi_kubernetes as k8s
@@ -28,14 +28,12 @@ jupyterhub_tls_secret = k8s.core.v1.Secret(
     opts=OPTS,
 )
 
-secrets_file_path = os.path.join(
-    os.path.dirname(__file__), "secrets", "jupyterhub.yaml"
-)
+secrets_file_path = Path(__file__).parent / "secrets" / "jupyterhub.yaml"
 secret_values = fill_in_password(
     encrypted_yaml=secrets_file_path, value_path="dummy_password"
 )
 
-values_file_path = os.path.join(os.path.dirname(__file__), "values", "jupyterhub.yaml")
+values_file_path = Path(__file__).parent / "values" / "jupyterhub.yaml"
 with open(values_file_path, "r") as f:
     chart_values = yaml.safe_load(f)
     chart_values["hub"]["config"]["DummyAuthenticator"]["password"] = secret_values[

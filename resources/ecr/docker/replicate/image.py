@@ -15,6 +15,9 @@ _ = Output.all(gcp_pixelml_us_central_1.region).apply(
     )
 )
 
+# Consistent prefix for all temporary images
+TEMP_PREFIX = "replicate-"
+
 
 def clone_public_image(
     source_image: str,
@@ -23,11 +26,13 @@ def clone_public_image(
     gcp_provider=gcp_pixelml_us_central_1,
 ) -> Dict[str, str]:
     image_uris = {}
+
     for hash in hashes:
         image_digest = hash
         short_digest = image_digest[:12]
 
         target_image_name = source_image.split("/")[-1]
+        local_temp_image_name = f"{TEMP_PREFIX}{target_image_name}"
 
         def check_image_exists_and_process(args):
             region, project, repository_id = args
@@ -64,6 +69,7 @@ def clone_public_image(
             print(f"Pulling base image {source_image}@sha256:{image_digest}")
 
             try:
+                # Pull the image
                 subprocess.run(
                     [
                         "docker",
@@ -73,11 +79,22 @@ def clone_public_image(
                     check=True,
                 )
 
+                temp_tag = f"{local_temp_image_name}:{short_digest}"
                 subprocess.run(
                     [
                         "docker",
                         "tag",
                         f"{source_image}@sha256:{image_digest}",
+                        temp_tag,
+                    ],
+                    check=True,
+                )
+
+                subprocess.run(
+                    [
+                        "docker",
+                        "tag",
+                        temp_tag,
                         short_digest_tag,
                     ],
                     check=True,
@@ -85,22 +102,9 @@ def clone_public_image(
 
                 print(f"Pushing image to {short_digest_tag}")
                 subprocess.run(["docker", "push", short_digest_tag], check=True)
-            finally:
-                print("Cleaning up local images...")
-                try:
-                    subprocess.run(
-                        [
-                            "docker",
-                            "rmi",
-                            f"{source_image}@sha256:{image_digest}",
-                        ],
-                        check=False,
-                    )
-
-                    subprocess.run(["docker", "rmi", short_digest_tag], check=False)
-                except Exception as e:
-                    print(f"Error during cleanup: {e}")
-            return "Image pulled, tagged, pushed, and cleaned up successfully"
+            except Exception as e:
+                print(f"Error during process: {e}")
+            return "Image processing completed"
 
         _ = Output.all(
             gcp_provider.region,
@@ -126,3 +130,58 @@ for source_image, image_config in configs.items():
     replicate_image_uris[source_image] = clone_public_image(
         source_image=image_config["url"], hashes=image_config["hashes"]
     )
+
+
+def cleanup_all_replicate_images():
+    print(f"Cleaning up all {TEMP_PREFIX}* temporary images...")
+
+    try:
+        result = subprocess.run(
+            [
+                "docker",
+                "images",
+                f"{TEMP_PREFIX}*",
+                "--format",
+                "{{.Repository}}:{{.Tag}}",
+            ],
+            stdout=subprocess.PIPE,
+            text=True,
+            check=True,
+        )
+
+        digest_result = subprocess.run(
+            [
+                "docker",
+                "images",
+                "--filter",
+                "dangling=false",
+                "--format",
+                "{{.Repository}}@{{.Digest}}",
+            ],
+            stdout=subprocess.PIPE,
+            text=True,
+            check=True,
+        )
+
+        all_images = []
+
+        if result.stdout.strip():
+            all_images.extend(result.stdout.strip().split("\n"))
+
+        if digest_result.stdout.strip():
+            for line in digest_result.stdout.strip().split("\n"):
+                for source_image, image_config in configs.items():
+                    if image_config["url"] in line:
+                        all_images.append(line)
+                        break
+
+        if all_images:
+            print(f"Removing {len(all_images)} images...")
+            subprocess.run(["docker", "rmi"] + all_images, check=False)
+        else:
+            print("No temporary images found to clean up.")
+    except Exception as e:
+        print(f"Error during cleanup: {e}")
+
+
+Output.all().apply(lambda _: cleanup_all_replicate_images())

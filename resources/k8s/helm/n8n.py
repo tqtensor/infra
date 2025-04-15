@@ -1,4 +1,4 @@
-import os
+from pathlib import Path
 
 import pulumi
 import pulumi_kubernetes as k8s
@@ -28,7 +28,7 @@ n8n_tls_secret = k8s.core.v1.Secret(
     opts=OPTS,
 )
 
-values_file_path = os.path.join(os.path.dirname(__file__), "values", "n8n.yaml")
+values_file_path = Path(__file__).parent / "values" / "n8n.yaml"
 with open(values_file_path, "r") as f:
     chart_values = yaml.safe_load(f)
 
@@ -64,7 +64,7 @@ with open(values_file_path, "r") as f:
     chart_values["ingress"]["tls"][0]["hosts"][0] = values["domain"]
     chart_values["ingress"]["tls"][0]["secretName"] = values["tls_secret_name"]
 
-chart_file_path = os.path.join(os.path.dirname(__file__), "charts", "n8n-0.25.2.tgz")
+chart_file_path = Path(__file__).parent / "charts" / "n8n-0.25.2.tgz"
 n8n_release = k8s.helm.v3.Release(
     "n8n",
     k8s.helm.v3.ReleaseArgs(
