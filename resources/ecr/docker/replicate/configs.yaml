@@ -1,0 +1,57 @@
+---
+dotted-video:
+  hashes:
+    - ea6107f7dc327e05d64eb42241250261af417d41d00c6399b06b0d62cd3c1a2a
+  url: r8.im/lucataco/dotted-video
+florence-2-base:
+  hashes:
+    - c81609117f666d3a86b262447f80d41ac5158a76adb56893301843a23165eaf8
+  url: r8.im/lucataco/florence-2-base
+florence-2-large:
+  hashes:
+    - da53547e17d45b9cfb48174b2f18af8b83ca020fa76db62136bf9c6616762595
+  url: r8.im/lucataco/florence-2-large
+flux-in-context:
+  hashes:
+    - 703f38c44b9c2820b79b54f96ef5f6554240b3ec4035a0cf80ba04e1f87ae307
+  url: r8.im/lucataco/flux-in-context
+joy-caption-pre-alpha:
+  hashes:
+    - 31665fdccd897d20cbda1fa305e64f1b94a181e0350409ed2a40df7a243830a5
+  url: r8.im/lucataco/joy-caption-pre-alpha
+moondream-0.5b:
+  hashes:
+    - 00c1f1ed7192004da1607947f940b7030558efc5e00cada7be75ccfaec97e6c2
+  url: r8.im/lucataco/moondream-0.5b
+moondream2:
+  hashes:
+    - 72ccb656353c348c1385df54b237eeb7bfa874bf11486cf0b9473e691b662d31
+  url: r8.im/lucataco/moondream2
+orpheus-3b-0.1-ft:
+  hashes:
+    - 79f2a473e6a9720716a473d9b2f2951437dbf91dc02ccb7079fb3d89b881207f
+  url: r8.im/lucataco/orpheus-3b-0.1-ft
+realistic-background:
+  hashes:
+    - 1fbd2b79f5cc40346dece1f1bba461c4239e012497b479ade7a493979b493ca4
+  url: r8.im/wolverinn/realistic-background
+rembg-enhance:
+  hashes:
+    - 4067ee2a58f6c161d434a9c077cfa012820b8e076efa2772aa171e26557da919
+  url: r8.im/smoretalk/rembg-enhance
+step-audio-tts-3b:
+  hashes:
+    - 8c30688893eb0a713273758033ea410a4022060142ac3ee5b93937ecbc27209f
+  url: r8.im/lucataco/step-audio-tts-3b
+sticker-maker:
+  hashes:
+    - 4acb778eb059772225ec213948f0660867b2e03f277448f18cf1800b96a65a1a
+  url: r8.im/fofr/sticker-maker
+videollama3-7b:
+  hashes:
+    - 34a1f45f7068f7121a5b47c91f2d7e06c298850767f76f96660450a0a3bd5bbe
+  url: r8.im/lucataco/videollama3-7b
+whisper-diarization:
+  hashes:
+    - d8bc5908738ebd84a9bb7d77d94b9c5e5a3d867886791d7171ddb60455b4c6af
+  url: r8.im/thomasmol/whisper-diarization

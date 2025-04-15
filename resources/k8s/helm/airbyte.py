@@ -1,5 +1,5 @@
 import base64
-import os
+from pathlib import Path
 
 import pulumi
 import pulumi_kubernetes as k8s
@@ -41,7 +41,7 @@ airbyte_tls_secret = k8s.core.v1.Secret(
     opts=OPTS,
 )
 
-values_file_path = os.path.join(os.path.dirname(__file__), "values", "airbyte.yaml")
+values_file_path = Path(__file__).parent / "values" / "airbyte.yaml"
 with open(values_file_path, "r") as f:
     chart_values = yaml.safe_load(f)
 

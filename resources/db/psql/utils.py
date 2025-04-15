@@ -1,4 +1,4 @@
-import os
+from pathlib import Path
 
 import pulumi
 import pulumi_postgresql as postgresql
@@ -7,7 +7,7 @@ from resources.utils import fill_in_password
 
 
 def create_db_and_user(username: str, opts: pulumi.ResourceOptions):
-    credentials_file_path = os.path.join(os.path.dirname(__file__), "credentials.yaml")
+    credentials_file_path = Path(__file__).parent / "credentials.yaml"
     credentials = fill_in_password(
         encrypted_yaml=credentials_file_path, value_path=f"roles.{username}.password"
     )["roles"]

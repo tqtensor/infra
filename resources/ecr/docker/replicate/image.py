@@ -1,6 +1,8 @@
 import subprocess
-from typing import Dict, Optional
+from pathlib import Path
+from typing import Dict, List
 
+import yaml
 from pulumi import Output
 
 from resources.ecr.registry import pixelml_us_central_1_registry
@@ -16,127 +18,113 @@ _ = Output.all(gcp_pixelml_us_central_1.region).apply(
 
 def clone_public_image(
     source_image: str,
-    image_digest: str,
-    target_image_name: Optional[str] = None,
+    hashes: List[str],
     registry=pixelml_us_central_1_registry,
     gcp_provider=gcp_pixelml_us_central_1,
-) -> Dict[str, Output]:
-    short_digest = image_digest[:12]
+) -> Dict[str, str]:
+    image_uris = {}
 
-    if not target_image_name:
+    for hash in hashes:
+        image_digest = hash
+        short_digest = image_digest[:12]
+
         target_image_name = source_image.split("/")[-1]
 
-    def check_image_exists_and_process(args):
-        region, project, repository_id = args
-        repository_path = f"{region}-docker.pkg.dev/{project}/{repository_id}"
-        target_image = f"{repository_path}/{target_image_name}"
-        short_digest_tag = f"{target_image}:{short_digest}"
-        latest_tag = f"{target_image}:latest"
+        def check_image_exists_and_process(args):
+            region, project, repository_id = args
+            repository_path = f"{region}-docker.pkg.dev/{project}/{repository_id}"
+            target_image = f"{repository_path}/{target_image_name}"
+            short_digest_tag = f"{target_image}:{short_digest}"
 
-        try:
-            result = subprocess.run(
-                [
-                    "gcloud",
-                    "artifacts",
-                    "docker",
-                    "images",
-                    "describe",
-                    short_digest_tag,
-                    "--project",
-                    project,
-                    "--quiet",
-                ],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                check=False,
-            )
-
-            if result.returncode == 0:
-                print(
-                    f"Image {short_digest_tag} already exists in Artifact Registry. Skipping pull and push."
+            try:
+                result = subprocess.run(
+                    [
+                        "gcloud",
+                        "artifacts",
+                        "docker",
+                        "images",
+                        "describe",
+                        short_digest_tag,
+                        "--project",
+                        project,
+                        "--quiet",
+                    ],
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    check=False,
                 )
-                return "Image already exists in Artifact Registry"
-        except Exception as e:
-            print(f"Error checking image existence: {e}")
 
-        print(f"Pulling base image {source_image}@sha256:{image_digest}")
+                if result.returncode == 0:
+                    print(
+                        f"Image {short_digest_tag} already exists in Artifact Registry. Skipping pull and push."
+                    )
+                    return "Image already exists in Artifact Registry"
+            except Exception as e:
+                print(f"Error checking image existence: {e}")
 
-        try:
-            subprocess.run(
-                [
-                    "docker",
-                    "pull",
-                    f"{source_image}@sha256:{image_digest}",
-                ],
-                check=True,
-            )
+            print(f"Pulling base image {source_image}@sha256:{image_digest}")
 
-            subprocess.run(
-                [
-                    "docker",
-                    "tag",
-                    f"{source_image}@sha256:{image_digest}",
-                    short_digest_tag,
-                ],
-                check=True,
-            )
-
-            # Tag as latest
-            subprocess.run(
-                [
-                    "docker",
-                    "tag",
-                    f"{source_image}@sha256:{image_digest}",
-                    latest_tag,
-                ],
-                check=True,
-            )
-
-            print(f"Pushing image to {short_digest_tag}")
-            subprocess.run(["docker", "push", short_digest_tag], check=True)
-
-            print(f"Pushing image to {latest_tag}")
-            subprocess.run(["docker", "push", latest_tag], check=True)
-        finally:
-            print("Cleaning up local images...")
             try:
                 subprocess.run(
                     [
                         "docker",
-                        "rmi",
+                        "pull",
                         f"{source_image}@sha256:{image_digest}",
                     ],
-                    check=False,
+                    check=True,
                 )
 
-                subprocess.run(["docker", "rmi", short_digest_tag], check=False)
-                subprocess.run(["docker", "rmi", latest_tag], check=False)
+                subprocess.run(
+                    [
+                        "docker",
+                        "tag",
+                        f"{source_image}@sha256:{image_digest}",
+                        short_digest_tag,
+                    ],
+                    check=True,
+                )
+
+                print(f"Pushing image to {short_digest_tag}")
+                subprocess.run(["docker", "push", short_digest_tag], check=True)
             except Exception as e:
-                print(f"Error during cleanup: {e}")
+                print(f"Error during process: {e}")
+            return "Image processing completed"
 
-        return "Image pulled, tagged, pushed, and cleaned up successfully"
+        _ = Output.all(
+            gcp_provider.region,
+            gcp_provider.project,
+            registry.repository_id,
+        ).apply(check_image_exists_and_process)
 
-    tagged_and_pushed = Output.all(
-        gcp_provider.region,
-        gcp_provider.project,
-        registry.repository_id,
-    ).apply(check_image_exists_and_process)
+        image_uri = Output.concat(
+            gcp_provider.region,
+            "-docker.pkg.dev/",
+            gcp_provider.project,
+            "/",
+            registry.repository_id,
+            f"/{target_image_name}",
+            ":",
+            short_digest,
+        )
+        image_uris[image_digest] = image_uri
+    return image_uris
 
-    image_uri = Output.concat(
-        gcp_provider.region,
-        "-docker.pkg.dev/",
-        gcp_provider.project,
-        "/",
-        registry.repository_id,
-        f"/{target_image_name}",
+
+configs = yaml.safe_load(open(Path(__file__).parent / "configs.yaml", "r").read())
+replicate_image_uris = {}
+for source_image, image_config in configs.items():
+    replicate_image_uris[source_image] = clone_public_image(
+        source_image=image_config["url"], hashes=image_config["hashes"]
     )
-    return {
-        "image_uri": image_uri,
-        "operation_status": tagged_and_pushed,
-    }
 
 
-whisper_diarization_image_uri = clone_public_image(
-    source_image="r8.im/thomasmol/whisper-diarization",
-    image_digest="d8bc5908738ebd84a9bb7d77d94b9c5e5a3d867886791d7171ddb60455b4c6af",
-)["image_uri"]
+def cleanup_docker_images():
+    print("Cleaning up all unused Docker images...")
+    try:
+        subprocess.run(["docker", "image", "prune", "-fa"], check=False)
+        print("Successfully removed all unused images.")
+    except Exception as e:
+        print(f"Error during cleanup: {e}")
+
+
+Output.all().apply(lambda _: cleanup_docker_images())
