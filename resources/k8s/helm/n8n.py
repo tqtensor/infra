@@ -64,7 +64,7 @@ with open(values_file_path, "r") as f:
     chart_values["ingress"]["tls"][0]["hosts"][0] = values["domain"]
     chart_values["ingress"]["tls"][0]["secretName"] = values["tls_secret_name"]
 
-chart_file_path = Path(__file__).parent / "charts" / "n8n-0.25.2.tgz"
+chart_file_path = str(Path(__file__).parent / "charts" / "n8n-0.25.2.tgz")
 n8n_release = k8s.helm.v3.Release(
     "n8n",
     k8s.helm.v3.ReleaseArgs(

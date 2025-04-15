@@ -1,1 +1,1 @@
-from .whisper_diarization import *  # noqa
+from .replicate import *  # noqa

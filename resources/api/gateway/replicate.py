@@ -6,7 +6,7 @@ import yaml
 from pulumi import Output
 
 from resources.providers import gcp_pixelml_us_central_1
-from resources.serverless import whisper_diarization
+from resources.serverless.cloudrun.replicate import *  # noqa
 from resources.utils import get_options
 
 OPTS = get_options(
@@ -27,7 +27,7 @@ def create_api_gateway(api_name: str, cloudrun_service: gcp.cloudrun.Service):
         opts=OPTS,
     )
 
-    api_config_file_path = Path(__file__).parent / "replicate.yaml"
+    api_config_file_path = Path(__file__).parent / "config.yaml"
     config_document = yaml.safe_load(open(api_config_file_path, "r"))
     config_document["info"]["title"] = api_name
     config_document["x-google-backend"]["address"] = cloudrun_service.statuses[0].url
@@ -120,6 +120,29 @@ def create_api_gateway(api_name: str, cloudrun_service: gcp.cloudrun.Service):
     return api, api_config, api_gateway, api_service, api_key
 
 
-_ = create_api_gateway(
-    api_name="whisper-diarization", cloudrun_service=whisper_diarization
+replicate_services = list(
+    yaml.safe_load(
+        open(
+            Path(__file__).parent.parent.parent
+            / "serverless"  # noqa: W503
+            / "cloudrun"  # noqa: W503
+            / "configs.yaml",  # noqa: W503
+            "r",
+        ).read()
+    ).keys()
 )
+
+# Only a few services are public
+public_services = ["whisper-diarization"]
+
+for service in replicate_services:
+    if service not in public_services:
+        continue
+
+    api_name = service.replace(".", "-")
+    cloudrun_service = service.replace("-", "_").replace(".", "_")
+    exec(
+        f"""_ = create_api_gateway(
+        api_name="{api_name}", cloudrun_service={cloudrun_service}
+    )"""
+    )

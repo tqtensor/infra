@@ -15,9 +15,6 @@ _ = Output.all(gcp_pixelml_us_central_1.region).apply(
     )
 )
 
-# Consistent prefix for all temporary images
-TEMP_PREFIX = "replicate-"
-
 
 def clone_public_image(
     source_image: str,
@@ -32,7 +29,6 @@ def clone_public_image(
         short_digest = image_digest[:12]
 
         target_image_name = source_image.split("/")[-1]
-        local_temp_image_name = f"{TEMP_PREFIX}{target_image_name}"
 
         def check_image_exists_and_process(args):
             region, project, repository_id = args
@@ -69,7 +65,6 @@ def clone_public_image(
             print(f"Pulling base image {source_image}@sha256:{image_digest}")
 
             try:
-                # Pull the image
                 subprocess.run(
                     [
                         "docker",
@@ -79,22 +74,11 @@ def clone_public_image(
                     check=True,
                 )
 
-                temp_tag = f"{local_temp_image_name}:{short_digest}"
                 subprocess.run(
                     [
                         "docker",
                         "tag",
                         f"{source_image}@sha256:{image_digest}",
-                        temp_tag,
-                    ],
-                    check=True,
-                )
-
-                subprocess.run(
-                    [
-                        "docker",
-                        "tag",
-                        temp_tag,
                         short_digest_tag,
                     ],
                     check=True,
@@ -119,6 +103,8 @@ def clone_public_image(
             "/",
             registry.repository_id,
             f"/{target_image_name}",
+            ":",
+            short_digest,
         )
         image_uris[image_digest] = image_uri
     return image_uris
@@ -132,56 +118,13 @@ for source_image, image_config in configs.items():
     )
 
 
-def cleanup_all_replicate_images():
-    print(f"Cleaning up all {TEMP_PREFIX}* temporary images...")
-
+def cleanup_docker_images():
+    print("Cleaning up all unused Docker images...")
     try:
-        result = subprocess.run(
-            [
-                "docker",
-                "images",
-                f"{TEMP_PREFIX}*",
-                "--format",
-                "{{.Repository}}:{{.Tag}}",
-            ],
-            stdout=subprocess.PIPE,
-            text=True,
-            check=True,
-        )
-
-        digest_result = subprocess.run(
-            [
-                "docker",
-                "images",
-                "--filter",
-                "dangling=false",
-                "--format",
-                "{{.Repository}}@{{.Digest}}",
-            ],
-            stdout=subprocess.PIPE,
-            text=True,
-            check=True,
-        )
-
-        all_images = []
-
-        if result.stdout.strip():
-            all_images.extend(result.stdout.strip().split("\n"))
-
-        if digest_result.stdout.strip():
-            for line in digest_result.stdout.strip().split("\n"):
-                for source_image, image_config in configs.items():
-                    if image_config["url"] in line:
-                        all_images.append(line)
-                        break
-
-        if all_images:
-            print(f"Removing {len(all_images)} images...")
-            subprocess.run(["docker", "rmi"] + all_images, check=False)
-        else:
-            print("No temporary images found to clean up.")
+        subprocess.run(["docker", "image", "prune", "-fa"], check=False)
+        print("Successfully removed all unused images.")
     except Exception as e:
         print(f"Error during cleanup: {e}")
 
 
-Output.all().apply(lambda _: cleanup_all_replicate_images())
+Output.all().apply(lambda _: cleanup_docker_images())
