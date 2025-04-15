@@ -1,4 +1,3 @@
-import datetime as dt
 import pathlib
 
 import pulumi_docker_build as docker_build
@@ -16,19 +15,9 @@ _ = Output.all(gcp_pixelml_us_central_1.region).apply(
 
 current_file_path = pathlib.Path(__file__).resolve()
 
-image_tag = dt.datetime.now(tz=dt.timezone.utc).strftime("%Y%m%d%H%M%S")
-
 devcontainer_image = docker_build.Image(
     "devcontainer_image",
     tags=[
-        Output.concat(
-            gcp_pixelml_us_central_1.region,
-            "-docker.pkg.dev/",
-            gcp_pixelml_us_central_1.project,
-            "/",
-            pixelml_us_central_1_registry.repository_id,
-            f"/devcontainer:{image_tag}",
-        ),
         Output.concat(
             gcp_pixelml_us_central_1.region,
             "-docker.pkg.dev/",
