@@ -34,15 +34,15 @@ openai_keys = Output.all(openai_account.name, openai_resource_group.name).apply(
     )
 )
 
-gpt_4o_deployment = az.cognitiveservices.Deployment(
-    "gpt_4o_deployment",
+gpt_o4_mini_deployment = az.cognitiveservices.Deployment(
+    "gpt_o4_mini_deployment",
     account_name=openai_account.name,
-    deployment_name="gpt-4o",
+    deployment_name="o4-mini",
     properties={
         "model": {
             "format": "OpenAI",
-            "name": "gpt-4o",
-            "version": "2024-11-20",
+            "name": "o4-mini",
+            "version": "2025-04-16",
         },
         "version_upgrade_option": az.cognitiveservices.DeploymentModelVersionUpgradeOption.ONCE_NEW_DEFAULT_VERSION_AVAILABLE,
     },
@@ -54,55 +54,15 @@ gpt_4o_deployment = az.cognitiveservices.Deployment(
     opts=OPTS,
 )
 
-gpt_o1_deployment = az.cognitiveservices.Deployment(
-    "gpt_o1_deployment",
+gpt_41 = az.cognitiveservices.Deployment(
+    "gpt_41",
     account_name=openai_account.name,
-    deployment_name="o1",
+    deployment_name="gpt-4.1",
     properties={
         "model": {
             "format": "OpenAI",
-            "name": "o1",
-            "version": "2024-12-17",
-        },
-        "version_upgrade_option": az.cognitiveservices.DeploymentModelVersionUpgradeOption.ONCE_NEW_DEFAULT_VERSION_AVAILABLE,
-    },
-    resource_group_name=openai_resource_group.name,
-    sku={
-        "capacity": 100,
-        "name": "GlobalStandard",
-    },
-    opts=OPTS,
-)
-
-gpt_o3_mini_deployment = az.cognitiveservices.Deployment(
-    "gpt_o3_mini_deployment",
-    account_name=openai_account.name,
-    deployment_name="o3-mini",
-    properties={
-        "model": {
-            "format": "OpenAI",
-            "name": "o3-mini",
-            "version": "2025-01-31",
-        },
-        "version_upgrade_option": az.cognitiveservices.DeploymentModelVersionUpgradeOption.ONCE_NEW_DEFAULT_VERSION_AVAILABLE,
-    },
-    resource_group_name=openai_resource_group.name,
-    sku={
-        "capacity": 100,
-        "name": "GlobalStandard",
-    },
-    opts=OPTS,
-)
-
-gpt_45_preview_deployment = az.cognitiveservices.Deployment(
-    "gpt_45_preview_deployment",
-    account_name=openai_account.name,
-    deployment_name="gpt-4.5-preview",
-    properties={
-        "model": {
-            "format": "OpenAI",
-            "name": "gpt-4.5-preview",
-            "version": "2025-02-27",
+            "name": "gpt-4.1",
+            "version": "2025-04-14",
         },
         "version_upgrade_option": az.cognitiveservices.DeploymentModelVersionUpgradeOption.ONCE_NEW_DEFAULT_VERSION_AVAILABLE,
     },
