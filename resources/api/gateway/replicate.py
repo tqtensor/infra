@@ -10,11 +10,7 @@ from resources.serverless.cloudrun.replicate import *  # noqa
 from resources.utils import get_options
 
 OPTS = get_options(
-    profile="pixelml",
-    region="us-central-1",
-    type="resource",
-    provider="gcp",
-    protect=False,
+    profile="pixelml", region="us-central-1", type="resource", provider="gcp"
 )
 
 
@@ -58,7 +54,6 @@ def create_api_gateway(api_name: str, cloudrun_service: gcp.cloudrun.Service):
             type="resource",
             provider="gcp",
             kwargs={"depends_on": [api]},
-            protect=False,
         ),
     )
 
@@ -77,7 +72,6 @@ def create_api_gateway(api_name: str, cloudrun_service: gcp.cloudrun.Service):
             type="resource",
             provider="gcp",
             kwargs={"depends_on": [api]},
-            protect=False,
         ),
     )
 
@@ -93,7 +87,6 @@ def create_api_gateway(api_name: str, cloudrun_service: gcp.cloudrun.Service):
             type="resource",
             provider="gcp",
             kwargs={"depends_on": [api, api_config]},
-            protect=False,
         ),
     )
 
@@ -114,7 +107,6 @@ def create_api_gateway(api_name: str, cloudrun_service: gcp.cloudrun.Service):
             type="resource",
             provider="gcp",
             kwargs={"depends_on": [api_service]},
-            protect=False,
         ),
     )
     return api, api_config, api_gateway, api_service, api_key
