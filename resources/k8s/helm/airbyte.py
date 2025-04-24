@@ -66,7 +66,7 @@ airbyte_release = k8s.helm.v3.Release(
     "airbyte",
     k8s.helm.v3.ReleaseArgs(
         chart="airbyte",
-        version="1.5.0",
+        version="1.5.1",
         name="airbyte",
         repository_opts=k8s.helm.v3.RepositoryOptsArgs(
             repo="https://airbytehq.github.io/helm-charts",

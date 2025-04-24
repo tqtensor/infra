@@ -106,7 +106,7 @@ chart_values["masterkey"] = secret_values["masterkey"]
 chart_values["db"]["endpoint"] = krp_eu_central_1_rds_cluster_instance.endpoint
 chart_values["db"]["database"] = litellm_db.name
 
-chart_file_path = str(Path(__file__).parent / "charts" / "litellm-helm-0.4.1.tgz")
+chart_file_path = str(Path(__file__).parent / "charts" / "litellm-helm-0.4.3.tgz")
 litellm_release = k8s.helm.v3.Release(
     "litellm-proxy",
     k8s.helm.v3.ReleaseArgs(
@@ -114,7 +114,7 @@ litellm_release = k8s.helm.v3.Release(
         name="litellm-proxy",
         namespace=litellm_ns.metadata["name"],
         values=chart_values,
-        version="0.4.1",
+        version="0.4.3",
     ),
     opts=pulumi.ResourceOptions(
         provider=k8s_provider_auto_pilot_eu_west_4,

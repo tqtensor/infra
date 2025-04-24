@@ -2,6 +2,7 @@ from pathlib import Path
 
 import pulumi
 import pulumi_kubernetes as k8s
+import pulumi_random as random
 import yaml
 from pulumi import Output
 
@@ -32,7 +33,9 @@ values_file_path = Path(__file__).parent / "values" / "n8n.yaml"
 with open(values_file_path, "r") as f:
     chart_values = yaml.safe_load(f)
 
-    def prepare_values(host, user, password, database, domain, tls_secret_name):
+    def prepare_values(
+        host, user, password, database, domain, tls_secret_name, encryption_key
+    ):
         return {
             "host": host,
             "user": user,
@@ -40,6 +43,7 @@ with open(values_file_path, "r") as f:
             "database": database,
             "domain": domain,
             "tls_secret_name": tls_secret_name,
+            "encryption_key": encryption_key,
         }
 
     values = Output.all(
@@ -49,20 +53,24 @@ with open(values_file_path, "r") as f:
         n8n_dolphin_db.name,
         n8n_tqtensor_com.hostname,
         n8n_tls_secret.metadata["name"],
+        random.RandomPassword("n8n_encryption_key", special=False, length=32).result,
     ).apply(
         lambda args: prepare_values(
-            args[0], args[1], args[2], args[3], args[4], args[5]
+            args[0], args[1], args[2], args[3], args[4], args[5], args[6]
         )
     )
 
     chart_values["config"]["database"]["postgresdb"]["host"] = values["host"]
     chart_values["config"]["database"]["postgresdb"]["user"] = values["user"]
-    chart_values["secret"]["database"]["postgresdb"]["password"] = values["password"]
     chart_values["config"]["database"]["postgresdb"]["database"] = values["database"]
-    chart_values["extraEnv"]["WEBHOOK_URL"] = values["domain"]
+    chart_values["secret"]["database"]["postgresdb"]["password"] = values["password"]
+
     chart_values["ingress"]["hosts"][0]["host"] = values["domain"]
     chart_values["ingress"]["tls"][0]["hosts"][0] = values["domain"]
     chart_values["ingress"]["tls"][0]["secretName"] = values["tls_secret_name"]
+
+    chart_values["extraEnv"]["WEBHOOK_URL"] = values["domain"]
+    chart_values["extraEnv"]["ENCRYPTION_KEY"] = values["encryption_key"]
 
 chart_file_path = str(Path(__file__).parent / "charts" / "n8n-0.25.2.tgz")
 n8n_release = k8s.helm.v3.Release(
