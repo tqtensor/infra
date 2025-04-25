@@ -125,7 +125,7 @@ proxy_config:
         aws_region_name: us-west-2
     - model_name: azure/gpt-41
       litellm_params:
-        model: azure/gpt-41
+        model: azure/gpt-4.1
         api_base: os.environ/AZURE_API_BASE
         api_key: os.environ/AZURE_API_KEY
         api_version: 2024-12-01-preview
