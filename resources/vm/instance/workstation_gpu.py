@@ -37,7 +37,7 @@ workstation_gpu_ip = gcp.compute.Address(
 workstation_gpu_instance = gcp.compute.Instance(
     "workstation_gpu_instance",
     name="workstation-gpu-instance",
-    machine_type="g2-standard-8",
+    machine_type="g2-standard-12",
     zone="us-east1-c",
     boot_disk=gcp.compute.InstanceBootDiskArgs(
         initialize_params=gcp.compute.InstanceBootDiskInitializeParamsArgs(
