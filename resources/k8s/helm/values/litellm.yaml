@@ -69,29 +69,19 @@ masterkey: changeme
 proxy_config:
   model_list:
     # At least one model must exist for the proxy to start.
-    - model_name: google/gemini-pro-1.5
-      litellm_params:
-        model: vertex_ai/gemini-1.5-pro-002
-        vertex_project: gen-lang-client-0608717027
-        vertex_location: europe-west4
-    - model_name: google/gemini-flash-1.5
-      litellm_params:
-        model: vertex_ai/gemini-1.5-flash-002
-        vertex_project: gen-lang-client-0608717027
-        vertex_location: europe-west4
-    - model_name: google/gemini-pro-2.5
-      litellm_params:
-        model: vertex_ai/gemini-2.5-pro-exp-03-25
-        vertex_project: gen-lang-client-0608717027
-        vertex_location: us-central1
     - model_name: google/gemini-flash-2.0
       litellm_params:
         model: vertex_ai/gemini-2.0-flash-001
         vertex_project: gen-lang-client-0608717027
         vertex_location: us-central1
-    - model_name: google/gemini-2.0-flash-thinking
+    - model_name: google/gemini-pro-2.5
       litellm_params:
-        model: vertex_ai/gemini-2.0-flash-thinking-exp-01-21
+        model: vertex_ai/gemini-2.5-pro-exp-03-25
+        vertex_project: gen-lang-client-0608717027
+        vertex_location: us-central1
+    - model_name: google/gemini-flash-2.5
+      litellm_params:
+        model: vertex_ai/gemini-2.5-flash-preview-04-17
         vertex_project: gen-lang-client-0608717027
         vertex_location: us-central1
     - model_name: google/multilingual-embedding
