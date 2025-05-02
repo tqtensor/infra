@@ -19,3 +19,17 @@ nginx_ip_eu_west_4 = gcp.compute.Address(
     region=gcp_pixelml_eu_west_4.region,
     opts=OPTS,
 )
+
+default_firewall = gcp.compute.Firewall(
+    "default_firewall",
+    name="global-firewall",
+    network="default",
+    allows=[
+        {
+            "protocol": "tcp",
+            "ports": ["22", "80", "443", "30000-39999"],
+        },
+    ],
+    source_ranges=["0.0.0.0/0"],
+    opts=OPTS,
+)

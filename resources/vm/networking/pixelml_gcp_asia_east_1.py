@@ -10,6 +10,7 @@ OPTS = get_options(
     provider="gcp",
 )
 
+
 nginx_ip_asia_east_1 = gcp.compute.Address(
     "nginx_ip_asia_east_1",
     name="nginx-controller-ip",
