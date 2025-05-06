@@ -56,7 +56,7 @@ with open(values_file_path, "r") as f:
         krp_eu_central_1_rds_cluster_instance.endpoint,
         airbyte_user.name,
         airbyte_db.name,
-    ).apply(lambda args: prepare_values(args[0], args[1], args[2]))
+    ).apply(lambda args: prepare_values(host=args[0], user=args[1], database=args[2]))
 
     chart_values["global"]["database"]["host"] = values["host"]
     chart_values["global"]["database"]["user"] = values["user"]
