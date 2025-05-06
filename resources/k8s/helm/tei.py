@@ -6,7 +6,7 @@ import pulumi_random as random
 import yaml
 from pulumi import Output
 
-from resources.cloudflare import tei_origin_ca_cert, tei_private_key, tei_unifai_dev
+from resources.cloudflare import tei_origin_ca_cert, tei_private_key, tei_tqtensor_com
 from resources.k8s.providers import k8s_provider_auto_pilot_eu_west_4
 from resources.utils import encode_tls_secret_data
 
@@ -34,8 +34,8 @@ tei_api_key = random.RandomPassword("tei_api_key", special=False, length=64)
 values_file_path = Path(__file__).parent / "values" / "tei.yaml"
 with open(values_file_path, "r") as f:
     chart_values = yaml.safe_load(f)
-    chart_values["ingress"]["hosts"][0]["host"] = tei_unifai_dev.hostname
-    chart_values["ingress"]["tls"][0]["hosts"][0] = tei_unifai_dev.hostname
+    chart_values["ingress"]["hosts"][0]["host"] = tei_tqtensor_com.hostname
+    chart_values["ingress"]["tls"][0]["hosts"][0] = tei_tqtensor_com.hostname
     chart_values["env"] = [
         {
             "name": "API_KEY",
