@@ -36,6 +36,7 @@ secret_values = fill_in_password(
 values_file_path = Path(__file__).parent / "values" / "jupyterhub.yaml"
 with open(values_file_path, "r") as f:
     chart_values = yaml.safe_load(f)
+
     chart_values["hub"]["config"]["DummyAuthenticator"]["password"] = secret_values[
         "dummy_password"
     ]

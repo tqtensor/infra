@@ -55,7 +55,7 @@ def encode_tls_secret_data(cert_pem: str, key_pem: str) -> Dict[str, str]:
     }
 
 
-def fill_in_password(encrypted_yaml: str, value_path: str):
+def fill_in_password(encrypted_yaml: str, value_path: str, prefix: str = ""):
     # Set update flag
     is_updated = False
 
@@ -80,7 +80,7 @@ def fill_in_password(encrypted_yaml: str, value_path: str):
     )
 
     # Get the raw string value from the password Output
-    password_value = password.result.apply(lambda x: x)
+    password_value = password.result.apply(lambda x: prefix + "-" + x)
 
     # Traverse the value path
     current = credentials

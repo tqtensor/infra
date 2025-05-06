@@ -71,6 +71,28 @@ nextcloud_tqtensor_com = cloudflare.Record(
     opts=OPTS,
 )
 
+tei_tqtensor_com = cloudflare.Record(
+    "tei_tqtensor_com",
+    name="tei",
+    ttl=1,
+    type="A",
+    content=nginx_ip_eu_west_4.address,
+    zone_id=tqtensor_com.id,
+    proxied=True,
+    opts=OPTS,
+)
+
+vllm_tqtensor_com = cloudflare.Record(
+    "vllm_tqtensor_com",
+    name="vllm",
+    ttl=1,
+    type="A",
+    content=nginx_ip_eu_west_4.address,
+    zone_id=tqtensor_com.id,
+    proxied=True,
+    opts=OPTS,
+)
+
 wedding_tqtensor_com = cloudflare.Record(
     "wedding_tqtensor_com",
     name="www.wedding",

@@ -9,20 +9,6 @@ OPTS = get_options(
 )
 
 
-workstation_firewall = gcp.compute.Firewall(
-    "workstation_firewall",
-    name="workstation-firewall",
-    network="default",
-    allows=[
-        {
-            "protocol": "tcp",
-            "ports": ["22", "80", "443"],
-        },
-    ],
-    source_ranges=["0.0.0.0/0"],
-    opts=OPTS,
-)
-
 boot_image = gcp.compute.get_image(family="debian-11", project="debian-cloud")
 
 workstation_ip = gcp.compute.Address(
@@ -36,7 +22,7 @@ workstation_ip = gcp.compute.Address(
 workstation_instance = gcp.compute.Instance(
     "workstation_instance",
     name="workstation-instance",
-    machine_type="e2-highmem-8",
+    machine_type="e2-standard-4",
     zone="us-east1-c",
     boot_disk=gcp.compute.InstanceBootDiskArgs(
         initialize_params=gcp.compute.InstanceBootDiskInitializeParamsArgs(
