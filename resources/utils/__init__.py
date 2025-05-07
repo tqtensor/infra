@@ -9,6 +9,7 @@ from typing import Dict, Union
 import pulumi
 import pulumi_gcp as gcp
 import pulumi_random as random
+import pulumiverse_scaleway as sw
 import yaml
 from pulumi import Output
 from sopsy import Sops
@@ -120,15 +121,19 @@ def normalize_email(email: str):
     return f"{username}@{email.split('@')[1]}".strip().lower()
 
 
-def create_kubeconfig(cluster: gcp.container.Cluster):
-    return Output.all(
-        cluster.name,
-        cluster.endpoint,
-        cluster.master_auth,
-        cluster.project,
-        cluster.location,
-    ).apply(
-        lambda args: f"""apiVersion: v1
+def create_kubeconfig(
+    cluster: Union[gcp.container.Cluster, sw.kubernetes.Cluster],
+) -> str:
+    if isinstance(cluster, gcp.container.Cluster):
+        return Output.all(
+            cluster.name,
+            cluster.endpoint,
+            cluster.master_auth,
+            cluster.project,
+            cluster.location,
+        ).apply(
+            lambda args: f"""
+apiVersion: v1
 clusters:
 - cluster:
     certificate-authority-data: {args[2]['cluster_ca_certificate']}
@@ -151,7 +156,11 @@ users:
       installHint: Install gke-gcloud-auth-plugin for use with kubectl by following https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
       provideClusterInfo: true
 """
-    )
+        )
+    elif isinstance(cluster, sw.kubernetes.Cluster):
+        return cluster.kubeconfigs[0].config_file
+    else:
+        raise ValueError(f"Unsupported cluster type: {type(cluster)}")
 
 
 def create_docker_config(provider: str, server: str):
