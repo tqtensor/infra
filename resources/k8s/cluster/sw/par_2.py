@@ -2,9 +2,7 @@ import pulumiverse_scaleway as sw
 
 from resources.utils import get_options
 
-OPTS = get_options(
-    profile="pixelml", region="par-2", type="resource", provider="sw", protect=False
-)
+OPTS = get_options(profile="pixelml", region="par-2", type="resource", provider="sw")
 REGION = "fr-par"
 ZONE = "fr-par-2"
 
@@ -13,10 +11,16 @@ par_2_pn = sw.network.PrivateNetwork(
     "par_2_pn", name="kube-network-par-2", region=REGION, opts=OPTS
 )
 
+nginx_ip_par_2 = sw.loadbalancers.Ip("nginx_ip_par_2", zone=ZONE, opts=OPTS)
+nginx_lb_par_2 = sw.loadbalancers.LoadBalancer(
+    "nginx_lb_par_2", ip_ids=[nginx_ip_par_2.id], type="LB-S", zone=ZONE, opts=OPTS
+)
+
 par_2_cluster = sw.kubernetes.Cluster(
     "par_2_cluster",
     name="par-2-cluster",
     version="1.32.3",
+    type="kapsule-dedicated-4",
     cni="cilium",
     private_network_id=par_2_pn.id,
     delete_additional_resources=False,
@@ -24,15 +28,15 @@ par_2_cluster = sw.kubernetes.Cluster(
     opts=OPTS,
 )
 
-par_2_standard_pool = sw.kubernetes.Pool(
-    "par_2_standard_pool",
+par_2_normal_pool = sw.kubernetes.Pool(
+    "par_2_normal_pool",
     cluster_id=par_2_cluster.id,
-    name="par-2-standard-pool",
-    node_type="DEV1-M",
-    size=0,
+    name="par-2-normal-pool",
+    node_type="DEV1-L",
+    size=1,
     autoscaling=True,
     autohealing=True,
-    min_size=0,
+    min_size=1,
     max_size=3,
     region=REGION,
     zone=ZONE,
@@ -44,10 +48,10 @@ par_2_l4_pool = sw.kubernetes.Pool(
     cluster_id=par_2_cluster.id,
     name="par-2-l4-pool",
     node_type="L4-1-24G",
-    size=0,
+    size=1,
     autoscaling=True,
     autohealing=True,
-    min_size=0,
+    min_size=1,
     max_size=3,
     region=REGION,
     zone=ZONE,
