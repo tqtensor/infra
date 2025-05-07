@@ -1,0 +1,40 @@
+import pulumiverse_scaleway as sw
+
+from resources.utils import get_options
+
+OPTS = get_options(
+    profile="pixelml", region="par-2", type="resource", provider="sw", protect=False
+)
+REGION = "fr-par"
+ZONE = "fr-par-2"
+
+
+par_2_pn = sw.network.PrivateNetwork(
+    "par_2_pn", name="kube-network-par-2", region=REGION, opts=OPTS
+)
+
+par_2_cluster = sw.kubernetes.Cluster(
+    "par_2_cluster",
+    name="par-2-cluster",
+    version="1.32.3",
+    cni="cilium",
+    private_network_id=par_2_pn.id,
+    delete_additional_resources=False,
+    region=REGION,
+    opts=OPTS,
+)
+
+par_2_standard_pool = sw.kubernetes.Pool(
+    "par_2_standard_pool",
+    cluster_id=par_2_cluster.id,
+    name="par-2-standard-pool",
+    node_type="DEV1-M",
+    size=1,
+    autoscaling=True,
+    autohealing=True,
+    min_size=1,
+    max_size=3,
+    region=REGION,
+    zone=ZONE,
+    opts=OPTS,
+)
