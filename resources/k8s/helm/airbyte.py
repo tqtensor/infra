@@ -8,6 +8,7 @@ from pulumi import Output
 
 from resources.cloudflare import airbyte_origin_ca_cert, airbyte_private_key
 from resources.db import airbyte_db, airbyte_user, krp_eu_central_1_rds_cluster_instance
+from resources.k8s.cluster import par_2_normal_pool
 from resources.k8s.providers import k8s_provider_par_2
 from resources.utils import encode_tls_secret_data
 
@@ -52,6 +53,17 @@ with open(values_file_path, "r") as f:
             "database": database,
         }
 
+    def set_node_selector(config, selector):
+        if isinstance(config, dict):
+            if "nodeSelector" in config:
+                config["nodeSelector"] = selector
+
+            for v in config.values():
+                set_node_selector(v, selector)
+        elif isinstance(config, list):
+            for item in config:
+                set_node_selector(item, selector)
+
     values = Output.all(
         krp_eu_central_1_rds_cluster_instance.endpoint,
         airbyte_user.name,
@@ -61,6 +73,13 @@ with open(values_file_path, "r") as f:
     chart_values["global"]["database"]["host"] = values["host"]
     chart_values["global"]["database"]["user"] = values["user"]
     chart_values["global"]["database"]["database"] = values["database"]
+
+    set_node_selector(
+        chart_values,
+        Output.all(par_2_normal_pool.name).apply(
+            lambda args: {"k8s.scaleway.com/pool-name": args[0]}
+        ),
+    )
 
 airbyte_release = k8s.helm.v3.Release(
     "airbyte",

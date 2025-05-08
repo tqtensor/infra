@@ -42,7 +42,7 @@ values_file_path = Path(__file__).parent / "values" / "vllm.yaml"
 with open(values_file_path, "r") as f:
     chart_values = yaml.safe_load(f)
 
-    def apply_hf_token(token: str):
+    def apply_hf_token(token):
         for model in chart_values["servingEngineSpec"]["modelSpec"]:
             model["hf_token"] = token
 
