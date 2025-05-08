@@ -12,8 +12,18 @@ par_2_pn = sw.network.PrivateNetwork(
 )
 
 nginx_ip_par_2 = sw.loadbalancers.Ip("nginx_ip_par_2", zone=ZONE, opts=OPTS)
+
 nginx_lb_par_2 = sw.loadbalancers.LoadBalancer(
-    "nginx_lb_par_2", ip_ids=[nginx_ip_par_2.id], type="LB-S", zone=ZONE, opts=OPTS
+    "nginx_lb_par_2",
+    ip_ids=[nginx_ip_par_2.id],
+    type="LB-S",
+    private_networks=[
+        {
+            "private_network_id": par_2_pn.id,
+        }
+    ],
+    zone=ZONE,
+    opts=OPTS,
 )
 
 par_2_cluster = sw.kubernetes.Cluster(
