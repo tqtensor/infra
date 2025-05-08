@@ -38,21 +38,6 @@ par_2_cluster = scw.kubernetes.Cluster(
     opts=OPTS,
 )
 
-par_2_normal_pool = scw.kubernetes.Pool(
-    "par_2_normal_pool",
-    cluster_id=par_2_cluster.id,
-    name="par-2-normal-pool",
-    node_type="DEV1-XL",
-    size=1,
-    autoscaling=True,
-    autohealing=True,
-    min_size=1,
-    max_size=10,
-    region=REGION,
-    zone=ZONE,
-    opts=OPTS,
-)
-
 par_2_l4_pool = scw.kubernetes.Pool(
     "par_2_l4_pool",
     cluster_id=par_2_cluster.id,

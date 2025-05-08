@@ -8,11 +8,10 @@ from pulumi import Output
 
 from resources.cloudflare import airbyte_origin_ca_cert, airbyte_private_key
 from resources.db import airbyte_db, airbyte_user, krp_eu_central_1_rds_cluster_instance
-from resources.k8s.cluster import par_2_normal_pool
-from resources.k8s.providers import k8s_provider_par_2
+from resources.k8s.providers import k8s_provider_auto_pilot_eu_west_4
 from resources.utils import encode_tls_secret_data
 
-OPTS = pulumi.ResourceOptions(provider=k8s_provider_par_2)
+OPTS = pulumi.ResourceOptions(provider=k8s_provider_auto_pilot_eu_west_4)
 
 
 airbyte_ns = k8s.core.v1.Namespace(
@@ -75,10 +74,11 @@ with open(values_file_path, "r") as f:
     chart_values["global"]["database"]["database"] = values["database"]
 
     set_node_selector(
-        chart_values,
-        Output.all(par_2_normal_pool.name).apply(
-            lambda args: {"k8s.scaleway.com/pool-name": args[0]}
-        ),
+        config=chart_values,
+        selector={
+            "cloud.google.com/compute-class": "Performance",
+            "cloud.google.com/machine-family": "c3",
+        },
     )
 
 airbyte_release = k8s.helm.v3.Release(
@@ -94,7 +94,7 @@ airbyte_release = k8s.helm.v3.Release(
         values=chart_values,
     ),
     opts=pulumi.ResourceOptions(
-        provider=k8s_provider_par_2,
+        provider=k8s_provider_auto_pilot_eu_west_4,
         depends_on=[airbyte_ns],
     ),
 )
