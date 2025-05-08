@@ -4,7 +4,7 @@ from typing import Union
 import pulumi
 import pulumi_gcp as gcp
 import pulumi_kubernetes as k8s
-import pulumiverse_scaleway as sw
+import pulumiverse_scaleway as scw
 import yaml
 
 from resources.k8s import nginx_lb_par_2
@@ -18,7 +18,7 @@ from resources.vm import nginx_ip_eu_west_4
 def deploy_nginx(
     region: str,
     provider: k8s.Provider,
-    public_ip: Union[gcp.compute.Address, sw.loadbalancers.LoadBalancer],
+    public_ip: Union[gcp.compute.Address, scw.loadbalancers.LoadBalancer],
 ):
     opts = pulumi.ResourceOptions(
         provider=provider,
@@ -35,7 +35,7 @@ def deploy_nginx(
         chart_values = yaml.safe_load(f)
         if isinstance(public_ip, gcp.compute.Address):
             chart_values["controller"]["service"]["loadBalancerIP"] = public_ip.address
-        elif isinstance(public_ip, sw.loadbalancers.LoadBalancer):
+        elif isinstance(public_ip, scw.loadbalancers.LoadBalancer):
             del chart_values["controller"]["service"]["loadBalancerIP"]
             chart_values["controller"]["service"]["annotations"] = {
                 "service.beta.kubernetes.io/scw-loadbalancer-id": public_ip.id

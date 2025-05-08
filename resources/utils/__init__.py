@@ -9,7 +9,7 @@ from typing import Dict, Union
 import pulumi
 import pulumi_gcp as gcp
 import pulumi_random as random
-import pulumiverse_scaleway as sw
+import pulumiverse_scaleway as scw
 import yaml
 from pulumi import Output
 from sopsy import Sops
@@ -122,7 +122,7 @@ def normalize_email(email: str):
 
 
 def create_kubeconfig(
-    cluster: Union[gcp.container.Cluster, sw.kubernetes.Cluster],
+    cluster: Union[gcp.container.Cluster, scw.kubernetes.Cluster],
 ) -> str:
     if isinstance(cluster, gcp.container.Cluster):
         return Output.all(
@@ -157,7 +157,7 @@ users:
       provideClusterInfo: true
 """
         )
-    elif isinstance(cluster, sw.kubernetes.Cluster):
+    elif isinstance(cluster, scw.kubernetes.Cluster):
         return cluster.kubeconfigs[0].config_file
     else:
         raise ValueError(f"Unsupported cluster type: {type(cluster)}")

@@ -5,7 +5,7 @@ Avoids accidental delete of resources or circular dependencies.
 import pulumi
 import pulumi_cloudflare as cloudflare
 import pulumi_gcp as gcp
-import pulumiverse_scaleway as sw
+import pulumiverse_scaleway as scw
 
 from resources.providers import gcp_pixelml_us_central_1
 
@@ -39,7 +39,7 @@ ind_cloudrun_sa = gcp.serviceaccount.Account.get(
 )
 
 # Scaleway
-ind_nginx_ip_par_2 = sw.loadbalancers.Ip.get(
+ind_nginx_ip_par_2 = scw.loadbalancers.Ip.get(
     "ind_nginx_ip_par_2",
     id="fr-par-2/bfe06b07-8bf4-4568-bf50-6813edbd3cc1",
 )

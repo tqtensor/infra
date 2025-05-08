@@ -1,4 +1,4 @@
-import pulumiverse_scaleway as sw
+import pulumiverse_scaleway as scw
 
 from resources.utils import get_options
 
@@ -7,13 +7,13 @@ REGION = "fr-par"
 ZONE = "fr-par-2"
 
 
-par_2_pn = sw.network.PrivateNetwork(
+par_2_pn = scw.network.PrivateNetwork(
     "par_2_pn", name="kube-network-par-2", region=REGION, opts=OPTS
 )
 
-nginx_ip_par_2 = sw.loadbalancers.Ip("nginx_ip_par_2", zone=ZONE, opts=OPTS)
+nginx_ip_par_2 = scw.loadbalancers.Ip("nginx_ip_par_2", zone=ZONE, opts=OPTS)
 
-nginx_lb_par_2 = sw.loadbalancers.LoadBalancer(
+nginx_lb_par_2 = scw.loadbalancers.LoadBalancer(
     "nginx_lb_par_2",
     ip_ids=[nginx_ip_par_2.id],
     type="LB-S",
@@ -26,7 +26,7 @@ nginx_lb_par_2 = sw.loadbalancers.LoadBalancer(
     opts=OPTS,
 )
 
-par_2_cluster = sw.kubernetes.Cluster(
+par_2_cluster = scw.kubernetes.Cluster(
     "par_2_cluster",
     name="par-2-cluster",
     version="1.32.3",
@@ -38,7 +38,7 @@ par_2_cluster = sw.kubernetes.Cluster(
     opts=OPTS,
 )
 
-par_2_normal_pool = sw.kubernetes.Pool(
+par_2_normal_pool = scw.kubernetes.Pool(
     "par_2_normal_pool",
     cluster_id=par_2_cluster.id,
     name="par-2-normal-pool",
@@ -53,7 +53,7 @@ par_2_normal_pool = sw.kubernetes.Pool(
     opts=OPTS,
 )
 
-par_2_l4_pool = sw.kubernetes.Pool(
+par_2_l4_pool = scw.kubernetes.Pool(
     "par_2_l4_pool",
     cluster_id=par_2_cluster.id,
     name="par-2-l4-pool",
