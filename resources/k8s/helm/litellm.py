@@ -118,6 +118,6 @@ litellm_release = k8s.helm.v3.Release(
     ),
     opts=pulumi.ResourceOptions(
         provider=k8s_provider_auto_pilot_eu_west_4,
-        depends_on=[litellm_ns, litellm_tls_secret],
+        depends_on=[litellm_ns],
     ),
 )
