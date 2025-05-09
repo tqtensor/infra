@@ -52,6 +52,17 @@ with open(values_file_path, "r") as f:
             "database": database,
         }
 
+    def set_node_selector(config, selector):
+        if isinstance(config, dict):
+            if "nodeSelector" in config:
+                config["nodeSelector"] = selector
+
+            for v in config.values():
+                set_node_selector(v, selector)
+        elif isinstance(config, list):
+            for item in config:
+                set_node_selector(item, selector)
+
     values = Output.all(
         krp_eu_central_1_rds_cluster_instance.endpoint,
         airbyte_user.name,
@@ -62,11 +73,19 @@ with open(values_file_path, "r") as f:
     chart_values["global"]["database"]["user"] = values["user"]
     chart_values["global"]["database"]["database"] = values["database"]
 
+    set_node_selector(
+        config=chart_values,
+        selector={
+            "cloud.google.com/compute-class": "Performance",
+            "cloud.google.com/machine-family": "c3",
+        },
+    )
+
 airbyte_release = k8s.helm.v3.Release(
     "airbyte",
     k8s.helm.v3.ReleaseArgs(
         chart="airbyte",
-        version="1.5.1",
+        version="1.6.1",
         name="airbyte",
         repository_opts=k8s.helm.v3.RepositoryOptsArgs(
             repo="https://airbytehq.github.io/helm-charts",

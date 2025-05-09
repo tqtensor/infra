@@ -153,10 +153,7 @@ volumeMounts: []
 #   readOnly: true
 
 nodeSelector:
-  cloud.google.com/gke-spot: 'true'
-  cloud.google.com/gke-accelerator: nvidia-l4
-  cloud.google.com/compute-class: Accelerator
-  cloud.google.com/gke-gpu-driver-version: latest
+  k8s.scaleway.com/pool-name: ''
 
 tolerations: []
 

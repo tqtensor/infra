@@ -6,10 +6,11 @@ import yaml
 from pulumi import Output
 
 from resources.cloudflare import tei_origin_ca_cert, tei_private_key
-from resources.k8s.providers import k8s_provider_auto_pilot_eu_west_4
+from resources.k8s.cluster import par_2_l4_pool
+from resources.k8s.providers import k8s_provider_par_2
 from resources.utils import encode_tls_secret_data, fill_in_password
 
-OPTS = pulumi.ResourceOptions(provider=k8s_provider_auto_pilot_eu_west_4)
+OPTS = pulumi.ResourceOptions(provider=k8s_provider_par_2)
 
 
 tei_ns = k8s.core.v1.Namespace(
@@ -43,6 +44,10 @@ with open(values_file_path, "r") as f:
         }
     ]
 
+    chart_values["nodeSelector"]["k8s.scaleway.com/pool-name"] = Output.all(
+        par_2_l4_pool.name
+    ).apply(lambda args: args[0])
+
 tei_release = k8s.helm.v3.Release(
     "tei",
     k8s.helm.v3.ReleaseArgs(
@@ -56,7 +61,7 @@ tei_release = k8s.helm.v3.Release(
         values=chart_values,
     ),
     opts=pulumi.ResourceOptions(
-        provider=k8s_provider_auto_pilot_eu_west_4,
+        provider=k8s_provider_par_2,
         depends_on=[tei_ns],
     ),
 )

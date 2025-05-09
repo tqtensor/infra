@@ -3,6 +3,7 @@ controller:
   replicaCount: 2
   service:
     loadBalancerIP: 1.1.1.1
+    annotations: {}
   publishService:
     enabled: true
   resources:
