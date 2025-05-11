@@ -66,6 +66,14 @@ ragflow:
   deployment:
     strategy:
     resources:
+      requests:
+        cpu: '2'
+        memory: '4Gi'
+        ephemeral-storage: 10Gi
+      limits:
+        cpu: '4'
+        memory: '8Gi'
+        ephemeral-storage: 10Gi
   service:
     # Use LoadBalancer to expose the web interface externally
     type: ClusterIP
@@ -154,6 +162,11 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
+          backend:
+            service:
+              name: ragflow
+              port:
+                number: 8080
   tls:
     - secretName: ragflow-tls-secret
       hosts:
