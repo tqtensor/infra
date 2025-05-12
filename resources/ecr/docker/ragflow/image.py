@@ -15,8 +15,8 @@ _ = Output.all(gcp_pixelml_us_central_1.region).apply(
 
 current_file_path = pathlib.Path(__file__).resolve()
 
-jupyterhub_image = docker_build.Image(
-    "jupyterhub_image",
+ragflow_image = docker_build.Image(
+    "ragflow_image",
     tags=[
         Output.concat(
             gcp_pixelml_us_central_1.region,
@@ -24,7 +24,7 @@ jupyterhub_image = docker_build.Image(
             gcp_pixelml_us_central_1.project,
             "/",
             pixelml_us_central_1_registry.repository_id,
-            "/jupyterhub:latest",
+            "/ragflow:latest",
         ),
     ],
     context=docker_build.BuildContextArgs(
@@ -39,11 +39,11 @@ jupyterhub_image = docker_build.Image(
     push=True,
 )
 
-jupyterhub_image_uri = Output.concat(
+ragflow_image_uri = Output.concat(
     gcp_pixelml_us_central_1.region,
     "-docker.pkg.dev/",
     gcp_pixelml_us_central_1.project,
     "/",
     pixelml_us_central_1_registry.repository_id,
-    "/jupyterhub",
+    "/ragflow",
 )
