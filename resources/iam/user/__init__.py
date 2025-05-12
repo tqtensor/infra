@@ -4,5 +4,6 @@ from .cloudrun import *  # noqa
 from .fast import *  # noqa
 from .gdrive import *  # noqa
 from .nextcloud import *  # noqa
+from .ragflow import *  # noqa
 from .scw_genai import *  # noqa
 from .vertex import *  # noqa

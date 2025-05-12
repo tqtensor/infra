@@ -39,3 +39,10 @@ pulumi_bucket = aws.s3.Bucket(
     acl="private",
     opts=UE1_OPTS,
 )
+
+ragflow_bucket = aws.s3.Bucket(
+    "ragflow_bucket",
+    bucket="tqtensor-ragflow-bucket-eu",
+    acl="private",
+    opts=EC1_OPTS,
+)

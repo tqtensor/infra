@@ -4,14 +4,17 @@ env:
   # Available options:
   # - `elasticsearch` (default)
   # - `infinity` (https://github.com/infiniflow/infinity)
+  # Disable user registration
+  REGISTER_ENABLED: '0'
+
+  # Log level
+  LOG_LEVELS: 'root=DEBUG'
+
   # DOC_ENGINE: elasticsearch
   DOC_ENGINE: infinity
 
   # The version of Elasticsearch.
   STACK_VERSION: '8.11.3'
-
-  # The password for Elasticsearch
-  ELASTIC_PASSWORD: infini_rag_flow_helm
 
   # PostgreSQL
   DB_TYPE: postgres
@@ -20,22 +23,19 @@ env:
   POSTGRES_PASSWORD: ''
   POSTGRES_DBNAME: rag_flow
 
-  # The password for MySQL
-  MYSQL_PASSWORD: infini_rag_flow_helm
-  # The database of the MySQL service to use
-  MYSQL_DBNAME: rag_flow
-
-  # The username for MinIO.
-  MINIO_ROOT_USER: rag_flow
-  # The password for MinIO
-  MINIO_PASSWORD: infini_rag_flow_helm
+  # AWS S3
+  STORAGE_IMPL: AWS_S3
+  AWS_S3_BUCKET: ''
+  AWS_S3_REGION: ''
+  AWS_S3_ACCESS_KEY: ''
+  AWS_S3_SECRET_KEY: ''
 
   # The password for Redis
   REDIS_PASSWORD: infini_rag_flow_helm
 
   # The RAGFlow Docker image to download.
   # Defaults to the v0.18.0-slim edition, which is the RAGFlow Docker image without embedding models.
-  RAGFLOW_IMAGE: us-central1-docker.pkg.dev/gen-lang-client-0608717027/pixelml-us-central-1-registry/ragflow@sha256:f7c971f550eeb49e978dd1b3515a4bf415fff04d86f89864c948924358a5c16e
+  RAGFLOW_IMAGE: ''
   #
   # To download the RAGFlow Docker image with embedding models, uncomment the following line instead:
   # RAGFLOW_IMAGE: infiniflow/ragflow:v0.18.0

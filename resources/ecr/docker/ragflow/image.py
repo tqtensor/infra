@@ -39,11 +39,9 @@ ragflow_image = docker_build.Image(
     push=True,
 )
 
-ragflow_image_uri = Output.concat(
+ragflow_image_uri = Output.all(
     gcp_pixelml_us_central_1.region,
-    "-docker.pkg.dev/",
     gcp_pixelml_us_central_1.project,
-    "/",
     pixelml_us_central_1_registry.repository_id,
-    "/ragflow",
-)
+    ragflow_image.digest,
+).apply(lambda args: f"{args[0]}-docker.pkg.dev/{args[1]}/{args[2]}/ragflow@{args[3]}")
