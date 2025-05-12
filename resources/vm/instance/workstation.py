@@ -22,7 +22,7 @@ workstation_ip = gcp.compute.Address(
 workstation_instance = gcp.compute.Instance(
     "workstation_instance",
     name="workstation-instance",
-    machine_type="e2-standard-4",
+    machine_type="e2-highmem-8",
     zone="us-east1-c",
     boot_disk=gcp.compute.InstanceBootDiskArgs(
         initialize_params=gcp.compute.InstanceBootDiskInitializeParamsArgs(
