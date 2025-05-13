@@ -8,9 +8,7 @@ from pulumi import Output
 from resources.cloudflare import ragflow_origin_ca_cert, ragflow_private_key
 from resources.db import krp_eu_central_1_rds_cluster_instance, ragflow_db, ragflow_user
 from resources.ecr import ragflow_image, ragflow_image_uri
-from resources.iam import ragflow_s3_access_key
 from resources.k8s.providers import k8s_provider_par_2
-from resources.storage import ragflow_bucket
 from resources.utils import encode_tls_secret_data
 
 OPTS = pulumi.ResourceOptions(provider=k8s_provider_par_2)
@@ -47,10 +45,6 @@ if values_file_path.exists():
         user,
         password,
         database,
-        bucket,
-        region,
-        access_key,
-        secret_key,
         image_uri,
     ):
         return {
@@ -58,10 +52,6 @@ if values_file_path.exists():
             "user": user,
             "password": password,
             "database": database,
-            "bucket": bucket,
-            "region": region,
-            "access_key": access_key,
-            "secret_key": secret_key,
             "image_uri": image_uri,
         }
 
@@ -70,10 +60,6 @@ if values_file_path.exists():
         ragflow_user.name,
         ragflow_user.password,
         ragflow_db.name,
-        ragflow_bucket.bucket,
-        ragflow_bucket.region,
-        ragflow_s3_access_key.id,
-        ragflow_s3_access_key.secret,
         ragflow_image_uri,
     ).apply(
         lambda args: prepare_values(
@@ -82,10 +68,6 @@ if values_file_path.exists():
             args[2],
             args[3],
             args[4],
-            args[5],
-            args[6],
-            args[7],
-            args[8],
         )
     )
 
@@ -93,11 +75,6 @@ if values_file_path.exists():
     chart_values["env"]["POSTGRES_USER"] = values["user"]
     chart_values["env"]["POSTGRES_PASSWORD"] = values["password"]
     chart_values["env"]["POSTGRES_DBNAME"] = values["database"]
-
-    chart_values["env"]["AWS_S3_BUCKET"] = values["bucket"]
-    chart_values["env"]["AWS_S3_REGION"] = values["region"]
-    chart_values["env"]["AWS_S3_ACCESS_KEY"] = values["access_key"]
-    chart_values["env"]["AWS_S3_SECRET_KEY"] = values["secret_key"]
 
     chart_values["env"]["RAGFLOW_IMAGE"] = values["image_uri"]
 
