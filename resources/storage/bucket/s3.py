@@ -2,8 +2,12 @@ import pulumi_aws as aws
 
 from resources.utils import get_options
 
-EC1_OPTS = get_options(profile="personal", region="eu-central-1", type="resource")
-UE1_OPTS = get_options(profile="personal", region="us-east-1", type="resource")
+EC1_OPTS = get_options(
+    profile="personal", region="eu-central-1", type="resource", protect=False
+)
+UE1_OPTS = get_options(
+    profile="personal", region="us-east-1", type="resource", protect=False
+)
 
 
 arq_bucket = aws.s3.Bucket(

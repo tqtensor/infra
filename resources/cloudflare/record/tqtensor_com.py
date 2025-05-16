@@ -12,7 +12,7 @@ airbyte_tqtensor_com = cloudflare.Record(
     name="airbyte",
     ttl=1,
     type="A",
-    content=nginx_ip_eu_west_4.address,
+    content=ind_nginx_ip_par_2.ip_address,
     zone_id=tqtensor_com.id,
     proxied=True,
     opts=OPTS,
@@ -67,6 +67,28 @@ nextcloud_tqtensor_com = cloudflare.Record(
     ttl=1,
     type="A",
     content=nginx_ip_eu_west_4.address,
+    zone_id=tqtensor_com.id,
+    proxied=True,
+    opts=OPTS,
+)
+
+ragflow_tqtensor_com = cloudflare.Record(
+    "ragflow_tqtensor_com",
+    name="ragflow",
+    ttl=1,
+    type="A",
+    content=ind_nginx_ip_par_2.ip_address,
+    zone_id=tqtensor_com.id,
+    proxied=True,
+    opts=OPTS,
+)
+
+s3_tqtensor_com = cloudflare.Record(
+    "s3_tqtensor_com",
+    name="s3",
+    ttl=1,
+    type="A",
+    content=ind_nginx_ip_par_2.ip_address,
     zone_id=tqtensor_com.id,
     proxied=True,
     opts=OPTS,
