@@ -83,6 +83,17 @@ ragflow_tqtensor_com = cloudflare.Record(
     opts=OPTS,
 )
 
+s3_tqtensor_com = cloudflare.Record(
+    "s3_tqtensor_com",
+    name="s3",
+    ttl=1,
+    type="A",
+    content=ind_nginx_ip_par_2.ip_address,
+    zone_id=tqtensor_com.id,
+    proxied=True,
+    opts=OPTS,
+)
+
 tei_tqtensor_com = cloudflare.Record(
     "tei_tqtensor_com",
     name="tei",
