@@ -40,8 +40,43 @@ def transform_noobaa_resources(res: dict):
 
 
 az_s3gw = k8s.yaml.ConfigFile(
-    "noobaa-azure-resources",
+    "az_s3gw",
     file=az_s3gw_yaml_path,
     transformations=[transform_noobaa_resources],
     opts=OPTS,
+)
+
+az_s3gw_bucket_configmap = k8s.core.v1.ConfigMap.get(
+    "az_s3gw_bucket_configmap",
+    f"noobaa/{bucket_claim_name}",
+    opts=pulumi.ResourceOptions(provider=k8s_provider_par_2, depends_on=[az_s3gw]),
+)
+
+az_s3gw_bucket_secret = k8s.core.v1.Secret.get(
+    "az_s3gw_bucket_secret",
+    f"noobaa/{bucket_claim_name}",
+    opts=pulumi.ResourceOptions(provider=k8s_provider_par_2, depends_on=[az_s3gw]),
+)
+
+pulumi.export(
+    "S3: Azure: bucket_name",
+    az_s3gw_bucket_configmap.data.apply(lambda data: data.get("BUCKET_NAME")),
+)
+
+pulumi.export(
+    "S3: Azure: aws_access_key_id",
+    az_s3gw_bucket_secret.data.apply(
+        lambda data: Output.all(data.get("AWS_ACCESS_KEY_ID")).apply(
+            lambda keys: base64.b64decode(keys[0]).decode() if keys[0] else None
+        )
+    ),
+)
+
+pulumi.export(
+    "S3: Azure: aws_secret_access_key",
+    az_s3gw_bucket_secret.data.apply(
+        lambda data: Output.all(data.get("AWS_SECRET_ACCESS_KEY")).apply(
+            lambda keys: base64.b64decode(keys[0]).decode() if keys[0] else None
+        )
+    ),
 )
