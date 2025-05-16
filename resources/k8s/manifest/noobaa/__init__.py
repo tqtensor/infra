@@ -1,2 +1,2 @@
+from .az_s3gw import *  # noqa
 from .gw import *  # noqa
-from .s3gw import *  # noqa
