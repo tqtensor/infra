@@ -15,10 +15,10 @@ from resources.storage import (
 OPTS = pulumi.ResourceOptions(provider=k8s_provider_par_2)
 
 
-az_s3gw_dev_yaml_path = str(Path(__file__).parent / "artifacts" / "az_s3gw_dev.yaml")
+az_s3gw_yaml_path = str(Path(__file__).parent / "artifacts" / "az_s3gw.yaml")
 
 bucket_claim_name = "az-s3gw-bucket-claim"
-bucket_prefix = "az-s3gw-data-dev"
+bucket_prefix = "az-s3gw-data"
 
 
 def transform_noobaa_resources(res: dict):
@@ -39,9 +39,9 @@ def transform_noobaa_resources(res: dict):
     return res
 
 
-az_s3gw_dev = k8s.yaml.ConfigFile(
+az_s3gw = k8s.yaml.ConfigFile(
     "noobaa-azure-resources",
-    file=az_s3gw_dev_yaml_path,
+    file=az_s3gw_yaml_path,
     transformations=[transform_noobaa_resources],
     opts=OPTS,
 )
