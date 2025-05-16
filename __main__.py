@@ -8,6 +8,7 @@ from resources.iam import *  # noqa
 from resources.k8s import *  # noqa
 from resources.kms import *  # noqa
 from resources.providers import *  # noqa
+from resources.resource_group import *  # noqa
 from resources.serverless import *  # noqa
 from resources.storage import *  # noqa
 from resources.vm import *  # noqa
