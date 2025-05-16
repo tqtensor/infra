@@ -1,0 +1,26 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: noobaa-s3-ingress
+  namespace: noobaa
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: 'HTTPS'
+    nginx.ingress.kubernetes.io/proxy-body-size: '0'
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - s3.tqtensor.com
+      secretName: s3-tls-secret
+  rules:
+    - host: s3.tqtensor.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: s3
+                port:
+                  number: 443
