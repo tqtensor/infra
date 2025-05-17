@@ -4,9 +4,7 @@ from pulumi import Output
 from resources.resource_group import victor_resource_group
 from resources.utils import get_options
 
-OPTS = get_options(
-    profile="quickqr", region="sweden", type="resource", provider="az", protect=False
-)
+OPTS = get_options(profile="quickqr", region="sweden", type="resource", provider="az")
 
 
 openai_account = az.cognitiveservices.Account(

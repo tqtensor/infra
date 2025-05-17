@@ -2,21 +2,25 @@ import pulumi_aws as aws
 
 from resources.utils import get_options
 
-EC1_OPTS = get_options(
-    profile="personal", region="eu-central-1", type="resource", protect=False
-)
-UE1_OPTS = get_options(
-    profile="personal", region="us-east-1", type="resource", protect=False
-)
+AS1_OPTS = get_options(profile="personal", region="ap-southeast-1", type="resource")
+EC1_OPTS = get_options(profile="personal", region="eu-central-1", type="resource")
+UE1_OPTS = get_options(profile="personal", region="us-east-1", type="resource")
 
 
-arq_bucket = aws.s3.Bucket(
+arq_bucket = aws.s3.Bucket.get(
     "arq_bucket",
+    id="tqtensor-arq-bucket-eu",
     bucket="tqtensor-arq-bucket-eu",
-    acl="private",
-    lifecycle_rules=[
-        aws.s3.BucketLifecycleRuleArgs(
-            enabled=True,
+    opts=EC1_OPTS,
+)
+
+arq_bucket_lifecycle = aws.s3.BucketLifecycleConfigurationV2(
+    "arq_bucket_lifecycle",
+    bucket=arq_bucket.id,
+    rules=[
+        aws.s3.BucketLifecycleConfigurationV2RuleArgs(
+            id="archive",
+            status="Enabled",
             transitions=[
                 aws.s3.BucketLifecycleRuleTransitionArgs(
                     days=30, storage_class="INTELLIGENT_TIERING"
@@ -25,9 +29,34 @@ arq_bucket = aws.s3.Bucket(
                     days=180, storage_class="DEEP_ARCHIVE"
                 ),
             ],
-        )
+        ),
     ],
     opts=EC1_OPTS,
+)
+
+fast_bucket = aws.s3.Bucket.get(
+    "fast_bucket",
+    id="tqtensor-fast-backup",
+    bucket="tqtensor-fast-backup",
+    opts=AS1_OPTS,
+)
+
+fast_bucket_lifecycle = aws.s3.BucketLifecycleConfigurationV2(
+    "fast_bucket_lifecycle",
+    bucket=fast_bucket.id,
+    rules=[
+        aws.s3.BucketLifecycleConfigurationV2RuleArgs(
+            id="archive",
+            status="Enabled",
+            transitions=[
+                aws.s3.BucketLifecycleRuleTransitionArgs(
+                    days=3,
+                    storage_class="GLACIER",
+                ),
+            ],
+        ),
+    ],
+    opts=AS1_OPTS,
 )
 
 n8n_bucket = aws.s3.Bucket(
