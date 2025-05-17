@@ -2,6 +2,7 @@ import pulumi
 import pulumi_aws as aws
 from pulumi import Output
 
+from resources.storage.bucket.s3 import fast_bucket
 from resources.utils import get_options
 
 OPTS = get_options(profile="personal", region="us-east-1", type="resource")
@@ -18,12 +19,12 @@ fast_s3_policy = aws.iam.Policy(
                 {
                     "Effect": "Allow",
                     "Action": ["s3:ListBucket"],
-                    "Resource": "arn:aws:s3:::tqtensor-fast-backup",
+                    "Resource": fast_bucket.arn,
                 },
                 {
                     "Effect": "Allow",
                     "Action": ["s3:PutObject", "s3:GetObject", "s3:DeleteObject"],
-                    "Resource": "arn:aws:s3:::tqtensor-fast-backup/*",
+                    "Resource": fast_bucket.arn.apply(lambda arn: f"{arn}/*"),
                 },
             ],
         }
