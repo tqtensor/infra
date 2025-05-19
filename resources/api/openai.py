@@ -66,3 +66,23 @@ gpt_41 = az.cognitiveservices.Deployment(
     },
     opts=OPTS,
 )
+
+gpt_45 = az.cognitiveservices.Deployment(
+    "gpt_45",
+    account_name=openai_account.name,
+    deployment_name="gpt-4.5",
+    properties={
+        "model": {
+            "format": "OpenAI",
+            "name": "gpt-4.5-preview",
+            "version": "2025-02-27",
+        },
+        "version_upgrade_option": az.cognitiveservices.DeploymentModelVersionUpgradeOption.ONCE_NEW_DEFAULT_VERSION_AVAILABLE,
+    },
+    resource_group_name=victor_resource_group.name,
+    sku={
+        "capacity": 100,
+        "name": "GlobalStandard",
+    },
+    opts=OPTS,
+)
