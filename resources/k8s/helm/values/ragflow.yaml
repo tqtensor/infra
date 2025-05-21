@@ -73,11 +73,16 @@ env:
 ragflow:
   deployment:
     strategy:
+      type: Recreate
     resources:
       requests:
         cpu: '4'
         memory: '8Gi'
         ephemeral-storage: 10Gi
+      limits:
+        cpu: '6'
+        memory: '40Gi'
+        nvidia.com/gpu: '1'
   service:
     # Use LoadBalancer to expose the web interface externally
     type: ClusterIP
@@ -97,6 +102,9 @@ infinity:
     strategy:
       type: Recreate
     resources:
+      requests:
+        cpu: '4'
+        memory: '8Gi'
   service:
     type: ClusterIP
 
