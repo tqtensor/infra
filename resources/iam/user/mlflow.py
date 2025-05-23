@@ -1,7 +1,6 @@
 import pulumi_aws as aws
 from pulumi import Output
 
-from resources.constants import stx_iam_user
 from resources.storage.bucket.s3 import mlflow_bucket
 from resources.utils import get_options
 
@@ -37,13 +36,6 @@ mlflow_s3_policy = aws.iam.Policy(
 mlflow_policy_attachment = aws.iam.UserPolicyAttachment(
     "mlflow_policy_attachment",
     user=mlflow_user.name,
-    policy_arn=mlflow_s3_policy.arn,
-    opts=OPTS,
-)
-
-mlflow_stx_policy_attachment = aws.iam.UserPolicyAttachment(
-    "mlflow_stx_policy_attachment",
-    user=stx_iam_user.name,
     policy_arn=mlflow_s3_policy.arn,
     opts=OPTS,
 )
