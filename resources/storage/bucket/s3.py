@@ -1,5 +1,9 @@
-import pulumi_aws as aws
+import json
 
+import pulumi_aws as aws
+from pulumi import Output
+
+from resources.constants import stx_iam_user
 from resources.utils import get_options
 
 AS1_OPTS = get_options(profile="personal", region="ap-southeast-1", type="resource")
@@ -63,6 +67,33 @@ mlflow_bucket = aws.s3.Bucket(
     "mlflow_bucket",
     bucket="tqtensor-mlflow-bucket-eu",
     acl="private",
+    opts=EC1_OPTS,
+)
+
+mlflow_stx_bucket_policy = aws.s3.BucketPolicy(
+    "mlflow_stx_bucket_policy",
+    bucket=mlflow_bucket.id,
+    policy=Output.all(stx_iam_user.arn, mlflow_bucket.arn).apply(
+        lambda args: json.dumps(
+            {
+                "Version": "2012-10-17",
+                "Statement": [
+                    {
+                        "Effect": "Allow",
+                        "Principal": {"AWS": args[0]},
+                        "Action": ["s3:ListBucket"],
+                        "Resource": args[1],
+                    },
+                    {
+                        "Effect": "Allow",
+                        "Principal": {"AWS": args[0]},
+                        "Action": ["s3:PutObject", "s3:GetObject", "s3:DeleteObject"],
+                        "Resource": args[1] + "/*",
+                    },
+                ],
+            }
+        )
+    ),
     opts=EC1_OPTS,
 )
 
