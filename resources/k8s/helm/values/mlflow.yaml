@@ -201,7 +201,7 @@ artifactRoot:
   # -- Specifies if you want to use AWS S3 Mlflow Artifact Root
   s3:
     # -- Specifies if you want to use AWS S3 Mlflow Artifact Root
-    enabled: false
+    enabled: true
     # -- S3 bucket name
     bucket: '' # required
     # -- S3 bucket folder. If you want to use root level, please don't set anything.
