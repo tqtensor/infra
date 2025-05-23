@@ -13,7 +13,9 @@ from resources.db import (
     mlflow_db,
     mlflow_user,
 )
+from resources.iam import mlflow_access_key
 from resources.k8s.providers import k8s_provider_auto_pilot_eu_west_4
+from resources.storage import mlflow_bucket
 from resources.utils import encode_tls_secret_data, fill_in_password
 
 OPTS = pulumi.ResourceOptions(provider=k8s_provider_auto_pilot_eu_west_4)
@@ -49,6 +51,9 @@ with open(values_file_path, "r") as f:
         auth_password,
         auth_database,
         admin_password,
+        aws_access_key_id,
+        aws_secret_access_key,
+        bucket,
     ):
         return {
             "host": host,
@@ -60,6 +65,9 @@ with open(values_file_path, "r") as f:
             "auth_password": auth_password,
             "auth_database": auth_database,
             "admin_password": admin_password,
+            "aws_access_key_id": aws_access_key_id,
+            "aws_secret_access_key": aws_secret_access_key,
+            "bucket": bucket,
         }
 
     values = Output.all(
@@ -72,6 +80,9 @@ with open(values_file_path, "r") as f:
         mlflow_auth_user.password,
         mlflow_auth_db.name,
         secret_values["adminPassword"],
+        mlflow_access_key.id,
+        mlflow_access_key.secret,
+        mlflow_bucket.id,
     ).apply(
         lambda args: prepare_values(
             args[0],
@@ -83,6 +94,9 @@ with open(values_file_path, "r") as f:
             args[6],
             args[7],
             args[8],
+            args[9],
+            args[10],
+            args[11],
         )
     )
 
@@ -97,6 +111,12 @@ with open(values_file_path, "r") as f:
     chart_values["auth"]["postgres"]["password"] = values["auth_password"]
 
     chart_values["auth"]["adminPassword"] = values["admin_password"]
+
+    chart_values["artifactRoot"]["s3"]["awsAccessKeyId"] = values["aws_access_key_id"]
+    chart_values["artifactRoot"]["s3"]["awsSecretAccessKey"] = values[
+        "aws_secret_access_key"
+    ]
+    chart_values["artifactRoot"]["s3"]["bucket"] = values["bucket"]
 
 
 mlflow_release = k8s.helm.v3.Release(

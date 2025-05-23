@@ -32,3 +32,6 @@ aws_pixelml_eu_central_1 = aws.Provider(
 aws_pixelml_us_east_1 = aws.Provider(
     "aws-pixelml-us-east-1", region="us-east-1", profile="pixelml"
 )
+
+# STX AWS account
+aws_stx_us_east_1 = aws.Provider("aws-stx-us-east-1", region="us-east-1", profile="stx")

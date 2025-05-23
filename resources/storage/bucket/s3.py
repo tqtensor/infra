@@ -59,6 +59,13 @@ fast_bucket_lifecycle = aws.s3.BucketLifecycleConfigurationV2(
     opts=AS1_OPTS,
 )
 
+mlflow_bucket = aws.s3.Bucket(
+    "mlflow_bucket",
+    bucket="tqtensor-mlflow-bucket-eu",
+    acl="private",
+    opts=EC1_OPTS,
+)
+
 n8n_bucket = aws.s3.Bucket(
     "n8n_bucket",
     bucket="tqtensor-n8n-bucket-eu",
