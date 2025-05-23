@@ -16,6 +16,14 @@ jupyterhub_db, jupyterhub_user, jupyterhub_grant_privileges = create_db_and_user
     username="jupyterhub", opts=OPTS
 )
 
+# MLFlow
+mlflow_db, mlflow_user, mlflow_grant_privileges = create_db_and_user(
+    username="mlflow", opts=OPTS
+)
+mlflow_auth_db, mlflow_auth_user, mlflow_auth_grant_privileges = create_db_and_user(
+    username="mlflow_auth", opts=OPTS
+)
+
 # LiteLLM
 litellm_db, litellm_user, litellm_grant_privileges = create_db_and_user(
     username="litellm", opts=OPTS
