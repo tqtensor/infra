@@ -4,9 +4,7 @@ from pulumi import Output
 from resources.resource_group import victor_resource_group
 from resources.utils import get_options
 
-OPTS = get_options(
-    profile="quickqr", region="sweden", type="resource", provider="az", protect=False
-)
+OPTS = get_options(profile="quickqr", region="sweden", type="resource", provider="az")
 
 
 openai_account = az.cognitiveservices.Account(
@@ -58,6 +56,26 @@ gpt_41 = az.cognitiveservices.Deployment(
             "format": "OpenAI",
             "name": "gpt-4.1",
             "version": "2025-04-14",
+        },
+        "version_upgrade_option": az.cognitiveservices.DeploymentModelVersionUpgradeOption.ONCE_NEW_DEFAULT_VERSION_AVAILABLE,
+    },
+    resource_group_name=victor_resource_group.name,
+    sku={
+        "capacity": 100,
+        "name": "GlobalStandard",
+    },
+    opts=OPTS,
+)
+
+gpt_45 = az.cognitiveservices.Deployment(
+    "gpt_45",
+    account_name=openai_account.name,
+    deployment_name="gpt-4.5",
+    properties={
+        "model": {
+            "format": "OpenAI",
+            "name": "gpt-4.5-preview",
+            "version": "2025-02-27",
         },
         "version_upgrade_option": az.cognitiveservices.DeploymentModelVersionUpgradeOption.ONCE_NEW_DEFAULT_VERSION_AVAILABLE,
     },

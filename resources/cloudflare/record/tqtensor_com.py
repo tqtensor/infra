@@ -39,6 +39,17 @@ jupyterhub_tqtensor_com = cloudflare.Record(
     opts=OPTS,
 )
 
+mlflow_tqtensor_com = cloudflare.Record(
+    "mlflow_tqtensor_com",
+    name="mlflow",
+    ttl=1,
+    type="A",
+    content=nginx_ip_eu_west_4.address,
+    zone_id=tqtensor_com.id,
+    proxied=True,
+    opts=OPTS,
+)
+
 litellm_tqtensor_com = cloudflare.Record(
     "litellm_tqtensor_com",
     name="litellm",
