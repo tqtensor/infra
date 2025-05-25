@@ -1,4 +1,4 @@
-FROM infiniflow/ragflow:v0.19.0
+FROM infiniflow/ragflow:v0.18.0
 
 # Set default environment variables (can be overridden at runtime)
 ENV RAGFLOW_WORKERS=5
