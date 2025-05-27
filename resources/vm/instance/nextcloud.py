@@ -48,4 +48,4 @@ nextcloud_instance = gcp.compute.Instance(
     opts=OPTS,
 )
 
-pulumi.export("VM: Nextcloud: IP", nextcloud_ip.address)
+pulumi.export("VM: NextCloud: IP", nextcloud_ip.address)

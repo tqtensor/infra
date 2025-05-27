@@ -27,7 +27,7 @@ default_firewall = gcp.compute.Firewall(
     allows=[
         {
             "protocol": "tcp",
-            "ports": ["22", "80", "443", "30000-39999"],
+            "ports": ["22", "80", "443", "8080", "8443", "30000-39999"],
         },
     ],
     source_ranges=["0.0.0.0/0"],
