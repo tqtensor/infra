@@ -56,11 +56,7 @@ def encode_tls_secret_data(cert_pem: str, key_pem: str) -> Dict[str, str]:
     }
 
 
-def fill_in_password(encrypted_yaml: str, value_path: str, prefix: str = ""):
-    # Set update flag
-    is_updated = False
-
-    # Decrypt the encrypted YAML file using sops
+def decode_password(encrypted_yaml: str) -> dict:
     sops_decoder = Sops(encrypted_yaml)
     try:
         credentials = sops_decoder.decrypt()
@@ -69,6 +65,15 @@ def fill_in_password(encrypted_yaml: str, value_path: str, prefix: str = ""):
     except Exception as e:
         pulumi.log.error(f"Failed to decrypt {encrypted_yaml}: {e}")
         raise
+    return credentials
+
+
+def fill_in_password(encrypted_yaml: str, value_path: str, prefix: str = ""):
+    # Set update flag
+    is_updated = False
+
+    # Decrypt the encrypted YAML file using sops
+    credentials = decode_password(encrypted_yaml=encrypted_yaml)
 
     # Generate a random password
     password = random.RandomPassword(

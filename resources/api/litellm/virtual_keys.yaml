@@ -1,0 +1,14 @@
+continue_dev: ENC[AES256_GCM,data:oYRDMlMCpZOxty35co2TeLLxr0JMCALDiRY3v86ii+Gc0LM=,iv:QBhMP2GwD1eNgbSI06/++mmTSY202WnTpey4PcEd5uA=,tag:mx11/ZFX/R3AFcs8RExqWA==,type:str]
+nextchat: ENC[AES256_GCM,data:1DpHiX3rTVBe4JEDV0/r1+KkYYTPYBUyNCHcDTQE6YzsXNM=,iv:uBpcUSKfBe3q1ovc2NpswgK3QhCR/PMUCV/RiYmwcgw=,tag:18Ut5tSGydBYUBDpgIV5Hw==,type:str]
+ragflow: ENC[AES256_GCM,data:j3XT+WC4qitpeCMrjr1VhkbTQwo9sP24tuug5sv06cVdzUM=,iv:ets0RLlrh6yYpMqzlH2nMQ67cNjP48IURQppcy7l2kU=,tag:NHpbY+F7T7vSwfnKfkYpUA==,type:str]
+stx: ENC[AES256_GCM,data:YgnshjgGggoAXhnfkwptgtS85NK4zHIOolfStCZvEd276tA=,iv:WVvy1HrkKxs45uQ2XbohiBeS+rC2qDzjjyAh8rKMkIo=,tag:ynS8WtBKcNm6goLvWctPVA==,type:str]
+sops:
+    kms:
+        - arn: arn:aws:kms:us-east-1:100874337694:key/c7fd5cab-3baf-40c1-a129-3d4a58c70cd3
+          created_at: "2025-05-28T06:11:16Z"
+          enc: AQICAHhZfWILurHAsFqnvtAb0hx4XSK8Hq5vHmUDi3UArtcCpgEAUVStLne+vozO7AKB12DFAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMF34qFIBav4f/leuVAgEQgDtwhuz+C4ENrEF52UF++RVax1f3Vf0hbnU6fwo1RICKPl7epnGgaP+0h2drLV7RXEa2YugphHm1xmjbeQ==
+          aws_profile: personal
+    lastmodified: "2025-05-28T06:11:16Z"
+    mac: ENC[AES256_GCM,data:anAfZyqKnVGE4BxlZU8nhl6m6RJgiUhjUfdX+DY+GxzV3Z+d+sM3NZ8DVDi85F7NL8MVSocX7J/LLaMhk9yRPeLSZ80Cnkuctenp3SvxDUyZmfWKuZC0iZlzguFepC/P5VpmIl69l61+qD7kyrafCXTlrsb0CG0ysvSjjFIEyRc=,iv:hGYZIKvIMObzmXNn9uCXL6AN9B/88G0Bqvmqy33EcRc=,tag:pYeEzD6SB9owpGVCMBqzmQ==,type:str]
+    unencrypted_suffix: _unencrypted
+    version: 3.10.1
