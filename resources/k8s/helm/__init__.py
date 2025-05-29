@@ -5,4 +5,3 @@ from .mlflow import *  # noqa
 from .n8n import *  # noqa
 from .nginx import *  # noqa
 from .ragflow import *  # noqa
-from .tei import *  # noqa

@@ -1,6 +1,6 @@
 import pulumi_cloudflare as cloudflare
 
-from resources.constants import ind_nginx_ip_par_2, tqtensor_com
+from resources.constants import nginx_ip_par_2, tqtensor_com
 from resources.utils import get_options
 from resources.vm import nextcloud_ip, nginx_ip_eu_west_4
 
@@ -12,7 +12,7 @@ airbyte_tqtensor_com = cloudflare.Record(
     name="airbyte",
     ttl=1,
     type="A",
-    content=ind_nginx_ip_par_2.ip_address,
+    content=nginx_ip_par_2.ip_address,
     zone_id=tqtensor_com.id,
     proxied=True,
     opts=OPTS,
@@ -55,7 +55,7 @@ litellm_tqtensor_com = cloudflare.Record(
     name="litellm",
     ttl=1,
     type="A",
-    content=ind_nginx_ip_par_2.ip_address,
+    content=nginx_ip_par_2.ip_address,
     zone_id=tqtensor_com.id,
     proxied=True,
     opts=OPTS,
@@ -88,7 +88,7 @@ ragflow_tqtensor_com = cloudflare.Record(
     name="ragflow",
     ttl=1,
     type="A",
-    content=ind_nginx_ip_par_2.ip_address,
+    content=nginx_ip_par_2.ip_address,
     zone_id=tqtensor_com.id,
     proxied=True,
     opts=OPTS,
@@ -99,7 +99,7 @@ s3_tqtensor_com = cloudflare.Record(
     name="s3",
     ttl=1,
     type="A",
-    content=ind_nginx_ip_par_2.ip_address,
+    content=nginx_ip_par_2.ip_address,
     zone_id=tqtensor_com.id,
     proxied=True,
     opts=OPTS,
@@ -110,7 +110,7 @@ tei_tqtensor_com = cloudflare.Record(
     name="tei",
     ttl=1,
     type="A",
-    content=ind_nginx_ip_par_2.ip_address,
+    content=nginx_ip_par_2.ip_address,
     zone_id=tqtensor_com.id,
     proxied=True,
     opts=OPTS,
