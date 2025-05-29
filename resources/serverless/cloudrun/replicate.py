@@ -4,7 +4,7 @@ import pulumi_gcp as gcp
 import yaml
 from pulumi import Output
 
-from resources.constants import ind_cloudrun_sa
+from resources.constants import imported_cloudrun_sa
 from resources.ecr import replicate_image_uris
 from resources.providers import gcp_pixelml_us_central_1
 from resources.utils import get_options
@@ -38,7 +38,7 @@ def deploy_replicate_service(image_name: str, hash: str) -> gcp.cloudrun.Service
         ).apply(lambda args: args[0]),
         template=Output.all(
             replicate_image_uris[image_name][hash],
-            ind_cloudrun_sa.email,
+            imported_cloudrun_sa.email,
         ).apply(
             lambda args: {
                 "metadata": {

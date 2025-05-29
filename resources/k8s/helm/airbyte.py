@@ -7,8 +7,8 @@ import yaml
 from pulumi import Output
 
 from resources.cloudflare import airbyte_origin_ca_cert, airbyte_private_key
+from resources.constants import normal_pool_par_2
 from resources.db import airbyte_db, airbyte_user, krp_eu_central_1_rds_cluster_instance
-from resources.k8s.cluster import par_2_normal_pool
 from resources.k8s.providers import k8s_provider_par_2
 from resources.utils import encode_tls_secret_data
 
@@ -76,7 +76,7 @@ with open(values_file_path, "r") as f:
 
     set_node_selector(
         config=chart_values,
-        selector=Output.all(par_2_normal_pool.name).apply(
+        selector=Output.all(normal_pool_par_2.name).apply(
             lambda args: {
                 "k8s.scaleway.com/pool-name": args[0],
             }

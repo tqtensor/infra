@@ -41,14 +41,29 @@ unifai_dev = cloudflare.Zone.get(
 )
 
 # GCP
-ind_cloudrun_sa = gcp.serviceaccount.Account.get(
-    "ind_cloudrun_sa",
+imported_cloudrun_sa = gcp.serviceaccount.Account.get(
+    "imported_cloudrun_sa",
     id="projects/gen-lang-client-0608717027/serviceAccounts/cloudrun-sa-us-central-1@gen-lang-client-0608717027.iam.gserviceaccount.com",
     project=gcp_pixelml_us_central_1.project,
 )
 
 # Scaleway
-ind_nginx_ip_par_2 = scw.loadbalancers.Ip.get(
-    "ind_nginx_ip_par_2",
-    id="fr-par-2/bfe06b07-8bf4-4568-bf50-6813edbd3cc1",
+cluster_par_2 = scw.kubernetes.Cluster.get(
+    "cluster_par_2",
+    id="fr-par/773f9f89-6cf5-44d9-b427-667dea748098",
+)
+
+normal_pool_par_2 = scw.kubernetes.Pool.get(
+    "normal_pool_par_2",
+    id="fr-par/58eb0502-2a3b-45e7-b180-514e1b4b0232",
+)
+
+l4_pool_par_2 = scw.kubernetes.Pool.get(
+    "l4_pool_par_2",
+    id="fr-par/65d0776e-bfc0-496e-8e87-a0ff2641ca2e",
+)
+
+nginx_ip_par_2 = scw.loadbalancers.Ip.get(
+    "nginx_ip_par_2",
+    id="fr-par-2/c8bbfacd-0e90-4297-a45a-0bbe30abceb3",
 )
