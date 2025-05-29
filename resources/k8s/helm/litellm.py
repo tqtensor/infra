@@ -2,7 +2,6 @@ import base64
 from pathlib import Path
 
 import pulumi
-import pulumi_gcp as gcp
 import pulumi_kubernetes as k8s
 import yaml
 from pulumi import Output
@@ -10,12 +9,11 @@ from pulumi import Output
 from resources.api import openai_account_details, openai_keys
 from resources.cloudflare import litellm_origin_ca_cert, litellm_private_key
 from resources.db import krp_eu_central_1_rds_cluster_instance, litellm_db, litellm_user
-from resources.iam import bedrock_access_key, vertex_sa
-from resources.k8s.providers import k8s_provider_auto_pilot_eu_west_4
-from resources.providers import gcp_pixelml_eu_west_4
+from resources.iam import bedrock_access_key, vertex_sa_key, vertex_sa_key_2nd
+from resources.k8s.providers import k8s_provider_par_2
 from resources.utils import encode_tls_secret_data, fill_in_password
 
-OPTS = pulumi.ResourceOptions(provider=k8s_provider_auto_pilot_eu_west_4)
+OPTS = pulumi.ResourceOptions(provider=k8s_provider_par_2)
 
 
 litellm_ns = k8s.core.v1.Namespace(
@@ -30,6 +28,8 @@ litellm_env_secret = k8s.core.v1.Secret(
         bedrock_access_key.secret,
         openai_account_details.properties.endpoint,
         openai_keys,
+        vertex_sa_key.private_key,
+        vertex_sa_key_2nd.private_key,
     ).apply(
         lambda args: {
             "BEDROCK_AWS_ACCESS_KEY_ID": base64.b64encode(args[0].encode()).decode(),
@@ -38,6 +38,8 @@ litellm_env_secret = k8s.core.v1.Secret(
             ).decode(),
             "AZURE_API_BASE": base64.b64encode(args[2].encode()).decode(),
             "AZURE_API_KEY": base64.b64encode(args[3].key1.encode()).decode(),
+            "VERTEX_SA_KEY": args[4],
+            "VERTEX_SA_2ND_KEY": args[5],
         }
     ),
     opts=OPTS,
@@ -70,31 +72,6 @@ litellm_tls_secret = k8s.core.v1.Secret(
     opts=OPTS,
 )
 
-litellm_sa = k8s.core.v1.ServiceAccount(
-    "litellm_sa",
-    metadata=k8s.meta.v1.ObjectMetaArgs(
-        name="litellm",
-        annotations={"iam.gke.io/gcp-service-account": vertex_sa.email},
-        namespace=litellm_ns.metadata["name"],
-    ),
-    opts=OPTS,
-)
-
-litellm_iam_member = gcp.serviceaccount.IAMMember(
-    "litellm_iam_member",
-    service_account_id=vertex_sa.name,
-    role="roles/iam.workloadIdentityUser",
-    member=Output.concat(
-        "serviceAccount:",
-        gcp_pixelml_eu_west_4.project,
-        ".svc.id.goog[",
-        litellm_sa.metadata.namespace,
-        "/",
-        litellm_sa.metadata.name,
-        "]",
-    ),
-)
-
 secrets_file_path = Path(__file__).parent / "secrets" / "litellm.yaml"
 secret_values = fill_in_password(
     encrypted_yaml=secrets_file_path, value_path="masterkey"
@@ -117,7 +94,7 @@ litellm_release = k8s.helm.v3.Release(
         version="0.4.3",
     ),
     opts=pulumi.ResourceOptions(
-        provider=k8s_provider_auto_pilot_eu_west_4,
+        provider=k8s_provider_par_2,
         depends_on=[litellm_ns],
     ),
 )
