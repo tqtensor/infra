@@ -14,7 +14,7 @@ nameOverride: litellm
 fullnameOverride: ''
 serviceAccount:
   # Specifies whether a service account should be created
-  create: false
+  create: true
   # Automatically mount a ServiceAccount's API credentials?
   automount: true
   # Annotations to add to the service account
@@ -70,31 +70,56 @@ masterkey: changeme
 proxy_config:
   model_list:
     # At least one model must exist for the proxy to start.
-    - model_name: google/gemini-flash-1.5
-      litellm_params:
-        model: vertex_ai/gemini-1.5-flash-002
-        vertex_project: gen-lang-client-0608717027
-        vertex_location: us-central1
     - model_name: google/gemini-flash-2.0
       litellm_params:
         model: vertex_ai/gemini-2.0-flash-001
-        vertex_project: gen-lang-client-0608717027
         vertex_location: us-central1
+        vertex_credentials: os.environ/VERTEX_SA_KEY
+    - model_name: google/gemini-flash-2.0
+      litellm_params:
+        model: vertex_ai/gemini-2.0-flash-001
+        vertex_location: us-central1
+        vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
     - model_name: google/gemini-flash-2.5
       litellm_params:
-        model: vertex_ai/gemini-2.5-flash-preview-04-17
-        vertex_project: gen-lang-client-0608717027
+        model: vertex_ai/gemini-2.5-flash-preview-05-20
         vertex_location: us-central1
+        vertex_credentials: os.environ/VERTEX_SA_KEY
+    - model_name: google/gemini-flash-2.5
+      litellm_params:
+        model: vertex_ai/gemini-2.5-flash-preview-05-20
+        vertex_location: us-central1
+        vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
     - model_name: google/gemini-pro-2.5
       litellm_params:
         model: vertex_ai/gemini-2.5-pro-preview-05-06
-        vertex_project: gen-lang-client-0608717027
         vertex_location: us-central1
+        vertex_credentials: os.environ/VERTEX_SA_KEY
+    - model_name: google/gemini-pro-2.5
+      litellm_params:
+        model: vertex_ai/gemini-2.5-pro-preview-05-06
+        vertex_location: us-central1
+        vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
     - model_name: google/multilingual-embedding
       litellm_params:
         model: vertex_ai/text-multilingual-embedding-002
-        vertex_project: gen-lang-client-0608717027
         vertex_location: us-central1
+        vertex_credentials: os.environ/VERTEX_SA_KEY
+    - model_name: google/multilingual-embedding
+      litellm_params:
+        model: vertex_ai/text-multilingual-embedding-002
+        vertex_location: us-central1
+        vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
+    - model_name: google/text-embedding-large
+      litellm_params:
+        model: vertex_ai/text-embedding-large-exp-03-07
+        vertex_location: us-central1
+        vertex_credentials: os.environ/VERTEX_SA_KEY
+    - model_name: google/text-embedding-large
+      litellm_params:
+        model: vertex_ai/text-embedding-large-exp-03-07
+        vertex_location: us-central1
+        vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
     - model_name: bedrock/claude-3.7-sonnet
       litellm_params:
         model: bedrock/us.anthropic.claude-3-7-sonnet-20250219-v1:0
@@ -143,6 +168,10 @@ proxy_config:
     store_prompts_in_spend_logs: true
   litellm_settings:
     drop_params: true
+  router_settings:
+    routing_strategy: simple-shuffle
+    num_retries: 2
+    timeout: 30
 resources: {}
 # We usually recommend not to specify default resources and to leave this as a conscious
 # choice for the user. This also increases chances charts run on environments with little
