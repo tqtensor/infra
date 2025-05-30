@@ -1,7 +1,7 @@
 ---
 config:
   gcp:project: gen-lang-client-0608717027
-  infra:accountId: 5b2f50a9a58974fa222a4966649c3705
+  infra:cloudflareAccountId: 5b2f50a9a58974fa222a4966649c3705
   cloudflare:apiToken:
     secure: v1:uX5HEEoMP3p2GITt:brYG4Z+smpViqILsfpT2wNt1nybWtrFfSU4IPa7/5V0InDVckFCySXj23ZLzY1aekiLmpmq3124=
   scaleway:access_key:
