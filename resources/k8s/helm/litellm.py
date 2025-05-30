@@ -7,7 +7,7 @@ import yaml
 from pulumi import Output
 
 from resources.api import openai_account_details, openai_keys
-from resources.cloudflare import litellm_origin_ca_cert, litellm_private_key
+from resources.cloudflare.tls import litellm_origin_ca_cert_bundle
 from resources.db import krp_eu_central_1_rds_cluster_instance, litellm_db, litellm_user
 from resources.iam import bedrock_access_key, vertex_sa_key, vertex_sa_key_2nd
 from resources.k8s.providers import k8s_provider_par_2
@@ -67,7 +67,8 @@ litellm_tls_secret = k8s.core.v1.Secret(
     "litellm_tls_secret",
     metadata={"name": "litellm-tls-secret", "namespace": litellm_ns.metadata["name"]},
     data=Output.all(
-        litellm_origin_ca_cert.certificate, litellm_private_key.private_key_pem
+        litellm_origin_ca_cert_bundle[0].certificate,
+        litellm_origin_ca_cert_bundle[1].private_key_pem,
     ).apply(lambda args: encode_tls_secret_data(args[0], args[1])),
     opts=OPTS,
 )

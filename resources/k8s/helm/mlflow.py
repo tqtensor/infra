@@ -5,7 +5,7 @@ import pulumi_kubernetes as k8s
 import yaml
 from pulumi import Output
 
-from resources.cloudflare import mlflow_origin_ca_cert, mlflow_private_key
+from resources.cloudflare.tls import mlflow_origin_ca_cert_bundle
 from resources.db import (
     krp_eu_central_1_rds_cluster_instance,
     mlflow_auth_db,
@@ -27,7 +27,8 @@ mlflow_tls_secret = k8s.core.v1.Secret(
     "mlflow_tls_secret",
     metadata={"name": "mlflow-tls-secret", "namespace": mlflow_ns.metadata["name"]},
     data=Output.all(
-        mlflow_origin_ca_cert.certificate, mlflow_private_key.private_key_pem
+        mlflow_origin_ca_cert_bundle[0].certificate,
+        mlflow_origin_ca_cert_bundle[1].private_key_pem,
     ).apply(lambda args: encode_tls_secret_data(args[0], args[1])),
     opts=OPTS,
 )
