@@ -6,7 +6,8 @@ import pulumi_random as random
 import yaml
 from pulumi import Output
 
-from resources.cloudflare import n8n_origin_ca_cert, n8n_private_key, n8n_tqtensor_com
+from resources.cloudflare.record import n8n_tqtensor_com
+from resources.cloudflare.tls import n8n_origin_ca_cert_bundle
 from resources.db import (
     krp_eu_central_1_rds_cluster_instance,
     n8n_dolphin_db,
@@ -24,7 +25,8 @@ n8n_tls_secret = k8s.core.v1.Secret(
     "n8n_tls_secret",
     metadata={"name": "n8n-tls-secret", "namespace": n8n_ns.metadata["name"]},
     data=Output.all(
-        n8n_origin_ca_cert.certificate, n8n_private_key.private_key_pem
+        n8n_origin_ca_cert_bundle[0].certificate,
+        n8n_origin_ca_cert_bundle[1].private_key_pem,
     ).apply(lambda args: encode_tls_secret_data(args[0], args[1])),
     opts=OPTS,
 )

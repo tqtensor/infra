@@ -5,7 +5,7 @@ import pulumi_kubernetes as k8s
 import yaml
 from pulumi import Output
 
-from resources.cloudflare import jupyterhub_origin_ca_cert, jupyterhub_private_key
+from resources.cloudflare.tls import jupyterhub_origin_ca_cert_bundle
 from resources.k8s.providers import k8s_provider_auto_pilot_eu_west_4
 from resources.utils import encode_tls_secret_data, fill_in_password
 
@@ -23,7 +23,8 @@ jupyterhub_tls_secret = k8s.core.v1.Secret(
         "namespace": jupyterhub_ns.metadata["name"],
     },
     data=Output.all(
-        jupyterhub_origin_ca_cert.certificate, jupyterhub_private_key.private_key_pem
+        jupyterhub_origin_ca_cert_bundle[0].certificate,
+        jupyterhub_origin_ca_cert_bundle[1].private_key_pem,
     ).apply(lambda args: encode_tls_secret_data(args[0], args[1])),
     opts=OPTS,
 )

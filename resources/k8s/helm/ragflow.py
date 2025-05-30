@@ -5,7 +5,7 @@ import pulumi_kubernetes as k8s
 import yaml
 from pulumi import Output
 
-from resources.cloudflare import ragflow_origin_ca_cert, ragflow_private_key
+from resources.cloudflare.tls import ragflow_origin_ca_cert_bundle
 from resources.db import krp_eu_central_1_rds_cluster_instance, ragflow_db, ragflow_user
 from resources.ecr import ragflow_image, ragflow_image_uri
 from resources.k8s.providers import k8s_provider_par_2
@@ -31,7 +31,8 @@ ragflow_tls_secret = k8s.core.v1.Secret(
     "ragflow_tls_secret",
     metadata={"name": "ragflow-tls-secret", "namespace": ragflow_ns.metadata["name"]},
     data=Output.all(
-        ragflow_origin_ca_cert.certificate, ragflow_private_key.private_key_pem
+        ragflow_origin_ca_cert_bundle[0].certificate,
+        ragflow_origin_ca_cert_bundle[1].private_key_pem,
     ).apply(lambda args: encode_tls_secret_data(args[0], args[1])),
     opts=OPTS,
 )
