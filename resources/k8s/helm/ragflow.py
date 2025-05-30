@@ -6,8 +6,9 @@ import yaml
 from pulumi import Output
 
 from resources.cloudflare.tls import ragflow_origin_ca_cert_bundle
-from resources.db import krp_eu_central_1_rds_cluster_instance, ragflow_db, ragflow_user
-from resources.ecr import ragflow_image, ragflow_image_uri
+from resources.db.psql import ragflow_db, ragflow_user
+from resources.db.rds import krp_eu_central_1_rds_cluster_instance
+from resources.ecr.docker import ragflow_image, ragflow_image_uri
 from resources.k8s.providers import k8s_provider_par_2
 from resources.utils import encode_tls_secret_data
 

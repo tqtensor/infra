@@ -2,7 +2,8 @@ import pulumi_cloudflare as cloudflare
 
 from resources.constants import nginx_ip_par_2, tqtensor_com
 from resources.utils import get_options
-from resources.vm import nextcloud_ip, nginx_ip_eu_west_4
+from resources.vm.instance import nextcloud_ip
+from resources.vm.networking import nginx_ip_eu_west_4
 
 OPTS = get_options(provider="cloudflare")
 

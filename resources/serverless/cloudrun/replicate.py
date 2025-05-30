@@ -5,7 +5,7 @@ import yaml
 from pulumi import Output
 
 from resources.constants import imported_cloudrun_sa
-from resources.ecr import replicate_image_uris
+from resources.ecr.docker import replicate_image_uris
 from resources.providers import gcp_pixelml_us_central_1
 from resources.utils import get_options
 

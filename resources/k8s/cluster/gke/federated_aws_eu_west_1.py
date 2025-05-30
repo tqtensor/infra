@@ -1,11 +1,15 @@
 import pulumi_gcp as gcp
 from pulumi import Output
 
-from resources.iam import gke_api_role, gke_control_plane_profile, gke_node_pool_profile
+from resources.iam.role import (
+    gke_api_role,
+    gke_control_plane_profile,
+    gke_node_pool_profile,
+)
 from resources.kms import gke_key
 from resources.providers import gcp_pixelml_eu_west_1
 from resources.utils import get_options
-from resources.vm import pixelml_eu_central_1_vpc
+from resources.vm.networking import pixelml_eu_central_1_vpc
 
 OPTS = get_options(
     profile="pixelml",

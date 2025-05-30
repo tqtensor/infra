@@ -8,7 +8,8 @@ from pulumi import Output
 
 from resources.cloudflare.tls import airbyte_origin_ca_cert_bundle
 from resources.constants import normal_pool_par_2
-from resources.db import airbyte_db, airbyte_user, krp_eu_central_1_rds_cluster_instance
+from resources.db.psql import airbyte_db, airbyte_user
+from resources.db.rds import krp_eu_central_1_rds_cluster_instance
 from resources.k8s.providers import k8s_provider_par_2
 from resources.utils import encode_tls_secret_data
 
