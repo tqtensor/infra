@@ -1,4 +1,4 @@
-from resources.cloudflare.record.tqtensor_com import (
+from resources.cloudflare.record import (
     airbyte_tqtensor_com,
     jupyterhub_tqtensor_com,
     litellm_tqtensor_com,

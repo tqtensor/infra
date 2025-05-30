@@ -8,7 +8,7 @@ import pulumiverse_scaleway as scw
 import yaml
 
 from resources.k8s.providers import k8s_provider_auto_pilot_eu_west_4
-from resources.vm import nginx_ip_eu_west_4
+from resources.vm.networking import nginx_ip_eu_west_4
 
 
 def deploy_nginx(

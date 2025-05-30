@@ -4,7 +4,7 @@ import pulumi
 import pulumi_aws as aws
 
 from resources.utils import get_options
-from resources.vm import krypfolio_eu_central_1_vpc
+from resources.vm.networking import krypfolio_eu_central_1_vpc
 
 OPTS = get_options(profile="krypfolio", region="eu-central-1", type="resource")
 
