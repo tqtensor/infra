@@ -1,3 +1,4 @@
+---
 # Based on docker compose .env file
 env:
   # The type of doc engine to use.
@@ -5,38 +6,35 @@ env:
   # - `elasticsearch` (default)
   # - `infinity` (https://github.com/infiniflow/infinity)
   # Disable user registration
-  REGISTER_ENABLED: 0
+    REGISTER_ENABLED: 0
 
   # Number of workers
-  RAGFLOW_WORKERS: 10
+    RAGFLOW_WORKERS: 10
 
   # Log level
-  LOG_LEVELS: 'root=DEBUG'
+    LOG_LEVELS: root=DEBUG
 
   # DOC_ENGINE: elasticsearch
-  DOC_ENGINE: infinity
-
-  # The version of Elasticsearch.
-  STACK_VERSION: '8.11.3'
+    DOC_ENGINE: infinity
 
   # PostgreSQL
-  DB_TYPE: postgres
-  POSTGRES_HOST: ''
-  POSTGRES_USER: rag_flow
-  POSTGRES_PASSWORD: ''
-  POSTGRES_DBNAME: rag_flow
+    DB_TYPE: postgres
+    POSTGRES_HOST: ''
+    POSTGRES_USER: rag_flow
+    POSTGRES_PASSWORD: ''
+    POSTGRES_DBNAME: rag_flow
 
   # The username for MinIO
-  MINIO_ROOT_USER: rag_flow
+    MINIO_ROOT_USER: rag_flow
   # The password for MinIO
-  MINIO_PASSWORD: infini_rag_flow_helm
+    MINIO_PASSWORD: infini_rag_flow_helm
 
   # The password for Redis
-  REDIS_PASSWORD: infini_rag_flow_helm
+    REDIS_PASSWORD: infini_rag_flow_helm
 
   # The RAGFlow Docker image to download.
   # Defaults to the v0.18.0-slim edition, which is the RAGFlow Docker image without embedding models.
-  RAGFLOW_IMAGE: ''
+    RAGFLOW_IMAGE: ''
   #
   # To download the RAGFlow Docker image with embedding models, uncomment the following line instead:
   # RAGFLOW_IMAGE: infiniflow/ragflow:v0.18.0
@@ -60,7 +58,7 @@ env:
   #
 
   # The local time zone.
-  TIMEZONE: 'Europe/Amsterdam'
+    TIMEZONE: Europe/Amsterdam
 
   # Uncomment the following line if you have limited access to huggingface.co:
   # HF_ENDPOINT: https://hf-mirror.com
@@ -71,117 +69,86 @@ env:
   # After making the change, ensure you update `client_max_body_size` in nginx/nginx.conf correspondingly.
 
 ragflow:
-  deployment:
-    strategy:
-      type: Recreate
-    resources:
-      requests:
-        cpu: '4'
-        memory: '8Gi'
-        ephemeral-storage: 10Gi
-      limits:
-        cpu: '6'
-        memory: '40Gi'
-        nvidia.com/gpu: '1'
-  service:
-    # Use LoadBalancer to expose the web interface externally
-    type: ClusterIP
-  api:
+    deployment:
+        strategy:
+            type: Recreate
+        resources:
+            requests:
+                cpu: '4'
+                memory: 8Gi
+                ephemeral-storage: 10Gi
     service:
-      enabled: true
-      type: ClusterIP
+    # Use LoadBalancer to expose the web interface externally
+        type: ClusterIP
+    api:
+        service:
+            enabled: true
+            type: ClusterIP
 
 infinity:
-  image:
-    repository: infiniflow/infinity
-    tag: v0.6.0-dev3
-  storage:
-    className:
-    capacity: 5Gi
-  deployment:
-    strategy:
-      type: Recreate
-    resources:
-      requests:
-        cpu: '4'
-        memory: '8Gi'
-  service:
-    type: ClusterIP
-
-elasticsearch:
-  storage:
-    className:
-    capacity: 20Gi
-  deployment:
-    strategy:
-    resources:
-      requests:
-        cpu: '4'
-        memory: '16Gi'
-  service:
-    type: ClusterIP
+    image:
+        repository: infiniflow/infinity
+        tag: v0.6.0-dev3
+    storage:
+        className:
+        capacity: 5Gi
+    deployment:
+        strategy:
+            type: Recreate
+        resources:
+            requests:
+                cpu: '4'
+                memory: 8Gi
+    service:
+        type: ClusterIP
 
 minio:
-  image:
-    repository: quay.io/minio/minio
-    tag: RELEASE.2023-12-20T01-00-02Z
-  storage:
-    className:
-    capacity: 5Gi
-  deployment:
-    strategy:
-    resources:
-  service:
-    type: ClusterIP
-
-mysql:
-  image:
-    repository: mysql
-    tag: 8.0.39
-  storage:
-    className:
-    capacity: 5Gi
-  deployment:
-    strategy:
-      type: Recreate
-    resources:
-  service:
-    type: ClusterIP
+    image:
+        repository: quay.io/minio/minio
+        tag: RELEASE.2023-12-20T01-00-02Z
+    storage:
+        className:
+        capacity: 5Gi
+    deployment:
+        strategy:
+        resources:
+    service:
+        type: ClusterIP
 
 redis:
-  image:
-    repository: valkey/valkey
-    tag: 8
-  storage:
-    className:
-    capacity: 5Gi
-  persistence:
-    enabled: true
-  deployment:
-    strategy:
-    resources:
-  service:
-    type: ClusterIP
+    image:
+        repository: valkey/valkey
+        tag: 8
+    storage:
+        className:
+        capacity: 5Gi
+    persistence:
+        enabled: true
+    deployment:
+        strategy:
+        resources:
+    service:
+        type: ClusterIP
 
 # This block is for setting up web service ingress. For more information, see:
 # https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
-  enabled: true
-  className: 'nginx'
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: ragflow.tqtensor.com
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-          backend:
-            service:
-              name: ragflow
-              port:
-                number: 8080
-  tls:
-    - secretName: ragflow-tls-secret
-      hosts:
-        - ragflow.tqtensor.com
+    enabled: true
+    className: nginx
+    annotations:
+        kubernetes.io/ingress.class: nginx
+  # kubernetes.io/tls-acme: "true"
+    hosts:
+        - host: ragflow.tqtensor.com
+          paths:
+              - path: /
+                pathType: ImplementationSpecific
+                backend:
+                    service:
+                        name: ragflow
+                        port:
+                            number: 8080
+    tls:
+        - secretName: ragflow-tls-secret
+          hosts:
+              - ragflow.tqtensor.com

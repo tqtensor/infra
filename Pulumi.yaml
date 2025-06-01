@@ -1,12 +1,12 @@
 ---
 name: infra
 runtime:
-  name: python
-  options:
-    toolchain: poetry
+    name: python
+    options:
+        toolchain: poetry
 config:
-  pulumi:tags:
-    value:
-      pulumi:template: python
+    pulumi:tags:
+        value:
+            pulumi:template: python
 backend:
-  url: s3://tqtensor-pulumi-bucket-us?region=us-east-1
+    url: s3://tqtensor-pulumi-bucket-us?region=us-east-1
