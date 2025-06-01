@@ -110,3 +110,10 @@ pulumi_bucket = aws.s3.Bucket(
     acl="private",
     opts=UE1_OPTS,
 )
+
+velero_bucket = aws.s3.Bucket(
+    "velero_bucket",
+    bucket="tqtensor-velero-bucket-eu",
+    acl="private",
+    opts=EC1_OPTS,
+)

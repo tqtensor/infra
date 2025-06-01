@@ -2,8 +2,8 @@ from .arq import *  # noqa
 from .bedrock import *  # noqa
 from .cloudrun import *  # noqa
 from .fast import *  # noqa
-from .gdrive import *  # noqa
 from .mlflow import *  # noqa
 from .nextcloud import *  # noqa
 from .scw_genai import *  # noqa
+from .velero import *  # noqa
 from .vertex import *  # noqa
