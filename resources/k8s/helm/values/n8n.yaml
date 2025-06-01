@@ -1,26 +1,27 @@
+---
 # Default helm values for n8n.
 # Default values within the n8n application can be found under https://github.com/n8n-io/n8n/blob/master/packages/cli/src/config/index.ts
 n8n:
   # if not specified, n8n on first launch creates a random encryption key for encrypting saved credentials and saves it in the ~/.n8n folder
-  encryption_key:
+    encryption_key:
 defaults:
 
 config:
-  database:
-    type: postgresdb
-    postgresdb:
-      database: # PostgresDB Database - default: n8n
-      host: # PostgresDB Host - default: localhost
-      port: 5432
-      user: # PostgresDB User - default: root
+    database:
+        type: postgresdb
+        postgresdb:
+            database: # PostgresDB Database - default: n8n
+            host: # PostgresDB Host - default: localhost
+            port: 5432
+            user: # PostgresDB User - default: root
 
 # existingSecret and secret are exclusive, with existingSecret taking priority.
 # existingSecret: "" # Use an existing Kubernetes secret, e.g., created by hand or Vault operator.
 # Dict with all n8n JSON config options, unlike config, the values here will end up in a secret.
 secret:
-  database:
-    postgresdb:
-      password: 'big secret'
+    database:
+        postgresdb:
+            password: big secret
 
 # Typical Example of a config in combination with a secret.
 # config:
@@ -109,8 +110,8 @@ secret:
 # Set additional environment variables on the Deployment
 extraEnv:
   # Set this if running behind a reverse proxy and the external port is different from the port n8n runs on
-  WEBHOOK_URL: https://workflow.example.com
-  N8N_ENCRYPTION_KEY: rLhfWDL7Wykog77z72XGkiL31K0kTe3
+    WEBHOOK_URL: https://workflow.example.com
+    N8N_ENCRYPTION_KEY: rLhfWDL7Wykog77z72XGkiL31K0kTe3
 
 # Set additional environment from existing secrets
 extraEnvSecrets: {}
@@ -126,9 +127,9 @@ extraEnvSecrets: {}
 persistence:
   ## If true, use a Persistent Volume Claim, If false, use emptyDir
   ##
-  enabled: false
+    enabled: false
   # what type volume, possible options are [existing, emptyDir, dynamic] dynamic for Dynamic Volume Provisioning, existing for using an existing Claim
-  type: emptyDir
+    type: emptyDir
   ## Persistent Volume Storage Class
   ## If defined, storageClassName: <storageClass>
   ## If set to "-", storageClassName: "", which disables dynamic provisioning
@@ -147,11 +148,11 @@ persistence:
   #   helm.sh/resource-policy: keep
   ## Persistent Volume Access Mode
   ##
-  accessModes:
-    - ReadWriteOnce
+    accessModes:
+        - ReadWriteOnce
   ## Persistent Volume size
   ##
-  size: 1Gi
+    size: 1Gi
   ## Use an existing PVC
   ##
   # existingClaim:
@@ -166,15 +167,15 @@ replicaCount: 1
 #  maxUnavailable: "50%"
 
 deploymentStrategy:
-  type: RollingUpdate
-  maxSurge: '50%'
-  maxUnavailable: '50%'
+    type: RollingUpdate
+    maxSurge: 50%
+    maxUnavailable: 50%
 
 image:
-  repository: n8nio/n8n
-  pullPolicy: IfNotPresent
+    repository: n8nio/n8n
+    pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: '1.91.3'
+    tag: 1.91.3
 
 imagePullSecrets: []
 nameOverride: ''
@@ -182,25 +183,24 @@ fullnameOverride: ''
 
 serviceAccount:
   # Specifies whether a service account should be created
-  create: true
+    create: true
   # Annotations to add to the service account
-  annotations: {}
+    annotations: {}
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: ''
+    name: ''
 
 podAnnotations: {}
 
 podLabels: {}
 
 podSecurityContext:
-  runAsNonRoot: true
-  runAsUser: 1000
-  runAsGroup: 1000
-  fsGroup: 1000
+    runAsNonRoot: true
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
 
-securityContext:
-  {}
+securityContext: {}
   # capabilities:
   #   drop:
   #   - ALL
@@ -236,9 +236,9 @@ command: []
 # it may be used to increase the timeout for the livenessProbe (e.g., to resolve issues like
 
 livenessProbe:
-  httpGet:
-    path: /healthz
-    port: http
+    httpGet:
+        path: /healthz
+        port: http
   # initialDelaySeconds: 30
   # periodSeconds: 10
   # timeoutSeconds: 5
@@ -249,9 +249,9 @@ livenessProbe:
 # it may be used to increase the timeout for the readinessProbe (e.g., to resolve issues like
 
 readinessProbe:
-  httpGet:
-    path: /healthz
-    port: http
+    httpGet:
+        path: /healthz
+        port: http
   # initialDelaySeconds: 30
   # periodSeconds: 10
   # timeoutSeconds: 5
@@ -262,33 +262,32 @@ readinessProbe:
 initContainers: []
 
 service:
-  type: ClusterIP
-  port: 80
-  annotations: {}
+    type: ClusterIP
+    port: 80
+    annotations: {}
 
 ingress:
-  enabled: true
-  annotations:
-    kubernetes.io/ingress.class: nginx
+    enabled: true
+    annotations:
+        kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: workflow.example.com
-      paths:
-        - /
-  tls:
-    - secretName: host-domain-cert
-      hosts:
-        - workflow.example.com
+    hosts:
+        - host: workflow.example.com
+          paths:
+              - /
+    tls:
+        - secretName: host-domain-cert
+          hosts:
+              - workflow.example.com
 
   # define a custom incressClassName, like "traefik" or "nginx"
-  className: 'nginx'
+    className: nginx
 
 workerResources: {}
 
 webhookResources: {}
 
-resources:
-  {}
+resources: {}
   # We usually recommend not specifying default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -301,10 +300,10 @@ resources:
   #   memory: 128Mi
 
 autoscaling:
-  enabled: true
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
 nodeSelector: {}
@@ -314,29 +313,29 @@ tolerations: []
 affinity: {}
 
 scaling:
-  enabled: false
+    enabled: false
 
-  worker:
-    count: 2
-    concurrency: 2
+    worker:
+        count: 2
+        concurrency: 2
   # With .Values.scaling.webhook.enabled=true you disable Webhooks from the main process, but you enable the processing on a different Webhook instance.
   # See https://github.com/8gears/n8n-helm-chart/issues/39#issuecomment-1579991754 for the full explanation.
-  webhook:
-    enabled: false
-    count: 1
+    webhook:
+        enabled: false
+        count: 1
 
-  redis:
-    host:
-    password:
+    redis:
+        host:
+        password:
 
 ## Bitnami Redis configuration
 ## https://github.com/bitnami/charts/tree/master/bitnami/redis
 redis:
-  enabled: true
-  architecture: standalone
+    enabled: true
+    architecture: standalone
 
-  master:
-    persistence:
-      enabled: true
-      existingClaim: ''
-      size: 2Gi
+    master:
+        persistence:
+            enabled: true
+            existingClaim: ''
+            size: 2Gi

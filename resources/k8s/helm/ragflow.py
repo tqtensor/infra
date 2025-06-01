@@ -91,7 +91,6 @@ ragflow_release = k8s.helm.v3.Release(
         version="0.1.0",
     ),
     opts=pulumi.ResourceOptions(
-        provider=k8s_provider_par_2,
-        depends_on=[ragflow_ns, ragflow_image],
+        provider=k8s_provider_par_2, depends_on=[ragflow_ns, ragflow_image]
     ),
 )

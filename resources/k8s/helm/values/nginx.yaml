@@ -1,16 +1,17 @@
+---
 apiVersion: networking.k8s.io/v1
 controller:
-  replicaCount: 2
-  service:
-    loadBalancerIP: 1.1.1.1
-    annotations: {}
-  publishService:
-    enabled: true
-  resources:
-    requests:
-      cpu: 250m
-      memory: 256Mi
-  config:
-    proxy-body-size: '50m'
-    proxy-read-timeout: '600'
-    proxy-send-timeout: '600'
+    replicaCount: 2
+    service:
+        loadBalancerIP: 1.1.1.1
+        annotations: {}
+    publishService:
+        enabled: true
+    resources:
+        requests:
+            cpu: 250m
+            memory: 256Mi
+    config:
+        proxy-body-size: 50m
+        proxy-read-timeout: '600'
+        proxy-send-timeout: '600'
