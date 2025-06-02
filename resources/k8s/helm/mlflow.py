@@ -6,8 +6,8 @@ import yaml
 from pulumi import Output
 
 from resources.cloudflare.tls import mlflow_origin_ca_cert_bundle
+from resources.db.instance import krp_eu_central_1_rds_cluster_instance
 from resources.db.psql import mlflow_auth_db, mlflow_auth_user, mlflow_db, mlflow_user
-from resources.db.rds import krp_eu_central_1_rds_cluster_instance
 from resources.iam.user import mlflow_access_key
 from resources.k8s.providers import k8s_provider_auto_pilot_eu_west_4
 from resources.storage.bucket import mlflow_bucket

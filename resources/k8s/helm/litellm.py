@@ -8,8 +8,8 @@ from pulumi import Output
 
 from resources.api import openai_account_details, openai_keys
 from resources.cloudflare.tls import litellm_origin_ca_cert_bundle
+from resources.db.instance import krp_eu_central_1_rds_cluster_instance
 from resources.db.psql import litellm_db, litellm_user
-from resources.db.rds import krp_eu_central_1_rds_cluster_instance
 from resources.iam.user import bedrock_access_key, vertex_sa_key, vertex_sa_key_2nd
 from resources.k8s.providers import k8s_provider_par_2
 from resources.utils import encode_tls_secret_data, fill_in_password

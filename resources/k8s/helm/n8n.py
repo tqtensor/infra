@@ -8,8 +8,8 @@ from pulumi import Output
 
 from resources.cloudflare.record import n8n_tqtensor_com
 from resources.cloudflare.tls import n8n_origin_ca_cert_bundle
+from resources.db.instance import krp_eu_central_1_rds_cluster_instance
 from resources.db.psql import n8n_dolphin_db, n8n_dolphin_user
-from resources.db.rds import krp_eu_central_1_rds_cluster_instance
 from resources.k8s.providers import k8s_provider_auto_pilot_eu_west_4
 from resources.utils import encode_tls_secret_data
 

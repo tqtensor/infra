@@ -1,10 +1,10 @@
 import pulumi
 import pulumiverse_scaleway as scw
 
-from resources.providers import sw_pixelml_par_2
+from resources.providers import scw_pixelml_par_2
 from resources.utils import get_options
 
-OPTS = get_options(profile="pixelml", region="par-2", type="resource", provider="sw")
+OPTS = get_options(profile="pixelml", region="par-2", type="resource", provider="scw")
 
 scw_genai_app = scw.iam.Application(
     "scw_genai_app",
@@ -19,7 +19,7 @@ scw_genai_policy = scw.iam.Policy(
     rules=[
         scw.iam.PolicyRuleArgs(
             permission_set_names=["GenerativeApisFullAccess"],
-            project_ids=[sw_pixelml_par_2.project_id],
+            project_ids=[scw_pixelml_par_2.project_id],
         )
     ],
     opts=OPTS,

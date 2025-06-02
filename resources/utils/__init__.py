@@ -26,7 +26,7 @@ def get_options(
     provider: str = "aws",
     kwargs: dict = {},
 ) -> Union[pulumi.ResourceOptions, pulumi.InvokeOptions]:
-    if provider in ["aws", "az", "gcp", "sw"]:
+    if provider in ["aws", "az", "gcp", "scw"]:
         if type == "resource":
             return pulumi.ResourceOptions(
                 provider=eval(f"{provider}_{profile}_{region.replace('-', '_')}"),
