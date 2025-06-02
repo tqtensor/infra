@@ -14,11 +14,6 @@ airbyte_db, airbyte_user, airbyte_grant_privileges = create_db_and_user(
     username="airbyte", opts=pulumi.ResourceOptions(provider=par_1_postgres_provider)
 )
 
-# JupyterHub
-jupyterhub_db, jupyterhub_user, jupyterhub_grant_privileges = create_db_and_user(
-    username="jupyterhub", opts=OPTS
-)
-
 # MLflow
 mlflow_db, mlflow_user, mlflow_grant_privileges = create_db_and_user(
     username="mlflow", opts=OPTS
@@ -34,10 +29,10 @@ litellm_db, litellm_user, litellm_grant_privileges = create_db_and_user(
 
 # n8n accounts
 n8n_dolphin_db, n8n_dolphin_user, n8n_dolphin_grant_privileges = create_db_and_user(
-    username="dolphin", opts=OPTS
+    username="dolphin", opts=pulumi.ResourceOptions(provider=par_1_postgres_provider)
 )
 
 # RAGFlow
 ragflow_db, ragflow_user, ragflow_grant_privileges = create_db_and_user(
-    username="ragflow", opts=OPTS
+    username="ragflow", opts=pulumi.ResourceOptions(provider=par_1_postgres_provider)
 )

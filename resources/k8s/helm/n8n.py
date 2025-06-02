@@ -8,7 +8,7 @@ from pulumi import Output
 
 from resources.cloudflare.record import n8n_tqtensor_com
 from resources.cloudflare.tls import n8n_origin_ca_cert_bundle
-from resources.db.instance import krp_eu_central_1_rds_cluster_instance
+from resources.db.instance import psql_par_1_instance
 from resources.db.psql import n8n_dolphin_db, n8n_dolphin_user
 from resources.k8s.providers import k8s_provider_auto_pilot_eu_west_4
 from resources.utils import encode_tls_secret_data
@@ -33,10 +33,11 @@ with open(values_file_path, "r") as f:
     chart_values = yaml.safe_load(f)
 
     def prepare_values(
-        host, user, password, database, domain, tls_secret_name, encryption_key
+        host, port, user, password, database, domain, tls_secret_name, encryption_key
     ):
         return {
             "host": host,
+            "port": port,
             "user": user,
             "password": password,
             "database": database,
@@ -46,7 +47,8 @@ with open(values_file_path, "r") as f:
         }
 
     values = Output.all(
-        krp_eu_central_1_rds_cluster_instance.endpoint,
+        psql_par_1_instance.load_balancers[0].ip,
+        psql_par_1_instance.load_balancers[0].port,
         n8n_dolphin_user.name,
         n8n_dolphin_user.password,
         n8n_dolphin_db.name,
@@ -55,11 +57,12 @@ with open(values_file_path, "r") as f:
         random.RandomPassword("n8n_encryption_key", special=False, length=32).result,
     ).apply(
         lambda args: prepare_values(
-            args[0], args[1], args[2], args[3], args[4], args[5], args[6]
+            args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7]
         )
     )
 
     chart_values["config"]["database"]["postgresdb"]["host"] = values["host"]
+    chart_values["config"]["database"]["postgresdb"]["port"] = values["port"]
     chart_values["config"]["database"]["postgresdb"]["user"] = values["user"]
     chart_values["config"]["database"]["postgresdb"]["database"] = values["database"]
     chart_values["secret"]["database"]["postgresdb"]["password"] = values["password"]
