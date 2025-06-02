@@ -1,0 +1,17 @@
+---
+psql_par_1_instance:
+    password: 
+        ENC[AES256_GCM,data:ggknxw1yB3ETsUTk8MweMWjckDyPkdiwPlj/FsxMXLuv,iv:lZQMeRRTZR1TVonSC+RwDr8VbZNMUp53b0DEJ+M6nck=,tag:AX2NRNpCQdbOolwGXLaWIw==,type:str]
+    username: ENC[AES256_GCM,data:INMULbtGJ+I=,iv:2IDw3u9X3Iouy6bd7VPmlfMJBkVpoxVZqTELoqDhOdg=,tag:z7qf0N72kfDFm64fCfAw5g==,type:str]
+sops:
+    kms:
+        - arn: arn:aws:kms:us-east-1:100874337694:key/c7fd5cab-3baf-40c1-a129-3d4a58c70cd3
+          created_at: '2025-06-02T09:56:27Z'
+          enc: 
+              AQICAHhZfWILurHAsFqnvtAb0hx4XSK8Hq5vHmUDi3UArtcCpgHAbHdKFfxp9iSasBtoVT2mAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMsj/LXprihcf5kXGsAgEQgDvZce+M0Xbw4zfeYEwRJIHUGl6DUz3AVFDOUYPtJ/AUKLih2VeaWNwsV6g6C1bi+3mp33eX0XKSEIO+CQ==
+          aws_profile: personal
+    lastmodified: '2025-06-02T09:56:27Z'
+    mac: 
+        ENC[AES256_GCM,data:tyE6xQ/f9WHKuArizsB0E6Iwn3CiQq7GUxzmtfLC5/WWU74juNYDMkTKl3MwRBkmBrzV+IaIcKImOKMxXiGuMFTWZgm8jhxtQyxpbzEM4jsBxMsLgaMUfHc/PSQsPftExN3C8d9YoTC9d7rv4bwshCMifTUKJHbJ8MMYV6HEcpc=,iv:y3q+Xrtz2HI5lE6zHb63xDvIrUDIP4LUuUeZjGo44+A=,tag:SAi1cvCJNgMnNXSjzIPO8A==,type:str]
+    unencrypted_suffix: _unencrypted
+    version: 3.10.1

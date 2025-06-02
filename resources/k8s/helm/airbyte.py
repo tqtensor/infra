@@ -8,8 +8,8 @@ from pulumi import Output
 
 from resources.cloudflare.tls import airbyte_origin_ca_cert_bundle
 from resources.constants import normal_pool_par_2
+from resources.db.instance import psql_par_1_instance
 from resources.db.psql import airbyte_db, airbyte_user
-from resources.db.rds import krp_eu_central_1_rds_cluster_instance
 from resources.k8s.providers import k8s_provider_par_2
 from resources.utils import encode_tls_secret_data
 
@@ -48,9 +48,10 @@ values_file_path = Path(__file__).parent / "values" / "airbyte.yaml"
 with open(values_file_path, "r") as f:
     chart_values = yaml.safe_load(f)
 
-    def prepare_values(host, user, database):
+    def prepare_values(host, port, user, database):
         return {
             "host": host,
+            "port": port,
             "user": user,
             "database": database,
         }
@@ -67,12 +68,14 @@ with open(values_file_path, "r") as f:
                 set_node_selector(item, selector)
 
     values = Output.all(
-        krp_eu_central_1_rds_cluster_instance.endpoint,
+        psql_par_1_instance.load_balancers[0].ip,
+        psql_par_1_instance.load_balancers[0].port,
         airbyte_user.name,
         airbyte_db.name,
-    ).apply(lambda args: prepare_values(host=args[0], user=args[1], database=args[2]))
+    ).apply(lambda args: prepare_values(args[0], args[1], args[2], args[3]))
 
     chart_values["global"]["database"]["host"] = values["host"]
+    chart_values["global"]["database"]["port"] = values["port"]
     chart_values["global"]["database"]["user"] = values["user"]
     chart_values["global"]["database"]["database"] = values["database"]
 
