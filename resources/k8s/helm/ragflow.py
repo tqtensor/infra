@@ -6,7 +6,7 @@ import yaml
 from pulumi import Output
 
 from resources.cloudflare.tls import ragflow_origin_ca_cert_bundle
-from resources.db.instance import krp_eu_central_1_rds_cluster_instance
+from resources.db.instance import psql_par_1_instance
 from resources.db.psql import ragflow_db, ragflow_user
 from resources.ecr.docker import ragflow_image, ragflow_image_uri
 from resources.k8s.providers import k8s_provider_par_2
@@ -44,6 +44,7 @@ if values_file_path.exists():
 
     def prepare_values(
         host,
+        port,
         user,
         password,
         database,
@@ -51,6 +52,7 @@ if values_file_path.exists():
     ):
         return {
             "host": host,
+            "port": port,
             "user": user,
             "password": password,
             "database": database,
@@ -58,7 +60,8 @@ if values_file_path.exists():
         }
 
     values = Output.all(
-        krp_eu_central_1_rds_cluster_instance.endpoint,
+        psql_par_1_instance.load_balancers[0].ip,
+        psql_par_1_instance.load_balancers[0].port,
         ragflow_user.name,
         ragflow_user.password,
         ragflow_db.name,
@@ -70,10 +73,12 @@ if values_file_path.exists():
             args[2],
             args[3],
             args[4],
+            args[5],
         )
     )
 
     chart_values["env"]["POSTGRES_HOST"] = values["host"]
+    chart_values["env"]["POSTGRES_PORT"] = values["port"]
     chart_values["env"]["POSTGRES_USER"] = values["user"]
     chart_values["env"]["POSTGRES_PASSWORD"] = values["password"]
     chart_values["env"]["POSTGRES_DBNAME"] = values["database"]
