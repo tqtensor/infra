@@ -2,7 +2,9 @@ import pulumi_awsx as awsx
 
 from resources.utils import get_options
 
-OPTS = get_options(profile="krypfolio", region="eu-central-1", type="resource")
+OPTS = get_options(
+    profile="krypfolio", region="eu-central-1", type="resource", protect=False
+)
 
 
 krypfolio_eu_central_1_vpc = awsx.ec2.Vpc(
