@@ -6,7 +6,7 @@ import yaml
 from pulumi import Output
 
 from resources.cloudflare.tls import mlflow_origin_ca_cert_bundle
-from resources.db.instance import krp_eu_central_1_rds_cluster_instance
+from resources.db.instance import psql_par_1_instance
 from resources.db.psql import mlflow_auth_db, mlflow_auth_user, mlflow_db, mlflow_user
 from resources.iam.user import mlflow_access_key
 from resources.k8s.providers import k8s_provider_auto_pilot_eu_west_4
@@ -39,10 +39,12 @@ with open(values_file_path, "r") as f:
 
     def prepare_values(
         host,
+        port,
         user,
         password,
         database,
         auth_host,
+        auth_port,
         auth_user,
         auth_password,
         auth_database,
@@ -53,10 +55,12 @@ with open(values_file_path, "r") as f:
     ):
         return {
             "host": host,
+            "port": port,
             "user": user,
             "password": password,
             "database": database,
             "auth_host": auth_host,
+            "auth_port": auth_port,
             "auth_user": auth_user,
             "auth_password": auth_password,
             "auth_database": auth_database,
@@ -67,11 +71,13 @@ with open(values_file_path, "r") as f:
         }
 
     values = Output.all(
-        krp_eu_central_1_rds_cluster_instance.endpoint,
+        psql_par_1_instance.load_balancers[0].ip,
+        psql_par_1_instance.load_balancers[0].port,
         mlflow_user.name,
         mlflow_user.password,
         mlflow_db.name,
-        krp_eu_central_1_rds_cluster_instance.endpoint,
+        psql_par_1_instance.load_balancers[0].ip,
+        psql_par_1_instance.load_balancers[0].port,
         mlflow_auth_user.name,
         mlflow_auth_user.password,
         mlflow_auth_db.name,
@@ -93,15 +99,19 @@ with open(values_file_path, "r") as f:
             args[9],
             args[10],
             args[11],
+            args[12],
+            args[13],
         )
     )
 
     chart_values["backendStore"]["postgres"]["host"] = values["host"]
+    chart_values["backendStore"]["postgres"]["port"] = values["port"]
     chart_values["backendStore"]["postgres"]["user"] = values["user"]
     chart_values["backendStore"]["postgres"]["database"] = values["database"]
     chart_values["backendStore"]["postgres"]["password"] = values["password"]
 
     chart_values["auth"]["postgres"]["host"] = values["auth_host"]
+    chart_values["auth"]["postgres"]["port"] = values["auth_port"]
     chart_values["auth"]["postgres"]["user"] = values["auth_user"]
     chart_values["auth"]["postgres"]["database"] = values["auth_database"]
     chart_values["auth"]["postgres"]["password"] = values["auth_password"]

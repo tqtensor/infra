@@ -8,7 +8,7 @@ from pulumi import Output
 
 from resources.api import openai_account_details, openai_keys
 from resources.cloudflare.tls import litellm_origin_ca_cert_bundle
-from resources.db.instance import krp_eu_central_1_rds_cluster_instance
+from resources.db.instance import psql_par_1_instance
 from resources.db.psql import litellm_db, litellm_user
 from resources.iam.user import bedrock_access_key, vertex_sa_key, vertex_sa_key_2nd
 from resources.k8s.providers import k8s_provider_par_2
@@ -80,10 +80,22 @@ secret_values = fill_in_password(
 )
 
 values_file_path = Path(__file__).parent / "values" / "litellm.yaml"
-chart_values = yaml.safe_load(open(values_file_path, "r").read())
-chart_values["masterkey"] = secret_values["masterkey"]
-chart_values["db"]["endpoint"] = krp_eu_central_1_rds_cluster_instance.endpoint
-chart_values["db"]["database"] = litellm_db.name
+with open(values_file_path, "r") as f:
+    chart_values = yaml.safe_load(f)
+
+    def prepare_values(host, port):
+        return {
+            "endpoint": host + ":" + str(port),
+        }
+
+    values = Output.all(
+        psql_par_1_instance.load_balancers[0].ip,
+        psql_par_1_instance.load_balancers[0].port,
+    ).apply(lambda args: prepare_values(args[0], args[1]))
+
+    chart_values["masterkey"] = secret_values["masterkey"]
+    chart_values["db"]["endpoint"] = values["endpoint"]
+    chart_values["db"]["database"] = litellm_db.name
 
 chart_file_path = str(Path(__file__).parent / "charts" / "litellm-helm-0.4.3.tgz")
 litellm_release = k8s.helm.v3.Release(

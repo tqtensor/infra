@@ -16,15 +16,16 @@ airbyte_db, airbyte_user, airbyte_grant_privileges = create_db_and_user(
 
 # MLflow
 mlflow_db, mlflow_user, mlflow_grant_privileges = create_db_and_user(
-    username="mlflow", opts=OPTS
+    username="mlflow", opts=pulumi.ResourceOptions(provider=par_1_postgres_provider)
 )
 mlflow_auth_db, mlflow_auth_user, mlflow_auth_grant_privileges = create_db_and_user(
-    username="mlflow_auth", opts=OPTS
+    username="mlflow_auth",
+    opts=pulumi.ResourceOptions(provider=par_1_postgres_provider),
 )
 
 # LiteLLM
 litellm_db, litellm_user, litellm_grant_privileges = create_db_and_user(
-    username="litellm", opts=OPTS
+    username="litellm", opts=pulumi.ResourceOptions(provider=par_1_postgres_provider)
 )
 
 # n8n accounts
