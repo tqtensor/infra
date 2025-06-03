@@ -18,13 +18,14 @@ account_values = fill_in_password(
 psql_par_1_instance = scw.databases.Instance(
     "psql_par_1_instance",
     name="psql-par-1-instance",
-    node_type="DB-DEV-S",
+    node_type="DB-DEV-L",
     engine="PostgreSQL-14",
     is_ha_cluster=False,
     disable_backup=False,
     user_name=account_values["psql_par_1_instance"]["username"],
     password=account_values["psql_par_1_instance"]["password"],
     encryption_at_rest=True,
+    volume_type="sbs_5k",
     region=REGION,
     opts=OPTS,
 )
