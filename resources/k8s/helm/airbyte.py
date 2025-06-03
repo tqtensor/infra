@@ -7,7 +7,7 @@ import yaml
 from pulumi import Output
 
 from resources.cloudflare.tls import airbyte_origin_ca_cert_bundle
-from resources.constants import normal_pool_par_2
+from resources.constants import cpu_pool_par_2
 from resources.db.instance import psql_par_1_instance
 from resources.db.psql import airbyte_db, airbyte_user
 from resources.k8s.providers import k8s_provider_par_2
@@ -60,12 +60,21 @@ with open(values_file_path, "r") as f:
         if isinstance(config, dict):
             if "nodeSelector" in config:
                 config["nodeSelector"] = selector
-
             for v in config.values():
                 set_node_selector(v, selector)
         elif isinstance(config, list):
             for item in config:
                 set_node_selector(item, selector)
+
+    def set_resources(config, resources):
+        if isinstance(config, dict):
+            if "resources" in config:
+                config["resources"] = resources
+            for v in config.values():
+                set_resources(v, resources)
+        elif isinstance(config, list):
+            for item in config:
+                set_resources(item, resources)
 
     values = Output.all(
         psql_par_1_instance.load_balancers[0].ip,
@@ -81,11 +90,21 @@ with open(values_file_path, "r") as f:
 
     set_node_selector(
         config=chart_values,
-        selector=Output.all(normal_pool_par_2.name).apply(
+        selector=Output.all(cpu_pool_par_2.name).apply(
             lambda args: {
                 "k8s.scaleway.com/pool-name": args[0],
             }
         ),
+    )
+
+    set_resources(
+        config=chart_values,
+        resources={
+            "requests": {
+                "cpu": "250m",
+                "memory": "256Mi",
+            }
+        },
     )
 
 airbyte_release = k8s.helm.v3.Release(

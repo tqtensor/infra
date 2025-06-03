@@ -53,9 +53,9 @@ cluster_par_2 = scw.kubernetes.Cluster.get(
     id="fr-par/773f9f89-6cf5-44d9-b427-667dea748098",
 )
 
-normal_pool_par_2 = scw.kubernetes.Pool.get(
-    "normal_pool_par_2",
-    id="fr-par/58eb0502-2a3b-45e7-b180-514e1b4b0232",
+cpu_pool_par_2 = scw.kubernetes.Pool.get(
+    "cpu_pool_par_2",
+    id="fr-par/ae07f0f5-3a98-4ed0-b4b3-121f45656bc1",
 )
 
 l4_pool_par_2 = scw.kubernetes.Pool.get(
