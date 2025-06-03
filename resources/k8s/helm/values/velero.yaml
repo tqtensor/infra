@@ -6,20 +6,20 @@
 # Labels settings in namespace
 namespace:
     labels: {}
-    # Enforce Pod Security Standards with Namespace Labels
-    # https://kubernetes.io/docs/tasks/configure-pod-container/enforce-standards-namespace-labels/
-    # - key: pod-security.kubernetes.io/enforce
-    #   value: privileged
-    # - key: pod-security.kubernetes.io/enforce-version
-    #   value: latest
-    # - key: pod-security.kubernetes.io/audit
-    #   value: privileged
-    # - key: pod-security.kubernetes.io/audit-version
-    #   value: latest
-    # - key: pod-security.kubernetes.io/warn
-    #   value: privileged
-    # - key: pod-security.kubernetes.io/warn-version
-    #   value: latest
+  # Enforce Pod Security Standards with Namespace Labels
+  # https://kubernetes.io/docs/tasks/configure-pod-container/enforce-standards-namespace-labels/
+  # - key: pod-security.kubernetes.io/enforce
+  #   value: privileged
+  # - key: pod-security.kubernetes.io/enforce-version
+  #   value: latest
+  # - key: pod-security.kubernetes.io/audit
+  #   value: privileged
+  # - key: pod-security.kubernetes.io/audit-version
+  #   value: latest
+  # - key: pod-security.kubernetes.io/warn
+  #   value: privileged
+  # - key: pod-security.kubernetes.io/warn-version
+  #   value: latest
 
 ##
 ## End of namespace-related settings.
@@ -104,15 +104,15 @@ upgradeCRDsJob:
     extraVolumeMounts: []
   # Additional values to be used as environment variables. Optional.
     extraEnvVars: []
-    # Simple value
-    # - name: SIMPLE_VAR
-    #   value: "simple-value"
+  # Simple value
+  # - name: SIMPLE_VAR
+  #   value: "simple-value"
 
-    # FieldRef example
-    # - name: MY_POD_LABEL
-    #   valueFrom:
-    #     fieldRef:
-    #       fieldPath: metadata.labels['my_label']
+  # FieldRef example
+  # - name: MY_POD_LABEL
+  #   valueFrom:
+  #     fieldRef:
+  #       fieldPath: metadata.labels['my_label']
 
   # Configure if API credential for Service Account is automounted.
     automountServiceAccountToken: true
@@ -252,28 +252,28 @@ metrics:
         annotations: {}
         additionalLabels: {}
 
-    # metrics.serviceMonitor.metricRelabelings Specify Metric Relabelings to add to the scrape endpoint
-    # ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#relabelconfig
-    # metricRelabelings: []
-    # metrics.serviceMonitor.relabelings [array] Prometheus relabeling rules
-    # relabelings: []
-    # ServiceMonitor namespace. Default to Velero namespace.
-    # namespace:
-    # ServiceMonitor connection scheme. Defaults to HTTP.
-    # scheme: ""
-    # ServiceMonitor connection tlsConfig. Defaults to {}.
-    # tlsConfig: {}
+  # metrics.serviceMonitor.metricRelabelings Specify Metric Relabelings to add to the scrape endpoint
+  # ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#relabelconfig
+  # metricRelabelings: []
+  # metrics.serviceMonitor.relabelings [array] Prometheus relabeling rules
+  # relabelings: []
+  # ServiceMonitor namespace. Default to Velero namespace.
+  # namespace:
+  # ServiceMonitor connection scheme. Defaults to HTTP.
+  # scheme: ""
+  # ServiceMonitor connection tlsConfig. Defaults to {}.
+  # tlsConfig: {}
     nodeAgentPodMonitor:
         autodetect: true
         enabled: false
         annotations: {}
         additionalLabels: {}
-    # ServiceMonitor namespace. Default to Velero namespace.
-    # namespace:
-    # ServiceMonitor connection scheme. Defaults to HTTP.
-    # scheme: ""
-    # ServiceMonitor connection tlsConfig. Defaults to {}.
-    # tlsConfig: {}
+  # ServiceMonitor namespace. Default to Velero namespace.
+  # namespace:
+  # ServiceMonitor connection scheme. Defaults to HTTP.
+  # scheme: ""
+  # ServiceMonitor connection tlsConfig. Defaults to {}.
+  # tlsConfig: {}
 
     prometheusRule:
         autodetect: true
@@ -284,31 +284,31 @@ metrics:
     # namespace: ""
     # Rules to be deployed
         spec: []
-    # - alert: VeleroBackupPartialFailures
-    #   annotations:
-    #     message: Velero backup {{ $labels.schedule }} has {{ $value | humanizePercentage }} partialy failed backups.
-    #   expr: |-
-    #     velero_backup_partial_failure_total{schedule!=""} / velero_backup_attempt_total{schedule!=""} > 0.25
-    #   for: 15m
-    #   labels:
-    #     severity: warning
-    # - alert: VeleroBackupFailures
-    #   annotations:
-    #     message: Velero backup {{ $labels.schedule }} has {{ $value | humanizePercentage }} failed backups.
-    #   expr: |-
-    #     velero_backup_failure_total{schedule!=""} / velero_backup_attempt_total{schedule!=""} > 0.25
-    #   for: 15m
-    #   labels:
-    #     severity: warning
+  # - alert: VeleroBackupPartialFailures
+  #   annotations:
+  #     message: Velero backup {{ $labels.schedule }} has {{ $value | humanizePercentage }} partialy failed backups.
+  #   expr: |-
+  #     velero_backup_partial_failure_total{schedule!=""} / velero_backup_attempt_total{schedule!=""} > 0.25
+  #   for: 15m
+  #   labels:
+  #     severity: warning
+  # - alert: VeleroBackupFailures
+  #   annotations:
+  #     message: Velero backup {{ $labels.schedule }} has {{ $value | humanizePercentage }} failed backups.
+  #   expr: |-
+  #     velero_backup_failure_total{schedule!=""} / velero_backup_attempt_total{schedule!=""} > 0.25
+  #   for: 15m
+  #   labels:
+  #     severity: warning
 
 kubectl:
     image:
         repository: docker.io/bitnami/kubectl
-    # Digest value example: sha256:d238835e151cec91c6a811fe3a89a66d3231d9f64d09e5f3c49552672d271f38.
-    # If used, it will take precedence over the kubectl.image.tag.
-    # digest:
-    # kubectl image tag. If used, it will take precedence over the cluster Kubernetes version.
-    # tag: 1.16.15
+  # Digest value example: sha256:d238835e151cec91c6a811fe3a89a66d3231d9f64d09e5f3c49552672d271f38.
+  # If used, it will take precedence over the kubectl.image.tag.
+  # digest:
+  # kubectl image tag. If used, it will take precedence over the cluster Kubernetes version.
+  # tag: 1.16.15
   # Container Level Security Context for the 'kubectl' container of the crd jobs. Optional.
   # See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
     containerSecurityContext: {}
@@ -491,15 +491,15 @@ configuration:
 
   # Additional values to be used as environment variables. Optional.
     extraEnvVars: []
-    # Simple value
-    # - name: SIMPLE_VAR
-    #   value: "simple-value"
+  # Simple value
+  # - name: SIMPLE_VAR
+  #   value: "simple-value"
 
-    # FieldRef example
-    # - name: MY_POD_LABEL
-    #   valueFrom:
-    #     fieldRef:
-    #       fieldPath: metadata.labels['my_label']
+  # FieldRef example
+  # - name: MY_POD_LABEL
+  #   valueFrom:
+  #     fieldRef:
+  #       fieldPath: metadata.labels['my_label']
 
   # Set true for backup all pod volumes without having to apply annotation on the pod when used file system backup Default: false.
     defaultVolumesToFsBackup:
@@ -586,12 +586,12 @@ nodeAgent:
   # Resource requests/limits to specify for the node-agent daemonset deployment. Optional.
   # https://velero.io/docs/v1.6/customize-installation/#customize-resource-requests-and-limits
     resources: {}
-    # requests:
-    #   cpu: 500m
-    #   memory: 512Mi
-    # limits:
-    #   cpu: 1000m
-    #   memory: 1024Mi
+  # requests:
+  #   cpu: 500m
+  #   memory: 512Mi
+  # limits:
+  #   cpu: 1000m
+  #   memory: 1024Mi
 
   # Tolerations to use for the node-agent daemonset. Optional.
     tolerations: []
@@ -619,15 +619,15 @@ nodeAgent:
 
   # Additional values to be used as environment variables for node-agent daemonset. Optional.
     extraEnvVars: []
-    # Simple key/value
-    # - name: SIMPLE_VAR
-    #   value: "simple-value"
+  # Simple key/value
+  # - name: SIMPLE_VAR
+  #   value: "simple-value"
 
-    # FieldRef example
-    # - name: MY_POD_LABEL
-    #   valueFrom:
-    #     fieldRef:
-    #       fieldPath: metadata.labels['my_label']
+  # FieldRef example
+  # - name: MY_POD_LABEL
+  #   valueFrom:
+  #     fieldRef:
+  #       fieldPath: metadata.labels['my_label']
 
   # Additional command-line arguments that will be passed to the node-agent. Optional.
   # e.g.: extraArgs: ["--foo=bar"]
@@ -640,17 +640,17 @@ nodeAgent:
   # Configure hostAliases for node-agent daemonset. Optional
   # For more information, check: https://kubernetes.io/docs/tasks/network/customize-hosts-file-for-pods/
     hostAliases: []
-    # - ip: "127.0.0.1"
-    #   hostnames:
-    #   - "foo.local"
-    #   - "bar.local"
+  # - ip: "127.0.0.1"
+  #   hostnames:
+  #   - "foo.local"
+  #   - "bar.local"
 
   # SecurityContext to use for the Velero deployment. Optional.
   # Set fsGroup for `AWS IAM Roles for Service Accounts`
   # see more informations at: https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html
     podSecurityContext:
         runAsUser: 0
-    # fsGroup: 1337
+  # fsGroup: 1337
 
   # Container Level Security Context for the 'node-agent' container of the node-agent daemonset. Optional.
   # See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
@@ -707,7 +707,7 @@ schedules:
         paused: false
         skipImmediately: false
         template:
-            ttl: 24h # 1 day retention for testing
+            ttl: 72h
             storageLocation: default
             includedNamespaces:
                 - ragflow
