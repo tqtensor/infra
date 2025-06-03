@@ -6,7 +6,7 @@ import pulumi_kubernetes as k8s
 import yaml
 from pulumi import Output
 
-from resources.cloudflare import vllm_origin_ca_cert, vllm_private_key
+from resources.cloudflare.tls import vllm_origin_ca_cert_bundle
 from resources.k8s.providers import k8s_provider_auto_pilot_eu_west_4
 from resources.utils import encode_tls_secret_data, fill_in_password
 
@@ -19,7 +19,8 @@ vllm_tls_secret = k8s.core.v1.Secret(
     "vllm_tls_secret",
     metadata={"name": "vllm-tls-secret", "namespace": vllm_ns.metadata["name"]},
     data=Output.all(
-        vllm_origin_ca_cert.certificate, vllm_private_key.private_key_pem
+        vllm_origin_ca_cert_bundle[0].certificate,
+        vllm_origin_ca_cert_bundle[1].private_key_pem,
     ).apply(lambda args: encode_tls_secret_data(args[0], args[1])),
     opts=OPTS,
 )

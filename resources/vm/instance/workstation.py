@@ -5,7 +5,10 @@ from resources.utils import get_options
 from resources.vm.keypair import pixelml_gcp_us_east_1_key_pair
 
 OPTS = get_options(
-    profile="pixelml", region="us-east-1", type="resource", provider="gcp"
+    profile="pixelml",
+    region="us-east-1",
+    type="resource",
+    provider="gcp",
 )
 
 
@@ -22,7 +25,7 @@ workstation_ip = gcp.compute.Address(
 workstation_instance = gcp.compute.Instance(
     "workstation_instance",
     name="workstation-instance",
-    machine_type="e2-highmem-8",
+    machine_type="e2-highmem-4",
     zone="us-east1-c",
     boot_disk=gcp.compute.InstanceBootDiskArgs(
         initialize_params=gcp.compute.InstanceBootDiskInitializeParamsArgs(

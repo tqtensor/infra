@@ -1,14 +1,13 @@
-import base64
-
-import pulumi
 import pulumi_gcp as gcp
-from pulumi import Output
 
-from resources.providers import gcp_pixelml_eu_west_4
+from resources.providers import gcp_pixelml_2nd_eu_west_4, gcp_pixelml_eu_west_4
 from resources.utils import get_options
 
 OPTS = get_options(
     profile="pixelml", region="eu-west-4", type="resource", provider="gcp"
+)
+OPTS_2ND = get_options(
+    profile="pixelml_2nd", region="eu-west-4", type="resource", provider="gcp"
 )
 
 
@@ -16,6 +15,12 @@ vertex_sa = gcp.serviceaccount.Account(
     "vertex_sa",
     account_id="vertex-sa-eu-west-4",
     opts=OPTS,
+)
+
+vertex_sa_2nd = gcp.serviceaccount.Account(
+    "vertex_sa_2nd",
+    account_id="vertex-sa-eu-west-4-2nd",
+    opts=OPTS_2ND,
 )
 
 roles = [
@@ -29,6 +34,12 @@ for role in roles:
         role=role,
         member=vertex_sa.email.apply(lambda email: f"serviceAccount:{email}"),
     )
+    gcp.projects.IAMMember(
+        f"vertex_sa_2nd_{role}",
+        project=gcp_pixelml_2nd_eu_west_4.project,
+        role=role,
+        member=vertex_sa_2nd.email.apply(lambda email: f"serviceAccount:{email}"),
+    )
 
 vertex_sa_key = gcp.serviceaccount.Key(
     "vertex_sa_key",
@@ -37,8 +48,9 @@ vertex_sa_key = gcp.serviceaccount.Key(
     opts=OPTS,
 )
 
-decoded_private_key = vertex_sa_key.private_key.apply(
-    lambda key: base64.b64decode(key).decode("utf-8")
+vertex_sa_key_2nd = gcp.serviceaccount.Key(
+    "vertex_sa_key_2nd",
+    service_account_id=vertex_sa_2nd.name,
+    public_key_type="TYPE_X509_PEM_FILE",
+    opts=OPTS_2ND,
 )
-
-pulumi.export("IAM: Vertex: SA", Output.secret(decoded_private_key))

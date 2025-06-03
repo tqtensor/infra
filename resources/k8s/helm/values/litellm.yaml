@@ -1,27 +1,28 @@
+---
 # Default values for litellm.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 replicaCount: 1
 image:
   # Use "ghcr.io/berriai/litellm-database" for optimized image with database
-  repository: ghcr.io/berriai/litellm-database
-  pullPolicy: Always
+    repository: ghcr.io/berriai/litellm-database
+    pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   # tag: "main-latest"
-  tag: 'main-v1.69.0-stable'
+    tag: main-v1.69.0-stable
 imagePullSecrets: []
 nameOverride: litellm
 fullnameOverride: ''
 serviceAccount:
   # Specifies whether a service account should be created
-  create: false
+    create: true
   # Automatically mount a ServiceAccount's API credentials?
-  automount: true
+    automount: true
   # Annotations to add to the service account
-  annotations: {}
+    annotations: {}
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: litellm
+    name: litellm
 podAnnotations: {}
 podLabels: {}
 # At the time of writing, the litellm docker image requires write access to the
@@ -38,109 +39,140 @@ securityContext: {}
 #  pod as environment variables.  These secrets can then be referenced in the
 #  configuration file (or "litellm" ConfigMap) with `os.environ/<Env Var Name>`
 environmentSecrets:
-  - litellm-env-secret
+    - litellm-env-secret
 # A list of Kubernetes ConfigMap objects that will be exported to the LiteLLM proxy
 #  pod as environment variables.  The ConfigMap kv-pairs can then be referenced in the
 #  configuration file (or "litellm" ConfigMap) with `os.environ/<Env Var Name>`
 environmentConfigMaps: []
 # - litellm-env-configmap
 service:
-  type: ClusterIP
-  port: 4000
+    type: ClusterIP
+    port: 4000
 ingress:
-  enabled: true
-  className: nginx
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/proxy-body-size: '50m'
+    enabled: true
+    className: nginx
+    annotations:
+        kubernetes.io/ingress.class: nginx
+        nginx.ingress.kubernetes.io/proxy-body-size: 50m
     # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: litellm.tqtensor.com
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls:
-    - secretName: litellm-tls-secret
-      hosts:
-        - litellm.tqtensor.com
+    hosts:
+        - host: litellm.tqtensor.com
+          paths:
+              - path: /
+                pathType: ImplementationSpecific
+    tls:
+        - secretName: litellm-tls-secret
+          hosts:
+              - litellm.tqtensor.com
 masterkey: changeme
 # The elements within proxy_config are rendered as config.yaml for the proxy
 #  Examples: https://github.com/BerriAI/litellm/tree/main/litellm/proxy/example_config_yaml
 #  Reference: https://docs.litellm.ai/docs/proxy/configs
 proxy_config:
-  model_list:
+    model_list:
     # At least one model must exist for the proxy to start.
-    - model_name: google/gemini-flash-1.5
-      litellm_params:
-        model: vertex_ai/gemini-1.5-flash-002
-        vertex_project: gen-lang-client-0608717027
-        vertex_location: us-central1
-    - model_name: google/gemini-flash-2.0
-      litellm_params:
-        model: vertex_ai/gemini-2.0-flash-001
-        vertex_project: gen-lang-client-0608717027
-        vertex_location: us-central1
-    - model_name: google/gemini-flash-2.5
-      litellm_params:
-        model: vertex_ai/gemini-2.5-flash-preview-04-17
-        vertex_project: gen-lang-client-0608717027
-        vertex_location: us-central1
-    - model_name: google/gemini-pro-2.5
-      litellm_params:
-        model: vertex_ai/gemini-2.5-pro-preview-05-06
-        vertex_project: gen-lang-client-0608717027
-        vertex_location: us-central1
-    - model_name: google/multilingual-embedding
-      litellm_params:
-        model: vertex_ai/text-multilingual-embedding-002
-        vertex_project: gen-lang-client-0608717027
-        vertex_location: us-central1
-    - model_name: bedrock/claude-3.7-sonnet
-      litellm_params:
-        model: bedrock/us.anthropic.claude-3-7-sonnet-20250219-v1:0
-        aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
-        aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
-        aws_region_name: us-east-1
-    - model_name: bedrock/nova-lite-v1
-      litellm_params:
-        model: bedrock/converse/us.amazon.nova-lite-v1:0
-        aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
-        aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
-        aws_region_name: us-east-1
-    - model_name: bedrock/nova-pro-v1
-      litellm_params:
-        model: bedrock/converse/us.amazon.nova-pro-v1:0
-        aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
-        aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
-        aws_region_name: us-east-1
-    - model_name: bedrock/deepseek-r1
-      litellm_params:
-        model: bedrock/converse/us.deepseek.r1-v1:0
-        aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
-        aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
-        aws_region_name: us-west-2
-    - model_name: azure/gpt-41
-      litellm_params:
-        model: azure/gpt-4.1
-        api_base: os.environ/AZURE_API_BASE
-        api_key: os.environ/AZURE_API_KEY
-        api_version: 2024-12-01-preview
-    - model_name: azure/gpt-45
-      litellm_params:
-        model: azure/gpt-4.5
-        api_base: os.environ/AZURE_API_BASE
-        api_key: os.environ/AZURE_API_KEY
-        api_version: 2024-12-01-preview
-    - model_name: azure/o4-mini
-      litellm_params:
-        model: azure/o4-mini
-        api_base: os.environ/AZURE_API_BASE
-        api_key: os.environ/AZURE_API_KEY
-        api_version: 2024-12-01-preview
-  general_settings:
-    master_key: os.environ/PROXY_MASTER_KEY
-  litellm_settings:
-    drop_params: true
+        - model_name: google/gemini-flash-2.0
+          litellm_params:
+              model: vertex_ai/gemini-2.0-flash-001
+              vertex_location: us-central1
+              vertex_credentials: os.environ/VERTEX_SA_KEY
+        - model_name: google/gemini-flash-2.0
+          litellm_params:
+              model: vertex_ai/gemini-2.0-flash-001
+              vertex_location: us-central1
+              vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
+        - model_name: google/gemini-flash-2.5
+          litellm_params:
+              model: vertex_ai/gemini-2.5-flash-preview-05-20
+              vertex_location: us-central1
+              vertex_credentials: os.environ/VERTEX_SA_KEY
+        - model_name: google/gemini-flash-2.5
+          litellm_params:
+              model: vertex_ai/gemini-2.5-flash-preview-05-20
+              vertex_location: us-central1
+              vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
+        - model_name: google/gemini-pro-2.5
+          litellm_params:
+              model: vertex_ai/gemini-2.5-pro-preview-05-06
+              vertex_location: us-central1
+              vertex_credentials: os.environ/VERTEX_SA_KEY
+        - model_name: google/gemini-pro-2.5
+          litellm_params:
+              model: vertex_ai/gemini-2.5-pro-preview-05-06
+              vertex_location: us-central1
+              vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
+        - model_name: google/multilingual-embedding
+          litellm_params:
+              model: vertex_ai/text-multilingual-embedding-002
+              vertex_location: us-central1
+              vertex_credentials: os.environ/VERTEX_SA_KEY
+        - model_name: google/multilingual-embedding
+          litellm_params:
+              model: vertex_ai/text-multilingual-embedding-002
+              vertex_location: us-central1
+              vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
+        - model_name: google/text-embedding-large
+          litellm_params:
+              model: vertex_ai/text-embedding-large-exp-03-07
+              vertex_location: us-central1
+              vertex_credentials: os.environ/VERTEX_SA_KEY
+        - model_name: google/text-embedding-large
+          litellm_params:
+              model: vertex_ai/text-embedding-large-exp-03-07
+              vertex_location: us-central1
+              vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
+        - model_name: bedrock/claude-3.7-sonnet
+          litellm_params:
+              model: bedrock/us.anthropic.claude-3-7-sonnet-20250219-v1:0
+              aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
+              aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
+              aws_region_name: us-east-1
+        - model_name: bedrock/nova-lite-v1
+          litellm_params:
+              model: bedrock/converse/us.amazon.nova-lite-v1:0
+              aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
+              aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
+              aws_region_name: us-east-1
+        - model_name: bedrock/nova-pro-v1
+          litellm_params:
+              model: bedrock/converse/us.amazon.nova-pro-v1:0
+              aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
+              aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
+              aws_region_name: us-east-1
+        - model_name: bedrock/deepseek-r1
+          litellm_params:
+              model: bedrock/converse/us.deepseek.r1-v1:0
+              aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
+              aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
+              aws_region_name: us-west-2
+        - model_name: azure/gpt-41
+          litellm_params:
+              model: azure/gpt-4.1
+              api_base: os.environ/AZURE_API_BASE
+              api_key: os.environ/AZURE_API_KEY
+              api_version: 2024-12-01-preview
+        - model_name: azure/gpt-45
+          litellm_params:
+              model: azure/gpt-4.5
+              api_base: os.environ/AZURE_API_BASE
+              api_key: os.environ/AZURE_API_KEY
+              api_version: 2024-12-01-preview
+        - model_name: azure/o4-mini
+          litellm_params:
+              model: azure/o4-mini
+              api_base: os.environ/AZURE_API_BASE
+              api_key: os.environ/AZURE_API_KEY
+              api_version: 2024-12-01-preview
+    general_settings:
+        master_key: os.environ/PROXY_MASTER_KEY
+        store_model_in_db: true
+        store_prompts_in_spend_logs: true
+    litellm_settings:
+        drop_params: true
+    router_settings:
+        routing_strategy: simple-shuffle
+        num_retries: 2
+        timeout: 30
 resources: {}
 # We usually recommend not to specify default resources and to leave this as a conscious
 # choice for the user. This also increases chances charts run on environments with little
@@ -153,10 +185,10 @@ resources: {}
 #   cpu: 100m
 #   memory: 128Mi
 autoscaling:
-  enabled: true
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 # Additional volumes on the output Deployment definition.
 volumes: []
@@ -174,34 +206,34 @@ tolerations: []
 affinity: {}
 db:
   # Use an existing postgres server/cluster
-  useExisting: true
+    useExisting: true
   # How to connect to the existing postgres server/cluster
-  endpoint: localhost
-  database: litellm
-  url: postgresql://$(DATABASE_USERNAME):$(DATABASE_PASSWORD)@$(DATABASE_HOST)/$(DATABASE_NAME)
-  secret:
-    name: litellm-postgres-secret
-    usernameKey: username
-    passwordKey: password
+    endpoint: localhost
+    database: litellm
+    url: postgresql://$(DATABASE_USERNAME):$(DATABASE_PASSWORD)@$(DATABASE_HOST)/$(DATABASE_NAME)
+    secret:
+        name: litellm-postgres-secret
+        usernameKey: username
+        passwordKey: password
   # Use the Stackgres Helm chart to deploy an instance of a Stackgres cluster.
   #  The Stackgres Operator must already be installed within the target
   #  Kubernetes cluster.
   # TODO: Stackgres deployment currently unsupported
-  useStackgresOperator: false
+    useStackgresOperator: false
   # Use the Postgres Helm chart to create a single node, stand alone postgres
   #  instance.  See the "postgresql" top level key for additional configuration.
-  deployStandalone: false
+    deployStandalone: false
 # Settings for Bitnami postgresql chart (if db.deployStandalone is true, ignored
 #  otherwise)
 postgresql:
-  architecture: standalone
-  auth:
-    username: litellm
-    database: litellm
+    architecture: standalone
+    auth:
+        username: litellm
+        database: litellm
     # You should override these on the helm command line with
     #  `--set postgresql.auth.postgres-password=<some good password>,postgresql.auth.password=<some good password>`
-    password: HQJGdZgigJe05Mmt
-    postgres-password: HQJGdZgigJe05Mmt
+        password: HQJGdZgigJe05Mmt
+        postgres-password: HQJGdZgigJe05Mmt
     # A secret is created by this chart (litellm-helm) with the credentials that
     #  the new Postgres instance should use.
     # existingSecret: ""
@@ -211,19 +243,19 @@ postgresql:
 # either enable this or pass a secret for REDIS_HOST, REDIS_PORT, REDIS_PASSWORD or REDIS_URL
 # with cache: true to use existing redis instance
 redis:
-  enabled: true
-  architecture: standalone
+    enabled: true
+    architecture: standalone
 # Prisma migration job settings
 migrationJob:
   # Enable or disable the schema migration Job
-  enabled: true
+    enabled: true
   # Number of retries for the Job in case of failure
-  retries: 3
+    retries: 3
   # Backoff limit for Job restarts
-  backoffLimit: 4
+    backoffLimit: 4
   # Skip schema migrations for specific environments. When True, the job will exit with code 0.
-  disableSchemaUpdate: false
-  annotations: {}
+    disableSchemaUpdate: false
+    annotations: {}
 # Additional environment variables to be added to the deployment
 envVars: {}
 # USE_DDTRACE: "true"
