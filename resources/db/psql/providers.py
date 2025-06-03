@@ -1,19 +1,6 @@
 import pulumi_postgresql as postgresql
 
-from resources.db.instance import (
-    krp_eu_central_1_rds_cluster_instance,
-    krp_eu_central_1_rds_credentials,
-    psql_par_1_instance,
-)
-
-krp_ec1_postgres_provider = postgresql.Provider(
-    "krp_ec1_postgres_provider",
-    host=krp_eu_central_1_rds_cluster_instance.endpoint,
-    port=5432,
-    username=krp_eu_central_1_rds_credentials["username"],
-    password=krp_eu_central_1_rds_credentials["password"],
-    superuser=False,
-)
+from resources.db.instance import psql_par_1_instance
 
 par_1_postgres_provider = postgresql.Provider(
     "par_1_postgres_provider",
