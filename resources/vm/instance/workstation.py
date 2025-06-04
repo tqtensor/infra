@@ -25,7 +25,7 @@ workstation_ip = gcp.compute.Address(
 workstation_instance = gcp.compute.Instance(
     "workstation_instance",
     name="workstation-instance",
-    machine_type="e2-highmem-4",
+    machine_type="e2-highmem-8",
     zone="us-east1-c",
     boot_disk=gcp.compute.InstanceBootDiskArgs(
         initialize_params=gcp.compute.InstanceBootDiskInitializeParamsArgs(
@@ -44,6 +44,7 @@ workstation_instance = gcp.compute.Instance(
             ],
         )
     ],
+    allow_stopping_for_update=True,
     scheduling=gcp.compute.InstanceSchedulingArgs(automatic_restart=True),
     metadata={
         "ssh-keys": pixelml_gcp_us_east_1_key_pair.metadata["ssh-keys"],
