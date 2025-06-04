@@ -38,10 +38,3 @@ hf_image = docker_build.Image(
     ],
     push=True,
 )
-
-hf_image_uri = Output.all(
-    gcp_pixelml_us_central_1.region,
-    gcp_pixelml_us_central_1.project,
-    pixelml_us_central_1_registry.repository_id,
-    hf_image.digest,
-).apply(lambda args: f"{args[0]}-docker.pkg.dev/{args[1]}/{args[2]}/hf@{args[3]}")

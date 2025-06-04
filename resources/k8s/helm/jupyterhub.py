@@ -6,6 +6,7 @@ import yaml
 from pulumi import Output
 
 from resources.cloudflare.tls import jupyterhub_origin_ca_cert_bundle
+from resources.ecr.docker.jupyterhub import jupyterhub_image_ref
 from resources.k8s.providers import k8s_provider_auto_pilot_eu_west_4
 from resources.utils import encode_tls_secret_data, fill_in_password
 
@@ -41,6 +42,8 @@ with open(values_file_path, "r") as f:
     chart_values["hub"]["config"]["DummyAuthenticator"]["password"] = secret_values[
         "dummy_password"
     ]
+
+    chart_values["singleuser"]["image"]["name"] = jupyterhub_image_ref.uri
 
 jupyterhub_release = k8s.helm.v3.Release(
     "jupyterhub",
