@@ -7,10 +7,11 @@ import yaml
 from pulumi import Output
 
 from resources.cloudflare.tls import vllm_origin_ca_cert_bundle
-from resources.k8s.providers import k8s_provider_auto_pilot_eu_west_4
+from resources.constants import l40s_pool_par_2
+from resources.k8s.providers import k8s_provider_par_2
 from resources.utils import encode_tls_secret_data, fill_in_password
 
-OPTS = pulumi.ResourceOptions(provider=k8s_provider_auto_pilot_eu_west_4)
+OPTS = pulumi.ResourceOptions(provider=k8s_provider_par_2)
 
 
 vllm_ns = k8s.core.v1.Namespace("vllm_ns", metadata={"name": "vllm"}, opts=OPTS)
@@ -43,12 +44,23 @@ values_file_path = Path(__file__).parent / "values" / "vllm.yaml"
 with open(values_file_path, "r") as f:
     chart_values = yaml.safe_load(f)
 
-    def apply_hf_token(token):
+    def apply_model_spec(token: str, pool_name: str):
         for model in chart_values["servingEngineSpec"]["modelSpec"]:
             model["hf_token"] = token
+            model["nodeSelectorTerms"] = [
+                {
+                    "matchExpressions": [
+                        {
+                            "key": "k8s.scaleway.com/pool-name",
+                            "operator": "In",
+                            "values": [pool_name],
+                        }
+                    ]
+                }
+            ]
 
-    Output.all(secret_values["hf_token"]).apply(
-        lambda args: apply_hf_token(token=args[0])
+    Output.all(secret_values["hf_token"], l40s_pool_par_2.name).apply(
+        lambda args: apply_model_spec(args[0], args[1])
     )
 
 vllm_release = k8s.helm.v3.Release(
@@ -64,7 +76,7 @@ vllm_release = k8s.helm.v3.Release(
         values=chart_values,
     ),
     opts=pulumi.ResourceOptions(
-        provider=k8s_provider_auto_pilot_eu_west_4,
+        provider=k8s_provider_par_2,
         depends_on=[vllm_ns, vllm_tls_secret],
     ),
 )
