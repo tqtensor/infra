@@ -54,7 +54,7 @@ ingress:
     annotations:
         kubernetes.io/ingress.class: nginx
         nginx.ingress.kubernetes.io/proxy-body-size: 50m
-    # kubernetes.io/tls-acme: "true"
+  # kubernetes.io/tls-acme: "true"
     hosts:
         - host: litellm.tqtensor.com
           paths:
@@ -71,6 +71,11 @@ masterkey: changeme
 proxy_config:
     model_list:
     # At least one model must exist for the proxy to start.
+        - model_name: huggingface/linq-embed-mistral
+          litellm_params:
+              model: huggingface/Linq-AI-Research/Linq-Embed-Mistral
+              api_base: https://embedding.pixelml.dev/linq-ai-research-linq-embed-mistral/embed
+              api_key: os.environ/TEI_API_KEY
         - model_name: google/gemini-flash-2.0
           litellm_params:
               model: vertex_ai/gemini-2.0-flash-001
@@ -234,11 +239,11 @@ postgresql:
     #  `--set postgresql.auth.postgres-password=<some good password>,postgresql.auth.password=<some good password>`
         password: HQJGdZgigJe05Mmt
         postgres-password: HQJGdZgigJe05Mmt
-    # A secret is created by this chart (litellm-helm) with the credentials that
-    #  the new Postgres instance should use.
-    # existingSecret: ""
-    # secretKeys:
-    #   userPasswordKey: password
+  # A secret is created by this chart (litellm-helm) with the credentials that
+  #  the new Postgres instance should use.
+  # existingSecret: ""
+  # secretKeys:
+  #   userPasswordKey: password
 # requires cache: true in config file
 # either enable this or pass a secret for REDIS_HOST, REDIS_PORT, REDIS_PASSWORD or REDIS_URL
 # with cache: true to use existing redis instance
