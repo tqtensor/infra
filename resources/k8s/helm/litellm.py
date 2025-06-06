@@ -21,6 +21,11 @@ litellm_ns = k8s.core.v1.Namespace(
     "litellm_ns", metadata={"name": "litellm"}, opts=OPTS
 )
 
+secrets_file_path = Path(__file__).parent / "secrets" / "litellm.yaml"
+secret_values = fill_in_password(
+    encrypted_yaml=secrets_file_path, value_path="masterKey"
+)
+
 litellm_env_secret = k8s.core.v1.Secret(
     "litellm_env_secret",
     metadata={"name": "litellm-env-secret", "namespace": litellm_ns.metadata["name"]},
@@ -31,6 +36,7 @@ litellm_env_secret = k8s.core.v1.Secret(
         openai_keys,
         vertex_sa_key.private_key,
         vertex_sa_key_2nd.private_key,
+        secret_values["teiAPIKey"],
     ).apply(
         lambda args: {
             "BEDROCK_AWS_ACCESS_KEY_ID": base64.b64encode(args[0].encode()).decode(),
@@ -41,6 +47,7 @@ litellm_env_secret = k8s.core.v1.Secret(
             "AZURE_API_KEY": base64.b64encode(args[3].key1.encode()).decode(),
             "VERTEX_SA_KEY": args[4],
             "VERTEX_SA_2ND_KEY": args[5],
+            "TEI_API_KEY": base64.b64encode(args[6].encode()).decode(),
         }
     ),
     opts=OPTS,
@@ -74,11 +81,6 @@ litellm_tls_secret = k8s.core.v1.Secret(
     opts=OPTS,
 )
 
-secrets_file_path = Path(__file__).parent / "secrets" / "litellm.yaml"
-secret_values = fill_in_password(
-    encrypted_yaml=secrets_file_path, value_path="masterkey"
-)
-
 values_file_path = Path(__file__).parent / "values" / "litellm.yaml"
 with open(values_file_path, "r") as f:
     chart_values = yaml.safe_load(f)
@@ -93,7 +95,7 @@ with open(values_file_path, "r") as f:
         psql_par_1_instance.load_balancers[0].port,
     ).apply(lambda args: prepare_values(args[0], args[1]))
 
-    chart_values["masterkey"] = secret_values["masterkey"]
+    chart_values["masterKey"] = secret_values["masterKey"]
     chart_values["db"]["endpoint"] = values["endpoint"]
     chart_values["db"]["database"] = litellm_db.name
 

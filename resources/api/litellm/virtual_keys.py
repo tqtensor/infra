@@ -26,7 +26,7 @@ def make_request(
         / "secrets"  # noqa: W503
         / "litellm.yaml"  # noqa: W503
     )
-    litellm_key_value = decode_password(encrypted_yaml=litellm_key_path)["masterkey"]
+    litellm_key_value = decode_password(encrypted_yaml=litellm_key_path)["masterKey"]
 
     url = f"{LITELLM_BASE_URL}/key/generate"
     headers = {
