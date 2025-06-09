@@ -13,6 +13,9 @@ openai_account = az.cognitiveservices.Account(
     kind="OpenAI",
     resource_group_name=victor_resource_group.name,
     sku=az.cognitiveservices.SkuArgs(name="S0"),
+    properties=az.cognitiveservices.AccountPropertiesArgs(
+        public_network_access=az.cognitiveservices.PublicNetworkAccess.ENABLED,
+    ),
     opts=OPTS,
 )
 
