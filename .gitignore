@@ -6,3 +6,6 @@
 
 # Virtualenv
 .venv
+
+# UV
+infra.egg-info
