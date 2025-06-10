@@ -132,18 +132,12 @@ proxy_config:
               aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
               aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
               aws_region_name: us-east-1
-        - model_name: bedrock/nova-lite-v1
+        - model_name: bedrock/claude-4.0-sonnet
           litellm_params:
-              model: bedrock/converse/us.amazon.nova-lite-v1:0
+              model: bedrock/us.anthropic.claude-sonnet-4-20250514-v1:0
               aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
               aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
-              aws_region_name: us-east-1
-        - model_name: bedrock/nova-pro-v1
-          litellm_params:
-              model: bedrock/converse/us.amazon.nova-pro-v1:0
-              aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
-              aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
-              aws_region_name: us-east-1
+              aws_region_name: us-west-2
         - model_name: bedrock/deepseek-r1
           litellm_params:
               model: bedrock/converse/us.deepseek.r1-v1:0

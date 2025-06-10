@@ -23,7 +23,7 @@ litellm_ns = k8s.core.v1.Namespace(
 
 secrets_file_path = Path(__file__).parent / "secrets" / "litellm.yaml"
 secret_values = fill_in_password(
-    encrypted_yaml=secrets_file_path, value_path="masterKey"
+    encrypted_yaml=secrets_file_path, value_path="masterKey", prefix="sk"
 )
 
 litellm_env_secret = k8s.core.v1.Secret(
@@ -95,7 +95,7 @@ with open(values_file_path, "r") as f:
         psql_par_1_instance.load_balancers[0].port,
     ).apply(lambda args: prepare_values(args[0], args[1]))
 
-    chart_values["masterKey"] = secret_values["masterKey"]
+    chart_values["masterkey"] = secret_values["masterKey"]
     chart_values["db"]["endpoint"] = values["endpoint"]
     chart_values["db"]["database"] = litellm_db.name
 
