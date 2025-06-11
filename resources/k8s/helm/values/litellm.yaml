@@ -126,6 +126,16 @@ proxy_config:
               model: vertex_ai/text-embedding-large-exp-03-07
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
+        - model_name: google/gemini-embedding-001
+          litellm_params:
+              model: vertex_ai/gemini-embedding-001
+              vertex_location: us-central1
+              vertex_credentials: os.environ/VERTEX_SA_KEY
+        - model_name: google/gemini-embedding-001
+          litellm_params:
+              model: vertex_ai/gemini-embedding-001
+              vertex_location: us-central1
+              vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
         - model_name: bedrock/claude-3.7-sonnet
           litellm_params:
               model: bedrock/us.anthropic.claude-3-7-sonnet-20250219-v1:0
