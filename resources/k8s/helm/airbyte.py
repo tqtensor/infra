@@ -1,5 +1,6 @@
 import base64
 from pathlib import Path
+from typing import Dict
 
 import pulumi
 import pulumi_kubernetes as k8s
@@ -48,7 +49,9 @@ values_file_path = Path(__file__).parent / "values" / "airbyte.yaml"
 with open(values_file_path, "r") as f:
     chart_values = yaml.safe_load(f)
 
-    def prepare_values(host, port, user, database):
+    def prepare_values(
+        host: str, port: int, user: str, database: str
+    ) -> Dict[str, str]:
         return {
             "host": host,
             "port": port,

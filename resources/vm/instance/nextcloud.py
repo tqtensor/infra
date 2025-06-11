@@ -22,7 +22,7 @@ nextcloud_ip = gcp.compute.Address(
 nextcloud_instance = gcp.compute.Instance(
     "nextcloud_instance",
     name="nextcloud-instance",
-    machine_type="e2-standard-2",
+    machine_type="e2-custom-medium-8192",
     zone="europe-west4-c",
     boot_disk=gcp.compute.InstanceBootDiskArgs(
         initialize_params=gcp.compute.InstanceBootDiskInitializeParamsArgs(

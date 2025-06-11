@@ -1,17 +1,19 @@
 import pulumi_azure_native as az
 from pulumi import Output
 
-from resources.resource_group import victor_resource_group
+from resources.resource_group import victor_sweden_resource_group
 from resources.utils import get_options
 
-OPTS = get_options(profile="quickqr", region="sweden", type="resource", provider="az")
+OPTS = get_options(
+    profile="quickqr", region="sweden", type="resource", provider="az", protect=False
+)
 
 
 openai_account = az.cognitiveservices.Account(
     "openai_account",
     account_name="victor-openai",
     kind="OpenAI",
-    resource_group_name=victor_resource_group.name,
+    resource_group_name=victor_sweden_resource_group.name,
     sku=az.cognitiveservices.SkuArgs(name="S0"),
     properties=az.cognitiveservices.AccountPropertiesArgs(
         public_network_access=az.cognitiveservices.PublicNetworkAccess.ENABLED,
@@ -21,10 +23,10 @@ openai_account = az.cognitiveservices.Account(
 
 openai_account_details = az.cognitiveservices.get_account_output(
     account_name=openai_account.name,
-    resource_group_name=victor_resource_group.name,
+    resource_group_name=victor_sweden_resource_group.name,
 )
 
-openai_keys = Output.all(openai_account.name, victor_resource_group.name).apply(
+openai_keys = Output.all(openai_account.name, victor_sweden_resource_group.name).apply(
     lambda args: az.cognitiveservices.list_account_keys(
         resource_group_name=args[1], account_name=args[0]
     )
@@ -42,7 +44,7 @@ gpt_o4_mini_deployment = az.cognitiveservices.Deployment(
         },
         "version_upgrade_option": az.cognitiveservices.DeploymentModelVersionUpgradeOption.ONCE_NEW_DEFAULT_VERSION_AVAILABLE,
     },
-    resource_group_name=victor_resource_group.name,
+    resource_group_name=victor_sweden_resource_group.name,
     sku={
         "capacity": 100,
         "name": "GlobalStandard",
@@ -62,7 +64,7 @@ gpt_41 = az.cognitiveservices.Deployment(
         },
         "version_upgrade_option": az.cognitiveservices.DeploymentModelVersionUpgradeOption.ONCE_NEW_DEFAULT_VERSION_AVAILABLE,
     },
-    resource_group_name=victor_resource_group.name,
+    resource_group_name=victor_sweden_resource_group.name,
     sku={
         "capacity": 100,
         "name": "GlobalStandard",
@@ -82,7 +84,7 @@ gpt_45 = az.cognitiveservices.Deployment(
         },
         "version_upgrade_option": az.cognitiveservices.DeploymentModelVersionUpgradeOption.ONCE_NEW_DEFAULT_VERSION_AVAILABLE,
     },
-    resource_group_name=victor_resource_group.name,
+    resource_group_name=victor_sweden_resource_group.name,
     sku={
         "capacity": 100,
         "name": "GlobalStandard",

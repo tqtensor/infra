@@ -2,13 +2,14 @@ from pathlib import Path
 from typing import List
 
 import requests
+from pulumi import Output
 
 from resources.utils import decode_password, fill_in_password
 
 LITELLM_BASE_URL = "https://litellm.tqtensor.com"
 
 
-def create_virtual_key(name: str):
+def create_virtual_key(name: str) -> Output[dict]:
     virtual_key_path = Path(__file__).parent / "virtual_keys.yaml"
     virtual_key = fill_in_password(
         encrypted_yaml=virtual_key_path, value_path=name, prefix="sk"

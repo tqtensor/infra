@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Dict
 
 import pulumi
 import pulumi_kubernetes as k8s
@@ -49,7 +50,7 @@ if values_file_path.exists():
         password,
         database,
         image_uri,
-    ):
+    ) -> Dict[str, str]:
         return {
             "host": host,
             "port": port,
