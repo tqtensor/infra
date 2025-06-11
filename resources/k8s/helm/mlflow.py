@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Dict
 
 import pulumi
 import pulumi_kubernetes as k8s
@@ -52,7 +53,7 @@ with open(values_file_path, "r") as f:
         aws_access_key_id,
         aws_secret_access_key,
         bucket,
-    ):
+    ) -> Dict[str, str]:
         return {
             "host": host,
             "port": port,

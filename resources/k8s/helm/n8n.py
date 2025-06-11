@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Dict
 
 import pulumi
 import pulumi_kubernetes as k8s
@@ -34,7 +35,7 @@ with open(values_file_path, "r") as f:
 
     def prepare_values(
         host, port, user, password, database, domain, tls_secret_name, encryption_key
-    ):
+    ) -> Dict[str, str]:
         return {
             "host": host,
             "port": port,
