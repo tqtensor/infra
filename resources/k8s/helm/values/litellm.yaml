@@ -71,10 +71,10 @@ masterkey: changeme
 proxy_config:
     model_list:
     # At least one model must exist for the proxy to start.
-        - model_name: huggingface/linq-embed-mistral
+        - model_name: huggingface/gte-qwen2-1-5b-instruct
           litellm_params:
-              model: huggingface/Linq-AI-Research/Linq-Embed-Mistral
-              api_base: https://embedding.pixelml.dev/linq-ai-research-linq-embed-mistral/embed
+              model: huggingface/Alibaba-NLP/gte-Qwen2-1.5B-instruct
+              api_base: https://embedding.pixelml.dev/alibaba-nlp-gte-qwen2-1.5b-instruct/embed
               api_key: os.environ/TEI_API_KEY
         - model_name: google/gemini-flash-2.0
           litellm_params:

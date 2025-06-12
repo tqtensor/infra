@@ -26,6 +26,7 @@ def create_tailscale_instance(
         region=region,
         type="resource",
         provider="gcp",
+        kwargs={"ignore_changes": ["bootDisk"]},
     )
 
     external_ip = gcp.compute.Address(
