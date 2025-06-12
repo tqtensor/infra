@@ -54,7 +54,7 @@ ingress:
     annotations:
         kubernetes.io/ingress.class: nginx
         nginx.ingress.kubernetes.io/proxy-body-size: 50m
-    # kubernetes.io/tls-acme: "true"
+  # kubernetes.io/tls-acme: "true"
     hosts:
         - host: litellm.tqtensor.com
           paths:
@@ -71,6 +71,11 @@ masterkey: changeme
 proxy_config:
     model_list:
     # At least one model must exist for the proxy to start.
+        - model_name: huggingface/linq-embed-mistral
+          litellm_params:
+              model: huggingface/Linq-AI-Research/Linq-Embed-Mistral
+              api_base: https://embedding.pixelml.dev/linq-ai-research-linq-embed-mistral/embed
+              api_key: os.environ/TEI_API_KEY
         - model_name: google/gemini-flash-2.0
           litellm_params:
               model: vertex_ai/gemini-2.0-flash-001
@@ -119,6 +124,16 @@ proxy_config:
         - model_name: google/text-embedding-large
           litellm_params:
               model: vertex_ai/text-embedding-large-exp-03-07
+              vertex_location: us-central1
+              vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
+        - model_name: google/gemini-embedding-001
+          litellm_params:
+              model: vertex_ai/gemini-embedding-001
+              vertex_location: us-central1
+              vertex_credentials: os.environ/VERTEX_SA_KEY
+        - model_name: google/gemini-embedding-001
+          litellm_params:
+              model: vertex_ai/gemini-embedding-001
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
         - model_name: bedrock/claude-3.7-sonnet
@@ -127,18 +142,12 @@ proxy_config:
               aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
               aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
               aws_region_name: us-east-1
-        - model_name: bedrock/nova-lite-v1
+        - model_name: bedrock/claude-4.0-sonnet
           litellm_params:
-              model: bedrock/converse/us.amazon.nova-lite-v1:0
+              model: bedrock/us.anthropic.claude-sonnet-4-20250514-v1:0
               aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
               aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
-              aws_region_name: us-east-1
-        - model_name: bedrock/nova-pro-v1
-          litellm_params:
-              model: bedrock/converse/us.amazon.nova-pro-v1:0
-              aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
-              aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
-              aws_region_name: us-east-1
+              aws_region_name: us-west-2
         - model_name: bedrock/deepseek-r1
           litellm_params:
               model: bedrock/converse/us.deepseek.r1-v1:0
@@ -234,11 +243,11 @@ postgresql:
     #  `--set postgresql.auth.postgres-password=<some good password>,postgresql.auth.password=<some good password>`
         password: HQJGdZgigJe05Mmt
         postgres-password: HQJGdZgigJe05Mmt
-    # A secret is created by this chart (litellm-helm) with the credentials that
-    #  the new Postgres instance should use.
-    # existingSecret: ""
-    # secretKeys:
-    #   userPasswordKey: password
+  # A secret is created by this chart (litellm-helm) with the credentials that
+  #  the new Postgres instance should use.
+  # existingSecret: ""
+  # secretKeys:
+  #   userPasswordKey: password
 # requires cache: true in config file
 # either enable this or pass a secret for REDIS_HOST, REDIS_PORT, REDIS_PASSWORD or REDIS_URL
 # with cache: true to use existing redis instance

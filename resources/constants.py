@@ -53,14 +53,19 @@ cluster_par_2 = scw.kubernetes.Cluster.get(
     id="fr-par/773f9f89-6cf5-44d9-b427-667dea748098",
 )
 
-normal_pool_par_2 = scw.kubernetes.Pool.get(
-    "normal_pool_par_2",
-    id="fr-par/58eb0502-2a3b-45e7-b180-514e1b4b0232",
+cpu_pool_par_2 = scw.kubernetes.Pool.get(
+    "cpu_pool_par_2",
+    id="fr-par/ae07f0f5-3a98-4ed0-b4b3-121f45656bc1",
 )
 
 l4_pool_par_2 = scw.kubernetes.Pool.get(
     "l4_pool_par_2",
     id="fr-par/65d0776e-bfc0-496e-8e87-a0ff2641ca2e",
+)
+
+l40s_pool_par_2 = scw.kubernetes.Pool.get(
+    "l40s_pool_par_2",
+    id="fr-par/5887b352-5153-4871-8ef3-12a6d3df2156",
 )
 
 nginx_ip_par_2 = scw.loadbalancers.Ip.get(

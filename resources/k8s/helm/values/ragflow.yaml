@@ -75,8 +75,8 @@ ragflow:
             type: Recreate
         resources:
             requests:
-                cpu: '4'
-                memory: 8Gi
+                cpu: '1'
+                memory: 2Gi
                 ephemeral-storage: 10Gi
     service:
     # Use LoadBalancer to expose the web interface externally
@@ -98,8 +98,8 @@ infinity:
             type: Recreate
         resources:
             requests:
-                cpu: '4'
-                memory: 8Gi
+                cpu: '1'
+                memory: 2Gi
     service:
         type: ClusterIP
 

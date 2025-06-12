@@ -9,7 +9,9 @@ from pulumi_cloudflare.record import Record
 def create_origin_ca_cert(
     host: Record,
 ) -> Tuple[cloudflare.OriginCaCertificate, tls.PrivateKey]:
-    def make_resources(hostname: str):
+    def make_resources(
+        hostname: str,
+    ) -> Tuple[cloudflare.OriginCaCertificate, tls.PrivateKey]:
         private_key = tls.PrivateKey(
             f"{hostname}_private_key", algorithm="RSA", rsa_bits=2048
         )

@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Dict
 
 import pulumi
 import pulumi_kubernetes as k8s
@@ -8,7 +9,7 @@ from pulumi import Output
 from resources.cloudflare.tls import ragflow_origin_ca_cert_bundle
 from resources.db.instance import psql_par_1_instance
 from resources.db.psql import ragflow_db, ragflow_user
-from resources.ecr.docker import ragflow_image, ragflow_image_uri
+from resources.ecr.docker.ragflow import ragflow_image_ref
 from resources.k8s.providers import k8s_provider_par_2
 from resources.utils import encode_tls_secret_data
 
@@ -49,7 +50,7 @@ if values_file_path.exists():
         password,
         database,
         image_uri,
-    ):
+    ) -> Dict[str, str]:
         return {
             "host": host,
             "port": port,
@@ -65,7 +66,7 @@ if values_file_path.exists():
         ragflow_user.name,
         ragflow_user.password,
         ragflow_db.name,
-        ragflow_image_uri,
+        ragflow_image_ref.uri,
     ).apply(
         lambda args: prepare_values(
             args[0],
@@ -96,6 +97,6 @@ ragflow_release = k8s.helm.v3.Release(
         version="0.1.0",
     ),
     opts=pulumi.ResourceOptions(
-        provider=k8s_provider_par_2, depends_on=[ragflow_ns, ragflow_image]
+        provider=k8s_provider_par_2, depends_on=[ragflow_ns, ragflow_image_ref]
     ),
 )

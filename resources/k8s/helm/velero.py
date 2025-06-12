@@ -1,5 +1,6 @@
 import base64
 from pathlib import Path
+from typing import Dict
 
 import pulumi
 import pulumi_kubernetes as k8s
@@ -41,7 +42,7 @@ with open(values_file_path, "r") as f:
     def prepare_values(
         bucket,
         region,
-    ):
+    ) -> Dict[str, str]:
         return {
             "bucket": bucket,
             "region": region,

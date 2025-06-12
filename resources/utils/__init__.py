@@ -68,7 +68,9 @@ def decode_password(encrypted_yaml: str) -> dict:
     return credentials
 
 
-def fill_in_password(encrypted_yaml: str, value_path: str, prefix: str = ""):
+def fill_in_password(
+    encrypted_yaml: str, value_path: str, prefix: str = ""
+) -> Output[dict]:
     # Set update flag
     is_updated = False
 
@@ -190,6 +192,4 @@ def create_docker_config(provider: str, server: str):
                 "Warning: gcloud doesn't seem to be authenticated. Run 'gcloud auth login' first."
             )
     else:
-        raise ValueError(
-            f"Unsupported provider: {provider}. Currently only 'gcp' is supported."
-        )
+        raise ValueError("Invalid provider")

@@ -3,6 +3,7 @@ import pathlib
 import pulumi_docker_build as docker_build
 from pulumi import Output
 
+from resources.ecr.docker.utils import GCPImage
 from resources.ecr.registry import pixelml_us_central_1_registry
 from resources.providers import gcp_pixelml_us_central_1
 from resources.utils import create_docker_config
@@ -39,9 +40,9 @@ ragflow_image = docker_build.Image(
     push=True,
 )
 
-ragflow_image_uri = Output.all(
-    gcp_pixelml_us_central_1.region,
-    gcp_pixelml_us_central_1.project,
-    pixelml_us_central_1_registry.repository_id,
-    ragflow_image.digest,
-).apply(lambda args: f"{args[0]}-docker.pkg.dev/{args[1]}/{args[2]}/ragflow@{args[3]}")
+ragflow_image_ref = GCPImage(
+    name="ragflow",
+    tag="latest",
+    provider=gcp_pixelml_us_central_1,
+    repository=pixelml_us_central_1_registry,
+)

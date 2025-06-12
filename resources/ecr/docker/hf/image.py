@@ -3,7 +3,6 @@ import pathlib
 import pulumi_docker_build as docker_build
 from pulumi import Output
 
-from resources.ecr.docker.utils import GCPImage
 from resources.ecr.registry import pixelml_us_central_1_registry
 from resources.providers import gcp_pixelml_us_central_1
 from resources.utils import create_docker_config
@@ -16,8 +15,8 @@ _ = Output.all(gcp_pixelml_us_central_1.region).apply(
 
 current_file_path = pathlib.Path(__file__).resolve()
 
-jupyterhub_image = docker_build.Image(
-    "jupyterhub_image",
+hf_image = docker_build.Image(
+    "hf_image",
     tags=[
         Output.concat(
             gcp_pixelml_us_central_1.region,
@@ -25,7 +24,7 @@ jupyterhub_image = docker_build.Image(
             gcp_pixelml_us_central_1.project,
             "/",
             pixelml_us_central_1_registry.repository_id,
-            "/jupyterhub:latest",
+            "/hf:latest",
         ),
     ],
     context=docker_build.BuildContextArgs(
@@ -38,10 +37,4 @@ jupyterhub_image = docker_build.Image(
         docker_build.Platform.LINUX_AMD64,
     ],
     push=True,
-)
-
-jupyterhub_image_ref = GCPImage(
-    name="jupyterhub",
-    provider=gcp_pixelml_us_central_1,
-    repository=pixelml_us_central_1_registry,
 )

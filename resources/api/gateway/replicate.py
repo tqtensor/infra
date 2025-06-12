@@ -1,5 +1,6 @@
 import base64
 from pathlib import Path
+from typing import Tuple
 
 import pulumi_gcp as gcp
 import yaml
@@ -14,7 +15,15 @@ OPTS = get_options(
 )
 
 
-def create_api_gateway(api_name: str, cloudrun_service: gcp.cloudrun.Service):
+def create_api_gateway(
+    api_name: str, cloudrun_service: gcp.cloudrun.Service
+) -> Tuple[
+    gcp.apigateway.Api,
+    gcp.apigateway.ApiConfig,
+    gcp.apigateway.Gateway,
+    gcp.projects.Service,
+    gcp.projects.ApiKey,
+]:
     api = gcp.apigateway.Api(
         "{}_api".format(api_name.replace("-", "_")),
         api_id=api_name,

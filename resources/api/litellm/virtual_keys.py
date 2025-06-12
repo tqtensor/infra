@@ -2,13 +2,14 @@ from pathlib import Path
 from typing import List
 
 import requests
+from pulumi import Output
 
 from resources.utils import decode_password, fill_in_password
 
 LITELLM_BASE_URL = "https://litellm.tqtensor.com"
 
 
-def create_virtual_key(name: str):
+def create_virtual_key(name: str) -> Output[dict]:
     virtual_key_path = Path(__file__).parent / "virtual_keys.yaml"
     virtual_key = fill_in_password(
         encrypted_yaml=virtual_key_path, value_path=name, prefix="sk"
@@ -26,7 +27,7 @@ def make_request(
         / "secrets"  # noqa: W503
         / "litellm.yaml"  # noqa: W503
     )
-    litellm_key_value = decode_password(encrypted_yaml=litellm_key_path)["masterkey"]
+    litellm_key_value = decode_password(encrypted_yaml=litellm_key_path)["masterKey"]
 
     url = f"{LITELLM_BASE_URL}/key/generate"
     headers = {

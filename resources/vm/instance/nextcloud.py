@@ -22,7 +22,7 @@ nextcloud_ip = gcp.compute.Address(
 nextcloud_instance = gcp.compute.Instance(
     "nextcloud_instance",
     name="nextcloud-instance",
-    machine_type="e2-standard-4",
+    machine_type="e2-custom-medium-8192",
     zone="europe-west4-c",
     boot_disk=gcp.compute.InstanceBootDiskArgs(
         initialize_params=gcp.compute.InstanceBootDiskInitializeParamsArgs(
@@ -41,6 +41,7 @@ nextcloud_instance = gcp.compute.Instance(
             ],
         )
     ],
+    allow_stopping_for_update=True,
     scheduling=gcp.compute.InstanceSchedulingArgs(automatic_restart=True),
     metadata={
         "ssh-keys": pixelml_gcp_eu_west_4_key_pair.metadata["ssh-keys"],

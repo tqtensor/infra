@@ -1,31 +1,41 @@
+[project]
+dependencies = [
+  "awscli>=1.38.16",
+  "pg8000>=1.31.2",
+  "pulumi>=3.0.0",
+  "pulumi-aws>=6.66.2",
+  "pulumi-awsx>=2.21.0",
+  "pulumi-azure-native>=2.89.1",
+  "pulumi-cloudflare<6.0.0",
+  "pulumi-gcp>=8.18.0",
+  "pulumi-kubernetes>=4.21.1",
+  "pulumi-postgresql>=3.15.0",
+  "pulumi-random>=4.17.0",
+  "pulumi-tls>=5.1.0",
+  "pulumiverse-scaleway>=1.27.1",
+  "sopsy>=1.1.0"
+]
+description = "Infrastructure for my personal projects"
+name = "infra"
+readme = "README.md"
+requires-python = ">=3.11"
+version = "0.1.0"
+
+[dependency-groups]
+dev = [
+  "black>=25.1.0",
+  "flake8>=7.2.0",
+  "pre-commit>=4.2.0",
+  "toml-sort>=0.24.2"
+]
+
 [build-system]
-build-backend = "poetry.core.masonry.api"
-requires = ["poetry-core"]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools>=45", "wheel"]
 
-[tool]
+[tool.setuptools]
+include-package-data = true
+packages = ["resources"]
 
-[tool.poetry]
-package-mode = false
-
-[tool.poetry.dependencies]
-awscli = "^1.38.16"
-pg8000 = "^1.31.2"
-pulumi = ">=3.0.0,<4.0.0"
-pulumi-aws = "^6.66.2"
-pulumi-awsx = "^2.21.0"
-pulumi-azure-native = "^2.89.1"
-pulumi-cloudflare = "^5.47.0"
-pulumi-kubernetes = "^4.21.1"
-pulumi-postgresql = "^3.15.0"
-pulumi-random = "^4.17.0"
-pulumi-tls = "^5.1.0"
-pulumiverse-scaleway = "^1.27.1"
-python = "^3.10"
-sopsy = "^1.1.0"
-
-[tool.poetry.group.dev.dependencies]
-black = "^24.1.1"
-flake8 = "^7.1.1"
-pre-commit = "^4.1.0"
-pulumi-gcp = "^8.18.0"
-toml-sort = "^0.24.2"
+[tool.setuptools.package-data]
+resources = ["**/*"]
