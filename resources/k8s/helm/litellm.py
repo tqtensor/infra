@@ -7,7 +7,7 @@ import pulumi_kubernetes as k8s
 import yaml
 from pulumi import Output
 
-from resources.api import openai_account_details, openai_keys
+from resources.api import openai_account_sweden_details, openai_keys_sweden
 from resources.cloudflare.tls import litellm_origin_ca_cert_bundle
 from resources.db.instance import psql_par_1_instance
 from resources.db.psql import litellm_db, litellm_user
@@ -33,8 +33,8 @@ litellm_env_secret = k8s.core.v1.Secret(
     data=Output.all(
         bedrock_access_key.id,
         bedrock_access_key.secret,
-        openai_account_details.properties.endpoint,
-        openai_keys,
+        openai_account_sweden_details.properties.endpoint,
+        openai_keys_sweden.key1,
         vertex_sa_key.private_key,
         vertex_sa_key_2nd.private_key,
         secret_values["teiAPIKey"],
@@ -45,7 +45,7 @@ litellm_env_secret = k8s.core.v1.Secret(
                 args[1].encode()
             ).decode(),
             "AZURE_API_BASE": base64.b64encode(args[2].encode()).decode(),
-            "AZURE_API_KEY": base64.b64encode(args[3].key1.encode()).decode(),
+            "AZURE_API_KEY": base64.b64encode(args[3].encode()).decode(),
             "VERTEX_SA_KEY": args[4],
             "VERTEX_SA_2ND_KEY": args[5],
             "TEI_API_KEY": base64.b64encode(args[6].encode()).decode(),
