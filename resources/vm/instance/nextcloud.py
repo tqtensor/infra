@@ -5,7 +5,11 @@ from resources.utils import get_options
 from resources.vm.keypair import pixelml_gcp_eu_west_4_key_pair
 
 OPTS = get_options(
-    profile="pixelml", region="eu-west-4", type="resource", provider="gcp"
+    profile="pixelml",
+    region="eu-west-4",
+    type="resource",
+    provider="gcp",
+    kwargs={"ignore_changes": ["bootDisk"]},
 )
 
 

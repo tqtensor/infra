@@ -9,6 +9,7 @@ OPTS = get_options(
     region="us-east-1",
     type="resource",
     provider="gcp",
+    kwargs={"ignore_changes": ["bootDisk.initializeParams.image"]},
 )
 
 
