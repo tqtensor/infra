@@ -3,10 +3,10 @@ import pulumi_gcp as gcp
 from resources.utils import get_options
 
 COUNTRY_CODES = {
-    "aus": {"region": "australia-southeast1", "zone": "australia-southeast1-c"},
-    "bra": {"region": "southamerica-east-1", "zone": "southamerica-east1-c"},
-    "can": {"region": "northamerica-northeast-2", "zone": "northamerica-northeast2-c"},
-    "deu": {"region": "europe-west-3", "zone": "europe-west3-c"},
+    "aus": {"region": "aus-southeast-1", "zone": "australia-southeast1-c"},
+    "bra": {"region": "sa-east-1", "zone": "southamerica-east1-c"},
+    "can": {"region": "na-northeast-2", "zone": "northamerica-northeast2-c"},
+    "deu": {"region": "eu-west-3", "zone": "europe-west3-c"},
     "qat": {"region": "me-central-1", "zone": "me-central1-c"},
     "sgp": {"region": "asia-southeast-1", "zone": "asia-southeast1-c"},
     "twn": {"region": "asia-east-1", "zone": "asia-east1-c"},
@@ -66,6 +66,11 @@ def create_tailscale_instance(
     return instance
 
 
+aus_instance = create_tailscale_instance(country_code="aus")
+bra_instance = create_tailscale_instance(country_code="bra")
+can_instance = create_tailscale_instance(country_code="can")
+deu_instance = create_tailscale_instance(country_code="deu")
 sgp_instance = create_tailscale_instance(country_code="sgp")
 twn_instance = create_tailscale_instance(country_code="twn")
 qat_instance = create_tailscale_instance(country_code="qat")
+usa_instance = create_tailscale_instance(country_code="usa")
