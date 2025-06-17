@@ -13,9 +13,9 @@ gcp_pixelml_asia_southeast_1 = gcp.Provider(
     project="gen-lang-client-0608717027",
     user_project_override=True,
 )
-gcp_pixelml_me_central_1 = gcp.Provider(
-    "gcp_pixelml_me_central_1",
-    region="me-central1",
+gcp_pixelml_aus_southeast_1 = gcp.Provider(
+    "gcp_pixelml_aus_southeast_1",
+    region="australia-southeast1",
     project="gen-lang-client-0608717027",
     user_project_override=True,
 )
@@ -31,21 +31,45 @@ gcp_pixelml_eu_west_1 = gcp.Provider(
     project="gen-lang-client-0608717027",
     user_project_override=True,
 )
+gcp_pixelml_eu_west_3 = gcp.Provider(
+    "gcp_pixelml_eu_west_3",
+    region="europe-west3",
+    project="gen-lang-client-0608717027",
+    user_project_override=True,
+)
 gcp_pixelml_eu_west_4 = gcp.Provider(
     "gcp_pixelml_eu_west_4",
     region="europe-west4",
     project="gen-lang-client-0608717027",
     user_project_override=True,
 )
-gcp_pixelml_us_east_1 = gcp.Provider(
-    "gcp_pixelml_us_east_1",
-    region="us-east1",
+gcp_pixelml_me_central_1 = gcp.Provider(
+    "gcp_pixelml_me_central_1",
+    region="me-central1",
+    project="gen-lang-client-0608717027",
+    user_project_override=True,
+)
+gcp_pixelml_na_northeast_2 = gcp.Provider(
+    "gcp_pixelml_na_northeast_2",
+    region="northamerica-northeast2",
+    project="gen-lang-client-0608717027",
+    user_project_override=True,
+)
+gcp_pixelml_sa_east_1 = gcp.Provider(
+    "gcp_pixelml_sa_east_1",
+    region="southamerica-east1",
     project="gen-lang-client-0608717027",
     user_project_override=True,
 )
 gcp_pixelml_us_central_1 = gcp.Provider(
     "gcp_pixelml_us_central_1",
     region="us-central1",
+    project="gen-lang-client-0608717027",
+    user_project_override=True,
+)
+gcp_pixelml_us_east_1 = gcp.Provider(
+    "gcp_pixelml_us_east_1",
+    region="us-east1",
     project="gen-lang-client-0608717027",
     user_project_override=True,
 )
@@ -81,15 +105,15 @@ gcp_pixelml_2nd_eu_west_4 = gcp.Provider(
     project="arboreal-inn-444216-h1",
     user_project_override=True,
 )
-gcp_pixelml_2nd_us_east_1 = gcp.Provider(
-    "gcp_pixelml_2nd_us_east_1",
-    region="us-east1",
-    project="arboreal-inn-444216-h1",
-    user_project_override=True,
-)
 gcp_pixelml_2nd_us_central_1 = gcp.Provider(
     "gcp_pixelml_2nd_us_central_1",
     region="us-central1",
+    project="arboreal-inn-444216-h1",
+    user_project_override=True,
+)
+gcp_pixelml_2nd_us_east_1 = gcp.Provider(
+    "gcp_pixelml_2nd_us_east_1",
+    region="us-east1",
     project="arboreal-inn-444216-h1",
     user_project_override=True,
 )
