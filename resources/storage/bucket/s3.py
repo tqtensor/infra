@@ -97,13 +97,6 @@ mlflow_stx_bucket_policy = aws.s3.BucketPolicy(
     opts=EC1_OPTS,
 )
 
-n8n_bucket = aws.s3.Bucket(
-    "n8n_bucket",
-    bucket="tqtensor-n8n-bucket-eu",
-    acl="private",
-    opts=EC1_OPTS,
-)
-
 pulumi_bucket = aws.s3.Bucket(
     "pulumi_bucket",
     bucket="tqtensor-pulumi-bucket-us",
