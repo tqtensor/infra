@@ -10,7 +10,6 @@ OPTS = get_options(
     region="sweden",
     type="resource",
     provider="az",
-    protect=False,
 )
 
 
