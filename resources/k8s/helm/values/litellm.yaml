@@ -172,6 +172,36 @@ proxy_config:
               api_base: os.environ/AZURE_API_BASE
               api_key: os.environ/AZURE_API_KEY
               api_version: 2024-12-01-preview
+        - model_name: openrouter-anthropic-claude-opus-4
+          litellm_params:
+              model: openrouter/anthropic/claude-opus-4
+              api_base: https://openrouter.ai/api/v1
+              api_key: os.environ/OPENROUTER_API_KEY
+        - model_name: openrouter-anthropic-claude-sonnet-4
+          litellm_params:
+              model: openrouter/anthropic/claude-sonnet-4
+              api_base: https://openrouter.ai/api/v1
+              api_key: os.environ/OPENROUTER_API_KEY
+        - model_name: openrouter-google-gemma-3-27b-it
+          litellm_params:
+              model: openrouter/google/gemma-3-27b-it
+              api_base: https://openrouter.ai/api/v1
+              api_key: os.environ/OPENROUTER_API_KEY
+        - model_name: openrouter-minimax-minimax-01
+          litellm_params:
+              model: openrouter/minimax/minimax-01
+              api_base: https://openrouter.ai/api/v1
+              api_key: os.environ/OPENROUTER_API_KEY
+        - model_name: openrouter-microsoft-phi-4-multimodal-instruct
+          litellm_params:
+              model: openrouter/microsoft/phi-4-multimodal-instruct
+              api_base: https://openrouter.ai/api/v1
+              api_key: os.environ/OPENROUTER_API_KEY
+        - model_name: openrouter-mistralai-pixtral-large-2411
+          litellm_params:
+              model: openrouter/mistralai/pixtral-large-2411
+              api_base: https://openrouter.ai/api/v1
+              api_key: os.environ/OPENROUTER_API_KEY
     general_settings:
         master_key: os.environ/PROXY_MASTER_KEY
         store_model_in_db: true

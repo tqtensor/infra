@@ -37,6 +37,7 @@ litellm_env_secret = k8s.core.v1.Secret(
         openai_keys_sweden.key1,
         vertex_sa_key.private_key,
         vertex_sa_key_2nd.private_key,
+        secret_values["openrouterAPIKey"],
         secret_values["teiAPIKey"],
     ).apply(
         lambda args: {
@@ -48,7 +49,8 @@ litellm_env_secret = k8s.core.v1.Secret(
             "AZURE_API_KEY": base64.b64encode(args[3].encode()).decode(),
             "VERTEX_SA_KEY": args[4],
             "VERTEX_SA_2ND_KEY": args[5],
-            "TEI_API_KEY": base64.b64encode(args[6].encode()).decode(),
+            "OPENROUTER_API_KEY": base64.b64encode(args[6].encode()).decode(),
+            "TEI_API_KEY": base64.b64encode(args[7].encode()).decode(),
         }
     ),
     opts=OPTS,
