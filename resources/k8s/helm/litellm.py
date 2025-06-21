@@ -38,7 +38,6 @@ litellm_env_secret = k8s.core.v1.Secret(
         vertex_sa_key.private_key,
         vertex_sa_key_2nd.private_key,
         secret_values["openrouterAPIKey"],
-        secret_values["teiAPIKey"],
     ).apply(
         lambda args: {
             "BEDROCK_AWS_ACCESS_KEY_ID": base64.b64encode(args[0].encode()).decode(),
@@ -50,7 +49,6 @@ litellm_env_secret = k8s.core.v1.Secret(
             "VERTEX_SA_KEY": args[4],
             "VERTEX_SA_2ND_KEY": args[5],
             "OPENROUTER_API_KEY": base64.b64encode(args[6].encode()).decode(),
-            "TEI_API_KEY": base64.b64encode(args[7].encode()).decode(),
         }
     ),
     opts=OPTS,
