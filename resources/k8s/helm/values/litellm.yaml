@@ -71,11 +71,6 @@ masterkey: changeme
 proxy_config:
     model_list:
     # At least one model must exist for the proxy to start.
-        - model_name: huggingface/gte-qwen2-1-5b-instruct
-          litellm_params:
-              model: huggingface/Alibaba-NLP/gte-Qwen2-1.5B-instruct
-              api_base: https://embedding.pixelml.dev/alibaba-nlp-gte-qwen2-1.5b-instruct/embed
-              api_key: os.environ/TEI_API_KEY
         - model_name: google/gemini-flash-2.0
           litellm_params:
               model: vertex_ai/gemini-2.0-flash-001
@@ -88,22 +83,22 @@ proxy_config:
               vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
         - model_name: google/gemini-flash-2.5
           litellm_params:
-              model: vertex_ai/gemini-2.5-flash-preview-05-20
+              model: vertex_ai/gemini-2.5-flash
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_KEY
         - model_name: google/gemini-flash-2.5
           litellm_params:
-              model: vertex_ai/gemini-2.5-flash-preview-05-20
+              model: vertex_ai/gemini-2.5-flash
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
         - model_name: google/gemini-pro-2.5
           litellm_params:
-              model: vertex_ai/gemini-2.5-pro-preview-05-06
+              model: vertex_ai/gemini-2.5-pro
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_KEY
         - model_name: google/gemini-pro-2.5
           litellm_params:
-              model: vertex_ai/gemini-2.5-pro-preview-05-06
+              model: vertex_ai/gemini-2.5-pro
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
         - model_name: google/multilingual-embedding
