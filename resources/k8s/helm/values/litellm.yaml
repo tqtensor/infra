@@ -43,8 +43,8 @@ environmentSecrets:
 # A list of Kubernetes ConfigMap objects that will be exported to the LiteLLM proxy
 #  pod as environment variables.  The ConfigMap kv-pairs can then be referenced in the
 #  configuration file (or "litellm" ConfigMap) with `os.environ/<Env Var Name>`
-environmentConfigMaps: []
-# - litellm-env-configmap
+environmentConfigMaps:
+    - litellm-env-configmap
 service:
     type: ClusterIP
     port: 4000
@@ -91,6 +91,11 @@ proxy_config:
               model: vertex_ai/gemini-2.5-flash
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
+        - model_name: google-gemini-pro-2.5
+          litellm_params:
+              model: vertex_ai/gemini-2.5-pro
+              vertex_location: us-central1
+              vertex_credentials: os.environ/VERTEX_SA_KEY
         - model_name: google/gemini-pro-2.5
           litellm_params:
               model: vertex_ai/gemini-2.5-pro
@@ -203,6 +208,7 @@ proxy_config:
         store_prompts_in_spend_logs: true
     litellm_settings:
         drop_params: true
+        success_callback: [langfuse]
     router_settings:
         routing_strategy: simple-shuffle
         num_retries: 2
