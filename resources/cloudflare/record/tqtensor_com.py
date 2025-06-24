@@ -51,6 +51,17 @@ mlflow_tqtensor_com = cloudflare.Record(
     opts=OPTS,
 )
 
+langfuse_tqtensor_com = cloudflare.Record(
+    "langfuse_tqtensor_com",
+    name="langfuse",
+    ttl=1,
+    type="A",
+    content=nginx_ip_par_2.ip_address,
+    zone_id=tqtensor_com.id,
+    proxied=True,
+    opts=OPTS,
+)
+
 litellm_tqtensor_com = cloudflare.Record(
     "litellm_tqtensor_com",
     name="litellm",

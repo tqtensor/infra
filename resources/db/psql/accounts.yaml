@@ -2,34 +2,37 @@
 roles:
     airbyte:
         password: 
-            ENC[AES256_GCM,data:7aK3Qrae0rxmSYrGfKD3J95lJN1UrfjkSMgNgTOpVho=,iv:GMfRaPSNDfIzWjhSDw5ehFZ2+0K7p6D52h97GxOU3/g=,tag:ZH27KJkMFLpbtCqlwU0IFw==,type:str]
+            ENC[AES256_GCM,data:3tVv/XqFA40cxBbgTxNu7kV25cG0TplSxF676ijFjqs=,iv:s+dhCBY+oF8FanyrP6uwzKfmK6l5UKSY+vT7NBs5mHo=,tag:NIT30tmmdvQaKJor9oTVuw==,type:str]
     dolphin:
         password: 
-            ENC[AES256_GCM,data:VTddeNBoSddB+uhdMIAlKgYjhDpKSnO+2JVAaoSqm24=,iv:3mcorNDz+YaQHIf3vV1w6agGO314x6LlOofwmjuq0JE=,tag:TwlSncBP9qre8/PA8Fw/1Q==,type:str]
+            ENC[AES256_GCM,data:I2+s80UolHw8LVZmg5t4sghGmTWtgVg/vYFB9wKsKYI=,iv:UxkXqRNZVL9rFW2HYIKX1d1mt1iKjYvir3Jz4JxOxZA=,tag:aWVn0my7K94LkgLfmoqleA==,type:str]
     jupyterhub:
         password: 
-            ENC[AES256_GCM,data:nuAulS11IS53KDpJ4PqdiV59ypAZCgVx4OT6CjKsnWo=,iv:QecVnJdPwMxyk7GLPzXthcWNA7ylEnyTWZdrqeOdlPQ=,tag:sbyfUzfAyG42hBcfjj2a+w==,type:str]
+            ENC[AES256_GCM,data:zVWgGUDFRfDlT79QJdt5TP7eJsf80EwhX1FpcQ5Yb74=,iv:5pZVOqIr+SQrrjICpPEC9WSda9QXg4qOyQQFe9bCDu0=,tag:d4/bA8bEx3Ex5m090jYnRg==,type:str]
+    langfuse:
+        password: 
+            ENC[AES256_GCM,data:d4d1UN/iEPoJOhLI7GSDZY4h5TxtiBzZCPTxa6J2kF4j,iv:Vo4Loze+vMP2ZtqIBchIXsJU6Xqt4Wp9iVgbZQmMJOc=,tag:Kyw6p4AfysPbTZ9fk/M0DA==,type:str]
     litellm:
         password: 
-            ENC[AES256_GCM,data:5upV6C90VBUY54+b17U6+TiEfFS8pFROTuUqml1AVyM=,iv:X6pBnU7jjN61Jeeq6q9qLcoqghDl+o28EKI6AIwUIWs=,tag:0rbb/bUYsQK1QIXM9CLpLg==,type:str]
+            ENC[AES256_GCM,data:ncGcMDAg3AXRa7JsadkDerlSnidHAeDSjI6ULkQyMFM=,iv:6HJo76Y5Gqg+rwsp2yT2IA3mZPBngGpL8cF7pWHX+A8=,tag:O/DaVGyD2QeZzC8ECzdynQ==,type:str]
     mlflow:
         password: 
-            ENC[AES256_GCM,data:6bgvMiMZf9fB582LCvyRI1FYbTPe4FtGSlOfeZiI8nN3,iv:iyCMLD8zS/6fS0HezWBqyC1DuHoKt/86Nx5Q15CzS68=,tag:tkl/ia6CPn4Yt35M71h8dA==,type:str]
+            ENC[AES256_GCM,data:0Wb8co/HfUsUA8fxUwQJJQ0FGs+xsVtX7L5ElkkeP8Ri,iv:DXZsbaSuBwBugAAlypCvI7xP1w/0hwJRp+2dYBPa874=,tag:lwN7a732zr78zlCHCMsjRw==,type:str]
     mlflow_auth:
         password: 
-            ENC[AES256_GCM,data:HfEs8Y73KFOMk+2LUFsEBCQzUU84hD7ooJB+TFZ26Gj7,iv:oI2KR0dKOGWxCezESNHsOA5Ppr3EMvochgUR7r1vLYo=,tag:K/mZck3tmJHVKDwMdevh9g==,type:str]
+            ENC[AES256_GCM,data:tk0F4KJftEoECB383O8UCPLspTvakYM05eCwnxj/XT8A,iv:hIgjwcd9KHlM5r9N1sW8tmavOJyNy4A6L0qJvY7qo6A=,tag:LLh8WwTD67R8VoLSFA6hAw==,type:str]
     ragflow:
         password: 
-            ENC[AES256_GCM,data:0pyZzh9zum3oDSyURJFADEwwZxqItETbn9jVPxFgM6l6,iv:dyLCJAgJAg6ueiLINPtsOKTpNRn59grdIC3WT3BBfJc=,tag:24iyngA1F0QHPpCJjU6+SA==,type:str]
+            ENC[AES256_GCM,data:Cu+PVlvW33jxGf9k0pENGU1E4Wtl6Van1VAZs7kuMjTT,iv:juLDXvT9wKJ9IPPuxLfcgVoSxwQ7TYNW9k87j/FQJXA=,tag:zxiraVop2Wlit93iKAo8Qw==,type:str]
 sops:
     kms:
         - arn: arn:aws:kms:us-east-1:100874337694:key/c7fd5cab-3baf-40c1-a129-3d4a58c70cd3
-          created_at: '2025-06-02T12:53:47Z'
+          created_at: '2025-06-24T05:37:53Z'
           enc: 
-              AQICAHhZfWILurHAsFqnvtAb0hx4XSK8Hq5vHmUDi3UArtcCpgHF6NXFWMTm156ZqspHyYnOAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMQ6+5NY1HTIrCnyZtAgEQgDu+89X8ztyLQ39eF8qdHrVyGXw/ActFKiTTBy0cqfwlyaCuq74TKBo1zRuCN3Uf+1gNLl8xJzr0MR40yA==
+              AQICAHhZfWILurHAsFqnvtAb0hx4XSK8Hq5vHmUDi3UArtcCpgFau/lGibSHm/FBsL6xk12nAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMZKPZzt83NF6gLffLAgEQgDvzuvLAmrDx3nRcFOq6i2DDn2BvvCjksAJJmbfPSw6sjeihTJZxejP5kTi5XiR/HsKRMf9CdDPx7N/nHQ==
           aws_profile: personal
-    lastmodified: '2025-06-02T14:04:14Z'
+    lastmodified: '2025-06-24T05:37:53Z'
     mac: 
-        ENC[AES256_GCM,data:Sh/AKSx02ghhPRNPJpW+/iRhqAFH/sW+ybmqLuGCygFz4tg/hCkJVw5CYOrxjrlk1iohKDWjEkFi7N1/5ZNOjILnkmW1XF74yg4l6rggU1w3Vd5YC4c2iLO0wMtYl9eK19LUoH8v0SHHrxzF9xREd8Z4YDwuAocxYQg9FTTZEdE=,iv:wVcuXPzF9iAXqtMIWTj3ZBw0elJh9fjxImpIHbbAtzg=,tag:Cx5h2MK3OuIekIqILbwQUA==,type:str]
+        ENC[AES256_GCM,data:2yTz1iDk4PDU1P2nFY0hZPwCxWEH+sFJTmY9kdxvtRIqS+okLgyGL2mkF+Yk4VMIKaQqkccSCMM/qUiBAnLzQxQnDPTWyNvd8moC/J67XhHeRBa2QPBCBP+8gkhayJJitHx5oiiVITylV6PQ2qC7gpdmRnd4cmgBYIBrOXu1Jec=,iv:SuXda4BhlK8T1YqELs9mu3kDMD0cpNSRPJHgbDPthZU=,tag:kcF8UbVPBtFiBMG8LCPgBw==,type:str]
     unencrypted_suffix: _unencrypted
-    version: 3.10.1
+    version: 3.10.2

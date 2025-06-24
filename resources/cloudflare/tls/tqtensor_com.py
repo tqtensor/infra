@@ -1,6 +1,7 @@
 from resources.cloudflare.record import (
     airbyte_tqtensor_com,
     jupyterhub_tqtensor_com,
+    langfuse_tqtensor_com,
     litellm_tqtensor_com,
     mlflow_tqtensor_com,
     n8n_tqtensor_com,
@@ -13,6 +14,8 @@ from .utils import create_origin_ca_cert
 airbyte_origin_ca_cert_bundle = create_origin_ca_cert(host=airbyte_tqtensor_com)
 
 jupyterhub_origin_ca_cert_bundle = create_origin_ca_cert(host=jupyterhub_tqtensor_com)
+
+langfuse_origin_ca_cert_bundle = create_origin_ca_cert(host=langfuse_tqtensor_com)
 
 litellm_origin_ca_cert_bundle = create_origin_ca_cert(host=litellm_tqtensor_com)
 
