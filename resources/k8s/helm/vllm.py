@@ -28,14 +28,23 @@ vllm_tls_secret = k8s.core.v1.Secret(
 
 secrets_file_path = Path(__file__).parent / "secrets" / "vllm.yaml"
 secret_values = fill_in_password(
-    encrypted_yaml=secrets_file_path, value_path="hf_token"
+    encrypted_yaml=secrets_file_path, value_path="vllm-api-key"
+)
+
+hf_token_secret = k8s.core.v1.Secret(
+    "hf_token_secret",
+    metadata={"name": "hf-token-secret", "namespace": vllm_ns.metadata["name"]},
+    data=Output.all(secret_values["hf_token"]).apply(
+        lambda args: {"hf-token": base64.b64encode(args[0].encode()).decode()}
+    ),
+    opts=OPTS,
 )
 
 vllm_api_key_secret = k8s.core.v1.Secret(
     "vllm_api_key_secret",
     metadata={"name": "vllm-api-key-secret", "namespace": vllm_ns.metadata["name"]},
-    data=Output.all(secret_values["auth"]).apply(
-        lambda args: {"auth": base64.b64encode(args[0].encode()).decode()}
+    data=Output.all(secret_values["vllm-api-key"]).apply(
+        lambda args: {"vllm-api-key": base64.b64encode(args[0].encode()).decode()}
     ),
     opts=OPTS,
 )

@@ -85,10 +85,10 @@ servingEngineSpec:
   # - shmSize: (optional, string) The size of the shared memory, e.g., "20Gi"
   #
     modelSpec:
-        - name: qwen2-5-vl-7b-instruct
+        - name: menlo-jan-nano
           repository: vllm/vllm-openai
           tag: latest
-          modelURL: Qwen/Qwen2.5-VL-7B-Instruct
+          modelURL: Menlo/Jan-nano
           replicaCount: 1
 
           requestCPU: 4
@@ -266,6 +266,9 @@ routerSpec:
   # vllmApiKey: (optional) api key for securing the vLLM models. Must be an object referencing an existing secret
   #   secretName: "my-existing-secret"
   #   secretKey: "vllm-api-key"
+    vllmApiKey:
+        secretName: vllm-api-key-secret
+        secretKey: vllm-api-key
 
   # -- router resource requests and limits
     resources:
@@ -291,10 +294,7 @@ routerSpec:
     # -- Additional annotations for the Ingress resource
         annotations:
       # kubernetes.io/ingress.class: alb
-            nginx.ingress.kubernetes.io/auth-type: basic
             kubernetes.io/ingress.class: nginx
-            nginx.ingress.kubernetes.io/auth-secret: vllm-api-key-secret
-            nginx.ingress.kubernetes.io/auth-realm: Authentication Required - vllm
     # kubernetes.io/tls-acme: "true"
 
     # The list of hostnames to be covered with this ingress record.
@@ -309,6 +309,15 @@ routerSpec:
             - secretName: vllm-tls-secret
               hosts:
                   - vllm.tqtensor.com
+
+  # - hf_token: (optional) Hugging Face token configuration. Can be either:
+  #   - A string containing the token directly (will be stored in a generated secret)
+  #   - An object referencing an existing secret:
+  #     secretName: "my-existing-secret"
+  #     secretKey: "hf-token-key"
+    hf_token:
+        secretName: hf-token-secret
+        secretKey: hf-token
 
   # The node selector terms to match the nodes
   # Example:
