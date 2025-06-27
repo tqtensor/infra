@@ -127,12 +127,12 @@ langfuse:
     # -- Deployment strategy for all langfuse deployments (can be overridden by individual deployments)
         strategy: {}
   # -- Number of replicas to use for all langfuse deployments. Can be overridden by the individual deployments
-    replicas: 1
+    replicas: 2
   # -- Resources for all langfuse deployments. Can be overridden by the individual deployments
     resources: {}
     image:
     # -- The image tag to use for all langfuse deployments. Can be overridden by the individual deployments. Falls back to appVersion if not set.
-        tag:
+        tag: 3.75.4
     # -- The pull policy to use for all langfuse deployments. Can be overridden by the individual deployments.
         pullPolicy: Always
     # -- The pull secrets to use for all langfuse deployments. Can be overridden by the individual deployments.
@@ -371,7 +371,7 @@ langfuse:
 # PostgreSQL Configuration
 postgresql:
   # -- Enable PostgreSQL deployment (via Bitnami Helm Chart). If you want to use an external Postgres server (or a managed one), set this to false
-    deploy: true
+    deploy: false
 
   # -- PostgreSQL host to connect to. If postgresql.deploy is true, this will be set automatically based on the release name.
     host: ''
@@ -500,7 +500,7 @@ clickhouse:
 # S3/MinIO Configuration
 s3:
   # -- Enable MinIO deployment (via Bitnami Helm Chart). If you want to use a custom BlobStorage, e.g. S3, set to false.
-    deploy: true
+    deploy: false
 
   # -- S3 bucket to use for all uploads. Can be overridden per upload type.
     bucket: ''

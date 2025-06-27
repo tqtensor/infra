@@ -63,6 +63,13 @@ fast_bucket_lifecycle = aws.s3.BucketLifecycleConfigurationV2(
     opts=AS1_OPTS,
 )
 
+langfuse_bucket = aws.s3.Bucket(
+    "langfuse_bucket",
+    bucket="tqtensor-langfuse-bucket-eu",
+    acl="private",
+    opts=EC1_OPTS,
+)
+
 mlflow_bucket = aws.s3.Bucket(
     "mlflow_bucket",
     bucket="tqtensor-mlflow-bucket-eu",
