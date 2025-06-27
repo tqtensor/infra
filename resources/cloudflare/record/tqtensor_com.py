@@ -19,6 +19,16 @@ airbyte_tqtensor_com = cloudflare.Record(
     opts=OPTS,
 )
 
+db_tqtensor_com = cloudflare.Record(
+    "db_tqtensor_com",
+    name="db",
+    ttl=1,
+    type="A",
+    content=nginx_ip_eu_west_4.address,
+    zone_id=tqtensor_com.id,
+    opts=OPTS,
+)
+
 drive_tqtensor_com = cloudflare.Record(
     "drive_tqtensor_com",
     name="drive",

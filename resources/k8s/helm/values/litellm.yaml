@@ -71,22 +71,22 @@ masterkey: changeme
 proxy_config:
     model_list:
     # At least one model must exist for the proxy to start.
-        - model_name: google/gemini-flash-2.0
+        - model_name: google-gemini-flash-2.0
           litellm_params:
               model: vertex_ai/gemini-2.0-flash-001
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_KEY
-        - model_name: google/gemini-flash-2.0
+        - model_name: google-gemini-flash-2.0
           litellm_params:
               model: vertex_ai/gemini-2.0-flash-001
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
-        - model_name: google/gemini-flash-2.5
+        - model_name: google-gemini-flash-2.5
           litellm_params:
               model: vertex_ai/gemini-2.5-flash
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_KEY
-        - model_name: google/gemini-flash-2.5
+        - model_name: google-gemini-flash-2.5
           litellm_params:
               model: vertex_ai/gemini-2.5-flash
               vertex_location: us-central1
@@ -96,77 +96,72 @@ proxy_config:
               model: vertex_ai/gemini-2.5-pro
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_KEY
-        - model_name: google/gemini-pro-2.5
-          litellm_params:
-              model: vertex_ai/gemini-2.5-pro
-              vertex_location: us-central1
-              vertex_credentials: os.environ/VERTEX_SA_KEY
-        - model_name: google/gemini-pro-2.5
+        - model_name: google-gemini-pro-2.5
           litellm_params:
               model: vertex_ai/gemini-2.5-pro
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
-        - model_name: google/multilingual-embedding
+        - model_name: google-multilingual-embedding
           litellm_params:
               model: vertex_ai/text-multilingual-embedding-002
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_KEY
-        - model_name: google/multilingual-embedding
+        - model_name: google-multilingual-embedding
           litellm_params:
               model: vertex_ai/text-multilingual-embedding-002
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
-        - model_name: google/text-embedding-large
+        - model_name: google-text-embedding-large
           litellm_params:
               model: vertex_ai/text-embedding-large-exp-03-07
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_KEY
-        - model_name: google/text-embedding-large
+        - model_name: google-text-embedding-large
           litellm_params:
               model: vertex_ai/text-embedding-large-exp-03-07
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
-        - model_name: google/gemini-embedding-001
+        - model_name: google-gemini-embedding-001
           litellm_params:
               model: vertex_ai/gemini-embedding-001
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_KEY
-        - model_name: google/gemini-embedding-001
+        - model_name: google-gemini-embedding-001
           litellm_params:
               model: vertex_ai/gemini-embedding-001
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
-        - model_name: bedrock/claude-3.7-sonnet
+        - model_name: bedrock-claude-3.7-sonnet
           litellm_params:
               model: bedrock/us.anthropic.claude-3-7-sonnet-20250219-v1:0
               aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
               aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
               aws_region_name: us-east-1
-        - model_name: bedrock/claude-4.0-sonnet
+        - model_name: bedrock-claude-4.0-sonnet
           litellm_params:
               model: bedrock/us.anthropic.claude-sonnet-4-20250514-v1:0
               aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
               aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
               aws_region_name: us-west-2
-        - model_name: bedrock/deepseek-r1
+        - model_name: bedrock-deepseek-r1
           litellm_params:
               model: bedrock/converse/us.deepseek.r1-v1:0
               aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
               aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
               aws_region_name: us-west-2
-        - model_name: azure/gpt-41
+        - model_name: azure-gpt-41
           litellm_params:
               model: azure/gpt-4.1
               api_base: os.environ/AZURE_API_BASE
               api_key: os.environ/AZURE_API_KEY
               api_version: 2024-12-01-preview
-        - model_name: azure/gpt-45
+        - model_name: azure-gpt-45
           litellm_params:
               model: azure/gpt-4.5
               api_base: os.environ/AZURE_API_BASE
               api_key: os.environ/AZURE_API_KEY
               api_version: 2024-12-01-preview
-        - model_name: azure/o4-mini
+        - model_name: azure-o4-mini
           litellm_params:
               model: azure/o4-mini
               api_base: os.environ/AZURE_API_BASE
