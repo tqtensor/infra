@@ -4,9 +4,7 @@ import pulumiverse_scaleway as scw
 
 from resources.utils import fill_in_password, get_options
 
-OPTS = get_options(
-    profile="pixelml", provider="scw", region="par-1", type="resource", protect=False
-)
+OPTS = get_options(profile="pixelml", provider="scw", region="par-1", type="resource")
 REGION = "fr-par"
 
 

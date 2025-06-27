@@ -54,12 +54,13 @@ def make_request(
         requests.post(url, headers=headers, json=data)
 
 
+cag_key = create_virtual_key(name="cag")
 continue_dev_key = create_virtual_key(name="continue_dev")
 nextchat_key = create_virtual_key(name="nextchat")
 ragflow_key = create_virtual_key(name="ragflow")
 stx_key = create_virtual_key(name="stx")
 
 make_request(
-    virtual_keys=["continue_dev", "nextchat", "ragflow", "stx"],
+    virtual_keys=["cag", "continue_dev", "nextchat", "ragflow", "stx"],
     max_budget=100,
 )

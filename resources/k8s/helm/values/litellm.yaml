@@ -9,7 +9,7 @@ image:
     pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   # tag: "main-latest"
-    tag: main-v1.69.0-stable
+    tag: main-v1.73.0-stable
 imagePullSecrets: []
 nameOverride: litellm
 fullnameOverride: ''
@@ -43,8 +43,8 @@ environmentSecrets:
 # A list of Kubernetes ConfigMap objects that will be exported to the LiteLLM proxy
 #  pod as environment variables.  The ConfigMap kv-pairs can then be referenced in the
 #  configuration file (or "litellm" ConfigMap) with `os.environ/<Env Var Name>`
-environmentConfigMaps: []
-# - litellm-env-configmap
+environmentConfigMaps:
+    - litellm-env-configmap
 service:
     type: ClusterIP
     port: 4000
@@ -71,113 +71,139 @@ masterkey: changeme
 proxy_config:
     model_list:
     # At least one model must exist for the proxy to start.
-        - model_name: huggingface/linq-embed-mistral
-          litellm_params:
-              model: huggingface/Linq-AI-Research/Linq-Embed-Mistral
-              api_base: https://embedding.pixelml.dev/linq-ai-research-linq-embed-mistral/embed
-              api_key: os.environ/TEI_API_KEY
-        - model_name: google/gemini-flash-2.0
+        - model_name: google-gemini-flash-2.0
           litellm_params:
               model: vertex_ai/gemini-2.0-flash-001
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_KEY
-        - model_name: google/gemini-flash-2.0
+        - model_name: google-gemini-flash-2.0
           litellm_params:
               model: vertex_ai/gemini-2.0-flash-001
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
-        - model_name: google/gemini-flash-2.5
+        - model_name: google-gemini-flash-2.5
           litellm_params:
-              model: vertex_ai/gemini-2.5-flash-preview-05-20
+              model: vertex_ai/gemini-2.5-flash
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_KEY
-        - model_name: google/gemini-flash-2.5
+        - model_name: google-gemini-flash-2.5
           litellm_params:
-              model: vertex_ai/gemini-2.5-flash-preview-05-20
+              model: vertex_ai/gemini-2.5-flash
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
-        - model_name: google/gemini-pro-2.5
+        - model_name: google-gemini-pro-2.5
           litellm_params:
-              model: vertex_ai/gemini-2.5-pro-preview-05-06
+              model: vertex_ai/gemini-2.5-pro
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_KEY
-        - model_name: google/gemini-pro-2.5
+        - model_name: google-gemini-pro-2.5
           litellm_params:
-              model: vertex_ai/gemini-2.5-pro-preview-05-06
+              model: vertex_ai/gemini-2.5-pro
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
-        - model_name: google/multilingual-embedding
+        - model_name: google-multilingual-embedding
           litellm_params:
               model: vertex_ai/text-multilingual-embedding-002
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_KEY
-        - model_name: google/multilingual-embedding
+        - model_name: google-multilingual-embedding
           litellm_params:
               model: vertex_ai/text-multilingual-embedding-002
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
-        - model_name: google/text-embedding-large
+        - model_name: google-text-embedding-large
           litellm_params:
               model: vertex_ai/text-embedding-large-exp-03-07
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_KEY
-        - model_name: google/text-embedding-large
+        - model_name: google-text-embedding-large
           litellm_params:
               model: vertex_ai/text-embedding-large-exp-03-07
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
-        - model_name: google/gemini-embedding-001
+        - model_name: google-gemini-embedding-001
           litellm_params:
               model: vertex_ai/gemini-embedding-001
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_KEY
-        - model_name: google/gemini-embedding-001
+        - model_name: google-gemini-embedding-001
           litellm_params:
               model: vertex_ai/gemini-embedding-001
               vertex_location: us-central1
               vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
-        - model_name: bedrock/claude-3.7-sonnet
+        - model_name: bedrock-claude-3.7-sonnet
           litellm_params:
               model: bedrock/us.anthropic.claude-3-7-sonnet-20250219-v1:0
               aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
               aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
               aws_region_name: us-east-1
-        - model_name: bedrock/claude-4.0-sonnet
+        - model_name: bedrock-claude-4.0-sonnet
           litellm_params:
               model: bedrock/us.anthropic.claude-sonnet-4-20250514-v1:0
               aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
               aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
               aws_region_name: us-west-2
-        - model_name: bedrock/deepseek-r1
+        - model_name: bedrock-deepseek-r1
           litellm_params:
               model: bedrock/converse/us.deepseek.r1-v1:0
               aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
               aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
               aws_region_name: us-west-2
-        - model_name: azure/gpt-41
+        - model_name: azure-gpt-41
           litellm_params:
               model: azure/gpt-4.1
               api_base: os.environ/AZURE_API_BASE
               api_key: os.environ/AZURE_API_KEY
               api_version: 2024-12-01-preview
-        - model_name: azure/gpt-45
+        - model_name: azure-gpt-45
           litellm_params:
               model: azure/gpt-4.5
               api_base: os.environ/AZURE_API_BASE
               api_key: os.environ/AZURE_API_KEY
               api_version: 2024-12-01-preview
-        - model_name: azure/o4-mini
+        - model_name: azure-o4-mini
           litellm_params:
               model: azure/o4-mini
               api_base: os.environ/AZURE_API_BASE
               api_key: os.environ/AZURE_API_KEY
               api_version: 2024-12-01-preview
+        - model_name: openrouter-anthropic-claude-opus-4
+          litellm_params:
+              model: openrouter/anthropic/claude-opus-4
+              api_base: https://openrouter.ai/api/v1
+              api_key: os.environ/OPENROUTER_API_KEY
+        - model_name: openrouter-anthropic-claude-sonnet-4
+          litellm_params:
+              model: openrouter/anthropic/claude-sonnet-4
+              api_base: https://openrouter.ai/api/v1
+              api_key: os.environ/OPENROUTER_API_KEY
+        - model_name: openrouter-google-gemma-3-27b-it
+          litellm_params:
+              model: openrouter/google/gemma-3-27b-it
+              api_base: https://openrouter.ai/api/v1
+              api_key: os.environ/OPENROUTER_API_KEY
+        - model_name: openrouter-minimax-minimax-01
+          litellm_params:
+              model: openrouter/minimax/minimax-01
+              api_base: https://openrouter.ai/api/v1
+              api_key: os.environ/OPENROUTER_API_KEY
+        - model_name: openrouter-microsoft-phi-4-multimodal-instruct
+          litellm_params:
+              model: openrouter/microsoft/phi-4-multimodal-instruct
+              api_base: https://openrouter.ai/api/v1
+              api_key: os.environ/OPENROUTER_API_KEY
+        - model_name: openrouter-mistralai-pixtral-large-2411
+          litellm_params:
+              model: openrouter/mistralai/pixtral-large-2411
+              api_base: https://openrouter.ai/api/v1
+              api_key: os.environ/OPENROUTER_API_KEY
     general_settings:
         master_key: os.environ/PROXY_MASTER_KEY
         store_model_in_db: true
         store_prompts_in_spend_logs: true
     litellm_settings:
         drop_params: true
+        success_callback: [langfuse]
     router_settings:
         routing_strategy: simple-shuffle
         num_retries: 2
