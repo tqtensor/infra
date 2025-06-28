@@ -7,4 +7,3 @@ from .n8n import *  # noqa
 from .nginx import *  # noqa
 from .ragflow import *  # noqa
 from .velero import *  # noqa
-from .vllm import *  # noqa
