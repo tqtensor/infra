@@ -13,7 +13,7 @@ from resources.db.instance import psql_par_1_instance
 from resources.db.psql import litellm_db, litellm_user
 from resources.iam.user import bedrock_access_key, vertex_sa_key, vertex_sa_key_2nd
 from resources.k8s.providers import k8s_provider_par_2
-from resources.utils import encode_tls_secret_data, fill_in_password
+from resources.utils import decode_password, encode_tls_secret_data, fill_in_password
 
 OPTS = pulumi.ResourceOptions(provider=k8s_provider_par_2)
 
@@ -26,6 +26,9 @@ secrets_file_path = Path(__file__).parent / "secrets" / "litellm.yaml"
 secret_values = fill_in_password(
     encrypted_yaml=secrets_file_path, value_path="masterKey", prefix="sk"
 )
+
+vllm_secrets_file_path = Path(__file__).parent / "secrets" / "vllm.yaml"
+vllm_secret_values = decode_password(encrypted_yaml=vllm_secrets_file_path)
 
 litellm_env_secret = k8s.core.v1.Secret(
     "litellm_env_secret",
@@ -40,6 +43,7 @@ litellm_env_secret = k8s.core.v1.Secret(
         secret_values["openrouterAPIKey"],
         vertex_sa_key.private_key,
         vertex_sa_key_2nd.private_key,
+        vllm_secret_values["vllm-api-key"],
     ).apply(
         lambda args: {
             "AZURE_API_BASE": base64.b64encode(args[0].encode()).decode(),
@@ -53,6 +57,7 @@ litellm_env_secret = k8s.core.v1.Secret(
             "OPENROUTER_API_KEY": base64.b64encode(args[6].encode()).decode(),
             "VERTEX_SA_KEY": args[7],
             "VERTEX_SA_2ND_KEY": args[8],
+            "VLLM_API_KEY": base64.b64encode(args[9].encode()).decode(),
         }
     ),
     opts=OPTS,

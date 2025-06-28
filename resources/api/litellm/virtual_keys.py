@@ -57,10 +57,11 @@ def make_request(
 cag_key = create_virtual_key(name="cag")
 continue_dev_key = create_virtual_key(name="continue_dev")
 nextchat_key = create_virtual_key(name="nextchat")
+pixelml_key = create_virtual_key(name="pixelml")
 ragflow_key = create_virtual_key(name="ragflow")
 stx_key = create_virtual_key(name="stx")
 
 make_request(
-    virtual_keys=["cag", "continue_dev", "nextchat", "ragflow", "stx"],
+    virtual_keys=["cag", "continue_dev", "nextchat", "pixelml", "ragflow", "stx"],
     max_budget=100,
 )

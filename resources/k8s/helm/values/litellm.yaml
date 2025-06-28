@@ -197,6 +197,11 @@ proxy_config:
               model: openrouter/mistralai/pixtral-large-2411
               api_base: https://openrouter.ai/api/v1
               api_key: os.environ/OPENROUTER_API_KEY
+        - model_name: vllm-menlo-jan-nano
+          litellm_params:
+              model: openai/Menlo/Jan-nano
+              api_base: https://vllm.tqtensor.com/v1
+              api_key: os.environ/VLLM_API_KEY
     general_settings:
         master_key: os.environ/PROXY_MASTER_KEY
         store_model_in_db: true
