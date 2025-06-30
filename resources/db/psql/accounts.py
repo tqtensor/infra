@@ -1,10 +1,10 @@
 import pulumi
 
 from resources.db.psql.providers import par_1_postgres_provider
-
-from .utils import create_db_and_user
+from resources.db.psql.utils import create_db_and_user
 
 OPTS = pulumi.ResourceOptions(provider=par_1_postgres_provider, protect=False)
+
 
 # Airbyte
 airbyte_db, airbyte_user, airbyte_grant_privileges = create_db_and_user(
