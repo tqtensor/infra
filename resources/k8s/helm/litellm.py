@@ -64,7 +64,7 @@ litellm_env_secret = k8s.core.v1.Secret(
 )
 
 litellm_env_configmap = k8s.core.v1.ConfigMap(
-    "litellm-env-configmap",
+    "litellm_env_configmap",
     metadata={
         "name": "litellm-env-configmap",
         "namespace": litellm_ns.metadata["name"],
