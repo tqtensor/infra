@@ -5,6 +5,7 @@ from resources.cloudflare.record import (
     litellm_tqtensor_com,
     mlflow_tqtensor_com,
     n8n_tqtensor_com,
+    qdrant_tqtensor_com,
     ragflow_tqtensor_com,
     vllm_tqtensor_com,
 )
@@ -24,5 +25,7 @@ mlflow_origin_ca_cert_bundle = create_origin_ca_cert(host=mlflow_tqtensor_com)
 n8n_origin_ca_cert_bundle = create_origin_ca_cert(host=n8n_tqtensor_com)
 
 ragflow_origin_ca_cert_bundle = create_origin_ca_cert(host=ragflow_tqtensor_com)
+
+qdrant_origin_ca_cert_bundle = create_origin_ca_cert(host=qdrant_tqtensor_com)
 
 vllm_origin_ca_cert_bundle = create_origin_ca_cert(host=vllm_tqtensor_com)
