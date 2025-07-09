@@ -5,5 +5,6 @@ from .litellm import *  # noqa
 from .mlflow import *  # noqa
 from .n8n import *  # noqa
 from .nginx import *  # noqa
+from .qdrant import *  # noqa
 from .ragflow import *  # noqa
 from .velero import *  # noqa
