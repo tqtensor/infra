@@ -179,7 +179,7 @@ config:
             port: 6335
             enable_tls: false
         consensus:
-            tick_period_ms: 100
+            tick_period_ms: 150
 
 sidecarContainers: []
 # sidecarContainers:
