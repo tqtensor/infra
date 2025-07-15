@@ -38,6 +38,7 @@ litellm_env_secret = k8s.core.v1.Secret(
         openai_keys_sweden.key1,
         bedrock_access_key.id,
         bedrock_access_key.secret,
+        secret_values["groqAPIKey"],
         secret_values["langfusePublicKey"],
         secret_values["langfuseSecretKey"],
         secret_values["openrouterAPIKey"],
@@ -52,12 +53,13 @@ litellm_env_secret = k8s.core.v1.Secret(
             "BEDROCK_AWS_SECRET_ACCESS_KEY": base64.b64encode(
                 args[3].encode()
             ).decode(),
-            "LANGFUSE_PUBLIC_KEY": base64.b64encode(args[4].encode()).decode(),
-            "LANGFUSE_SECRET_KEY": base64.b64encode(args[5].encode()).decode(),
-            "OPENROUTER_API_KEY": base64.b64encode(args[6].encode()).decode(),
-            "VERTEX_SA_KEY": args[7],
-            "VERTEX_SA_2ND_KEY": args[8],
-            "VLLM_API_KEY": base64.b64encode(args[9].encode()).decode(),
+            "GROQ_API_KEY": base64.b64encode(args[4].encode()).decode(),
+            "LANGFUSE_PUBLIC_KEY": base64.b64encode(args[5].encode()).decode(),
+            "LANGFUSE_SECRET_KEY": base64.b64encode(args[6].encode()).decode(),
+            "OPENROUTER_API_KEY": base64.b64encode(args[7].encode()).decode(),
+            "VERTEX_SA_KEY": args[8],
+            "VERTEX_SA_2ND_KEY": args[9],
+            "VLLM_API_KEY": base64.b64encode(args[10].encode()).decode(),
         }
     ),
     opts=OPTS,
