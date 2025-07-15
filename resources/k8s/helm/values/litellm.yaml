@@ -69,139 +69,162 @@ masterkey: changeme
 #  Examples: https://github.com/BerriAI/litellm/tree/main/litellm/proxy/example_config_yaml
 #  Reference: https://docs.litellm.ai/docs/proxy/configs
 proxy_config:
-    model_list:
-    # At least one model must exist for the proxy to start.
-        - model_name: google-gemini-flash-2.0
-          litellm_params:
-              model: vertex_ai/gemini-2.0-flash-001
-              vertex_location: us-central1
+    credential_list:
+        - credential_name: vertex_ai_key
+          credential_values:
               vertex_credentials: os.environ/VERTEX_SA_KEY
-        - model_name: google-gemini-flash-2.0
-          litellm_params:
-              model: vertex_ai/gemini-2.0-flash-001
               vertex_location: us-central1
+          credential_info:
+              description: Vertex AI primary service account
+        - credential_name: vertex_ai_2nd_key
+          credential_values:
               vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
-        - model_name: google-gemini-flash-2.5
-          litellm_params:
-              model: vertex_ai/gemini-2.5-flash
               vertex_location: us-central1
-              vertex_credentials: os.environ/VERTEX_SA_KEY
-        - model_name: google-gemini-flash-2.5
-          litellm_params:
-              model: vertex_ai/gemini-2.5-flash
-              vertex_location: us-central1
-              vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
-        - model_name: google-gemini-pro-2.5
-          litellm_params:
-              model: vertex_ai/gemini-2.5-pro
-              vertex_location: us-central1
-              vertex_credentials: os.environ/VERTEX_SA_KEY
-        - model_name: google-gemini-pro-2.5
-          litellm_params:
-              model: vertex_ai/gemini-2.5-pro
-              vertex_location: us-central1
-              vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
-        - model_name: google-multilingual-embedding
-          litellm_params:
-              model: vertex_ai/text-multilingual-embedding-002
-              vertex_location: us-central1
-              vertex_credentials: os.environ/VERTEX_SA_KEY
-        - model_name: google-multilingual-embedding
-          litellm_params:
-              model: vertex_ai/text-multilingual-embedding-002
-              vertex_location: us-central1
-              vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
-        - model_name: google-text-embedding-large
-          litellm_params:
-              model: vertex_ai/text-embedding-large-exp-03-07
-              vertex_location: us-central1
-              vertex_credentials: os.environ/VERTEX_SA_KEY
-        - model_name: google-text-embedding-large
-          litellm_params:
-              model: vertex_ai/text-embedding-large-exp-03-07
-              vertex_location: us-central1
-              vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
-        - model_name: google-gemini-embedding-001
-          litellm_params:
-              model: vertex_ai/gemini-embedding-001
-              vertex_location: us-central1
-              vertex_credentials: os.environ/VERTEX_SA_KEY
-        - model_name: google-gemini-embedding-001
-          litellm_params:
-              model: vertex_ai/gemini-embedding-001
-              vertex_location: us-central1
-              vertex_credentials: os.environ/VERTEX_SA_2ND_KEY
-        - model_name: bedrock-claude-3.7-sonnet
-          litellm_params:
-              model: bedrock/us.anthropic.claude-3-7-sonnet-20250219-v1:0
+          credential_info:
+              description: Vertex AI secondary service account
+        - credential_name: bedrock
+          credential_values:
               aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
               aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
               aws_region_name: us-east-1
+          credential_info:
+              description: Bedrock AWS credentials (us-east-1)
+        - credential_name: bedrock_west
+          credential_values:
+              aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
+              aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
+              aws_region_name: us-west-2
+          credential_info:
+              description: Bedrock AWS credentials (us-west-2)
+        - credential_name: azure
+          credential_values:
+              api_base: os.environ/AZURE_API_BASE
+              api_key: os.environ/AZURE_API_KEY
+              api_version: 2024-12-01-preview
+          credential_info:
+              description: Azure OpenAI credentials
+        - credential_name: openrouter
+          credential_values:
+              api_base: https://openrouter.ai/api/v1
+              api_key: os.environ/OPENROUTER_API_KEY
+          credential_info:
+              description: OpenRouter API credentials
+        - credential_name: vllm
+          credential_values:
+              api_base: https://vllm.tqtensor.com/v1
+              api_key: os.environ/VLLM_API_KEY
+          credential_info:
+              description: VLLM API credentials
+        - credential_name: groq
+          credential_values:
+              api_key: os.environ/GROQ_API_KEY
+          credential_info:
+              description: Groq API credentials
+    model_list:
+        - model_name: google-gemini-flash-2.0
+          litellm_params:
+              model: vertex_ai/gemini-2.0-flash-001
+              litellm_credential_name: vertex_ai_key
+        - model_name: google-gemini-flash-2.0
+          litellm_params:
+              model: vertex_ai/gemini-2.0-flash-001
+              litellm_credential_name: vertex_ai_2nd_key
+        - model_name: google-gemini-flash-2.5
+          litellm_params:
+              model: vertex_ai/gemini-2.5-flash
+              litellm_credential_name: vertex_ai_key
+        - model_name: google-gemini-flash-2.5
+          litellm_params:
+              model: vertex_ai/gemini-2.5-flash
+              litellm_credential_name: vertex_ai_2nd_key
+        - model_name: google-gemini-pro-2.5
+          litellm_params:
+              model: vertex_ai/gemini-2.5-pro
+              litellm_credential_name: vertex_ai_key
+        - model_name: google-gemini-pro-2.5
+          litellm_params:
+              model: vertex_ai/gemini-2.5-pro
+              litellm_credential_name: vertex_ai_2nd_key
+        - model_name: google-multilingual-embedding
+          litellm_params:
+              model: vertex_ai/text-multilingual-embedding-002
+              litellm_credential_name: vertex_ai_key
+        - model_name: google-multilingual-embedding
+          litellm_params:
+              model: vertex_ai/text-multilingual-embedding-002
+              litellm_credential_name: vertex_ai_2nd_key
+        - model_name: google-text-embedding-large
+          litellm_params:
+              model: vertex_ai/text-embedding-large-exp-03-07
+              litellm_credential_name: vertex_ai_key
+        - model_name: google-text-embedding-large
+          litellm_params:
+              model: vertex_ai/text-embedding-large-exp-03-07
+              litellm_credential_name: vertex_ai_2nd_key
+        - model_name: google-gemini-embedding-001
+          litellm_params:
+              model: vertex_ai/gemini-embedding-001
+              litellm_credential_name: vertex_ai_key
+        - model_name: google-gemini-embedding-001
+          litellm_params:
+              model: vertex_ai/gemini-embedding-001
+              litellm_credential_name: vertex_ai_2nd_key
+        - model_name: bedrock-claude-3.7-sonnet
+          litellm_params:
+              model: bedrock/us.anthropic.claude-3-7-sonnet-20250219-v1:0
+              litellm_credential_name: bedrock
         - model_name: bedrock-claude-4.0-sonnet
           litellm_params:
               model: bedrock/us.anthropic.claude-sonnet-4-20250514-v1:0
-              aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
-              aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
-              aws_region_name: us-west-2
-        - model_name: bedrock-deepseek-r1
-          litellm_params:
-              model: bedrock/converse/us.deepseek.r1-v1:0
-              aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
-              aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
-              aws_region_name: us-west-2
+              litellm_credential_name: bedrock_west
         - model_name: azure-gpt-41
           litellm_params:
               model: azure/gpt-4.1
-              api_base: os.environ/AZURE_API_BASE
-              api_key: os.environ/AZURE_API_KEY
-              api_version: 2024-12-01-preview
+              litellm_credential_name: azure
         - model_name: azure-gpt-45
           litellm_params:
               model: azure/gpt-4.5
-              api_base: os.environ/AZURE_API_BASE
-              api_key: os.environ/AZURE_API_KEY
-              api_version: 2024-12-01-preview
+              litellm_credential_name: azure
         - model_name: azure-o4-mini
           litellm_params:
               model: azure/o4-mini
-              api_base: os.environ/AZURE_API_BASE
-              api_key: os.environ/AZURE_API_KEY
-              api_version: 2024-12-01-preview
+              litellm_credential_name: azure
         - model_name: openrouter-anthropic-claude-opus-4
           litellm_params:
               model: openrouter/anthropic/claude-opus-4
-              api_base: https://openrouter.ai/api/v1
-              api_key: os.environ/OPENROUTER_API_KEY
+              litellm_credential_name: openrouter
         - model_name: openrouter-anthropic-claude-sonnet-4
           litellm_params:
               model: openrouter/anthropic/claude-sonnet-4
-              api_base: https://openrouter.ai/api/v1
-              api_key: os.environ/OPENROUTER_API_KEY
-        - model_name: openrouter-google-gemma-3-27b-it
-          litellm_params:
-              model: openrouter/google/gemma-3-27b-it
-              api_base: https://openrouter.ai/api/v1
-              api_key: os.environ/OPENROUTER_API_KEY
-        - model_name: openrouter-minimax-minimax-01
-          litellm_params:
-              model: openrouter/minimax/minimax-01
-              api_base: https://openrouter.ai/api/v1
-              api_key: os.environ/OPENROUTER_API_KEY
-        - model_name: openrouter-microsoft-phi-4-multimodal-instruct
-          litellm_params:
-              model: openrouter/microsoft/phi-4-multimodal-instruct
-              api_base: https://openrouter.ai/api/v1
-              api_key: os.environ/OPENROUTER_API_KEY
-        - model_name: openrouter-mistralai-pixtral-large-2411
-          litellm_params:
-              model: openrouter/mistralai/pixtral-large-2411
-              api_base: https://openrouter.ai/api/v1
-              api_key: os.environ/OPENROUTER_API_KEY
+              litellm_credential_name: openrouter
         - model_name: vllm-menlo-jan-nano
           litellm_params:
               model: openai/Menlo/Jan-nano
-              api_base: https://vllm.tqtensor.com/v1
-              api_key: os.environ/VLLM_API_KEY
+              litellm_credential_name: vllm
+        - model_name: groq-stx
+          litellm_params:
+              model: groq/gemma2-9b-it
+              litellm_credential_name: groq
+        - model_name: groq-stx
+          litellm_params:
+              model: groq/llama-3.1-8b-instant
+              litellm_credential_name: groq
+        - model_name: groq-stx
+          litellm_params:
+              model: groq/meta-llama/llama-4-maverick-17b-128e-instruct
+              litellm_credential_name: groq
+        - model_name: groq-stx
+          litellm_params:
+              model: groq/meta-llama/llama-4-scout-17b-16e-instruct
+              litellm_credential_name: groq
+        - model_name: groq-stx
+          litellm_params:
+              model: groq/mistral-saba-24b
+              litellm_credential_name: groq
+        - model_name: groq-stx
+          litellm_params:
+              model: groq/qwen/qwen3-32b
+              litellm_credential_name: groq
     general_settings:
         master_key: os.environ/PROXY_MASTER_KEY
         store_model_in_db: true
@@ -213,6 +236,7 @@ proxy_config:
         routing_strategy: simple-shuffle
         num_retries: 2
         timeout: 30
+        fallbacks: [groq-stx: [azure-gpt-41]]
 resources: {}
 # We usually recommend not to specify default resources and to leave this as a conscious
 # choice for the user. This also increases chances charts run on environments with little
