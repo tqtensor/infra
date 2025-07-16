@@ -236,7 +236,7 @@ proxy_config:
         routing_strategy: simple-shuffle
         num_retries: 2
         timeout: 30
-        fallbacks: [groq-stx: [azure-gpt-41], google-gemini-flash-2.5: [azure-gpt-41]]
+        fallbacks: [groq-stx: [azure-gpt-41], google-gemini-flash-2.5: [azure-gpt-41], google-gemini-pro-2.5: [azure-gpt-41]]
 resources: {}
 # We usually recommend not to specify default resources and to leave this as a conscious
 # choice for the user. This also increases chances charts run on environments with little
