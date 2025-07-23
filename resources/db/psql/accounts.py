@@ -30,11 +30,6 @@ litellm_db, litellm_user, litellm_grant_privileges = create_db_and_user(
     username="litellm", opts=OPTS
 )
 
-# n8n accounts
-n8n_dolphin_db, n8n_dolphin_user, n8n_dolphin_grant_privileges = create_db_and_user(
-    username="dolphin", opts=OPTS
-)
-
 # RAGFlow
 ragflow_db, ragflow_user, ragflow_grant_privileges = create_db_and_user(
     username="ragflow", opts=OPTS
