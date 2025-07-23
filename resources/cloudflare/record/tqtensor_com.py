@@ -39,17 +39,6 @@ drive_tqtensor_com = cloudflare.Record(
     opts=OPTS,
 )
 
-jupyterhub_tqtensor_com = cloudflare.Record(
-    "jupyterhub_tqtensor_com",
-    name="jupyterhub",
-    ttl=1,
-    type="A",
-    content=nginx_ip_eu_west_4.address,
-    zone_id=tqtensor_com.id,
-    proxied=True,
-    opts=OPTS,
-)
-
 mlflow_tqtensor_com = cloudflare.Record(
     "mlflow_tqtensor_com",
     name="mlflow",
@@ -83,17 +72,6 @@ litellm_tqtensor_com = cloudflare.Record(
     opts=OPTS,
 )
 
-n8n_tqtensor_com = cloudflare.Record(
-    "n8n_tqtensor_com",
-    name="n8n",
-    ttl=1,
-    type="A",
-    content=nginx_ip_eu_west_4.address,
-    zone_id=tqtensor_com.id,
-    proxied=True,
-    opts=OPTS,
-)
-
 nextcloud_tqtensor_com = cloudflare.Record(
     "nextcloud_tqtensor_com",
     name="nextcloud",
@@ -108,39 +86,6 @@ nextcloud_tqtensor_com = cloudflare.Record(
 ragflow_tqtensor_com = cloudflare.Record(
     "ragflow_tqtensor_com",
     name="ragflow",
-    ttl=1,
-    type="A",
-    content=nginx_ip_par_2.ip_address,
-    zone_id=tqtensor_com.id,
-    proxied=True,
-    opts=OPTS,
-)
-
-s3_tqtensor_com = cloudflare.Record(
-    "s3_tqtensor_com",
-    name="s3",
-    ttl=1,
-    type="A",
-    content=nginx_ip_par_2.ip_address,
-    zone_id=tqtensor_com.id,
-    proxied=True,
-    opts=OPTS,
-)
-
-tei_tqtensor_com = cloudflare.Record(
-    "tei_tqtensor_com",
-    name="tei",
-    ttl=1,
-    type="A",
-    content=nginx_ip_par_2.ip_address,
-    zone_id=tqtensor_com.id,
-    proxied=True,
-    opts=OPTS,
-)
-
-qdrant_tqtensor_com = cloudflare.Record(
-    "qdrant_tqtensor_com",
-    name="qdrant",
     ttl=1,
     type="A",
     content=nginx_ip_par_2.ip_address,
