@@ -85,10 +85,10 @@ servingEngineSpec:
   # - shmSize: (optional, string) The size of the shared memory, e.g., "20Gi"
   #
     modelSpec:
-        - name: dolphin-ocr
-          repository: us-central1-docker.pkg.dev/gen-lang-client-0608717027/pixelml-us-central-1-registry/vllm
-          tag: v0.9.0
-          modelURL: ByteDance/Dolphin
+        - name: rolm-ocr
+          repository: vllm/vllm-openai
+          tag: latest
+          modelURL: reducto/RolmOCR
           replicaCount: 1
 
           requestCPU: 4
@@ -110,7 +110,7 @@ servingEngineSpec:
 
           vllmConfig:
               dtype: float16
-              extraArgs: [--disable-log-requests, --trust-remote-code, --hf-overrides, '{"architectures": ["DolphinForConditionalGeneration"]}']
+              extraArgs: [--disable-log-requests, --trust-remote-code]
 
           nodeSelectorTerms: []
 
