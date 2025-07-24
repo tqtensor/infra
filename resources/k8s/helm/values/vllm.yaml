@@ -85,10 +85,10 @@ servingEngineSpec:
   # - shmSize: (optional, string) The size of the shared memory, e.g., "20Gi"
   #
     modelSpec:
-        - name: menlo-jan-nano
-          repository: vllm/vllm-openai
-          tag: latest
-          modelURL: Menlo/Jan-nano
+        - name: dolphin-ocr
+          repository: us-central1-docker.pkg.dev/gen-lang-client-0608717027/pixelml-us-central-1-registry/vllm
+          tag: v0.9.0
+          modelURL: ByteDance/Dolphin
           replicaCount: 1
 
           requestCPU: 4
@@ -109,8 +109,8 @@ servingEngineSpec:
               mountPvcStorage: true
 
           vllmConfig:
-              dtype: bfloat16
-              extraArgs: [--disable-log-requests, --trust-remote-code]
+              dtype: float16
+              extraArgs: [--disable-log-requests, --trust-remote-code, --hf-overrides, '{"architectures": ["DolphinForConditionalGeneration"]}']
 
           nodeSelectorTerms: []
 
