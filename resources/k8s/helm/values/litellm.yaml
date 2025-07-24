@@ -203,18 +203,6 @@ proxy_config:
               litellm_credential_name: vllm
         - model_name: groq-stx
           litellm_params:
-              model: groq/meta-llama/llama-4-maverick-17b-128e-instruct
-              litellm_credential_name: groq
-        - model_name: groq-stx
-          litellm_params:
-              model: groq/meta-llama/llama-4-scout-17b-16e-instruct
-              litellm_credential_name: groq
-        - model_name: groq-stx
-          litellm_params:
-              model: groq/mistral-saba-24b
-              litellm_credential_name: groq
-        - model_name: groq-stx
-          litellm_params:
               model: groq/qwen/qwen3-32b
               litellm_credential_name: groq
     general_settings:
