@@ -83,17 +83,6 @@ nextcloud_tqtensor_com = cloudflare.Record(
     opts=OPTS,
 )
 
-ragflow_tqtensor_com = cloudflare.Record(
-    "ragflow_tqtensor_com",
-    name="ragflow",
-    ttl=1,
-    type="A",
-    content=nginx_ip_par_2.ip_address,
-    zone_id=tqtensor_com.id,
-    proxied=True,
-    opts=OPTS,
-)
-
 vllm_tqtensor_com = cloudflare.Record(
     "vllm_tqtensor_com",
     name="vllm",

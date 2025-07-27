@@ -29,8 +29,3 @@ langfuse_db, langfuse_user, langfuse_grant_privileges = create_db_and_user(
 litellm_db, litellm_user, litellm_grant_privileges = create_db_and_user(
     username="litellm", opts=OPTS
 )
-
-# RAGFlow
-ragflow_db, ragflow_user, ragflow_grant_privileges = create_db_and_user(
-    username="ragflow", opts=OPTS
-)
