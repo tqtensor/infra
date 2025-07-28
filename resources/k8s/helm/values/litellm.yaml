@@ -201,9 +201,9 @@ proxy_config:
           litellm_params:
               model: openai/Menlo/Jan-nano
               litellm_credential_name: vllm
-        - model_name: groq-stx
+        - model_name: groq-*
           litellm_params:
-              model: groq/qwen/qwen3-32b
+              model: groq/*
               litellm_credential_name: groq
     general_settings:
         master_key: os.environ/PROXY_MASTER_KEY
@@ -216,7 +216,7 @@ proxy_config:
         routing_strategy: simple-shuffle
         num_retries: 2
         timeout: 30
-        fallbacks: [groq-stx: [azure-gpt-41], google-gemini-flash-2.5: [azure-gpt-41], google-gemini-pro-2.5: [azure-gpt-41]]
+        fallbacks: [google-gemini-flash-2.5: [azure-gpt-41], google-gemini-pro-2.5: [azure-gpt-41]]
 resources: {}
 # We usually recommend not to specify default resources and to leave this as a conscious
 # choice for the user. This also increases chances charts run on environments with little
