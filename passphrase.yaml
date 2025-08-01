@@ -1,0 +1,14 @@
+---
+secret: ENC[AES256_GCM,data:KdT3Q69Aj8B85Rhd9H3sPe+ZoL0Ttjs/iA==,iv:Gz1XwsZCWqJIJ+Nh/bTOwzk7ieoeeJxJ2yzAki19h9g=,tag:k2K6XaLRD4zB360lHyewug==,type:str]
+sops:
+    kms:
+        - arn: arn:aws:kms:us-east-1:100874337694:key/c7fd5cab-3baf-40c1-a129-3d4a58c70cd3
+          created_at: '2025-08-01T13:45:12Z'
+          enc: 
+              AQICAHhZfWILurHAsFqnvtAb0hx4XSK8Hq5vHmUDi3UArtcCpgGTY06jQGKLFPw8pv0S3qlGAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMQe3rtc7fj/V/9gGyAgEQgDsq7SeTLnX/37TNagUff+HYfkdZN2Fdkv+VVCgdr4Gq0JcGKDVB0H4x2RRcK/8nw/rdHBE2CLO1Hg5Etw==
+          aws_profile: personal
+    lastmodified: '2025-08-01T13:45:12Z'
+    mac: 
+        ENC[AES256_GCM,data:girsQYB7khhmS5bymN26vFU+JvDLs6w2HBptqVAIGhm3AU08fvPW8Q9ierJEk0wl1cfu73bCz46Ru12+EpLjkhV5Jvw3LoVnwyvW+1t1ABDvLpdNBh9jf/mJYqf7Jc8lIba3/jGTIDG7zh5IJku+eoGbTcvEE1CiPCAtCLLgfn4=,iv:RcGVjgm60TxmDNagQ1Am95PqTx68vN0a1pRKEkkZkto=,tag:PzXbKMudNoHI74AvARZ+mA==,type:str]
+    unencrypted_suffix: _unencrypted
+    version: 3.10.2

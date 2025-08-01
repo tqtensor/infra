@@ -1,4 +1,4 @@
 SHELL := /bin/bash
 
 toml-sort:
-	uv run toml-sort -i pyproject.toml --no-sort-tables --sort-table-keys
+	uv run toml-sort -i pyproject.toml --sort-table-keys --sort-inline-tables --sort-inline-arrays

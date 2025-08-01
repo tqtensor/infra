@@ -1,0 +1,6 @@
+outs:
+- md5: cf3df8534715f80502271f64d41a1fa4.dir
+  size: 5555646
+  nfiles: 12
+  hash: md5
+  path: state
