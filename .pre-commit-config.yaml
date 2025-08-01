@@ -1,12 +1,12 @@
 ---
 repos:
     - repo: https://github.com/ambv/black
-      rev: 23.3.0
+      rev: 25.1.0
       hooks:
           - id: black
             language_version: python3
     - repo: https://github.com/pre-commit/pre-commit-hooks
-      rev: v4.4.0
+      rev: v5.0.0
       hooks:
           - id: check-json
             exclude: (^.vscode/)
@@ -20,7 +20,7 @@ repos:
           - id: trailing-whitespace
             exclude: (.yaml)
     - repo: https://github.com/pycqa/isort
-      rev: 5.11.5
+      rev: 6.0.1
       hooks:
           - id: isort
             args: [--profile, black]
@@ -37,3 +37,15 @@ repos:
             pass_filenames: false
             always_run: true
             args: ['--ignore=F841,E501']
+          - id: dvc-add
+            name: dvc add
+            entry: uv run dvc add state
+            language: system
+            pass_filenames: false
+            always_run: true
+          - id: dvc-push
+            name: dvc push
+            entry: uv run dvc push
+            language: system
+            pass_filenames: false
+            always_run: true

@@ -9,3 +9,6 @@
 
 # UV
 infra.egg-info
+
+# Pulumi state
+/state

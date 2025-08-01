@@ -1,4 +1,3 @@
-import pulumi
 import pulumi_aws as aws
 
 from resources.utils import get_options
@@ -18,5 +17,3 @@ pulumi_secrets_key_alias = aws.kms.Alias(
     target_key_id=pulumi_secrets_key.id,
     opts=OPTS,
 )
-
-pulumi.export("KMS: pulumi_secrets: ARN", pulumi_secrets_key.arn)

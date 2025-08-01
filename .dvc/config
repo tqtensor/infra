@@ -1,0 +1,6 @@
+[core]
+    autostage = true
+    remote = s3backend
+['remote "s3backend"']
+    url = s3://tqtensor-pulumi-bucket-us/pulumi/infra/
+    profile = personal

@@ -1,8 +1,20 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools>=45", "wheel"]
+
+[dependency-groups]
+dev = [
+  "black>=25.1.0",
+  "dvc[s3]>=3.61.0",
+  "flake8>=7.2.0",
+  "pre-commit>=4.2.0",
+  "toml-sort>=0.24.2",
+]
+
 [project]
 dependencies = [
   "awscli>=1.38.16",
   "pg8000>=1.31.2",
-  "pulumi>=3.0.0",
   "pulumi-aws>=6.66.2",
   "pulumi-awsx>=2.21.0",
   "pulumi-azure-native>=2.89.1",
@@ -12,6 +24,7 @@ dependencies = [
   "pulumi-postgresql>=3.15.0",
   "pulumi-random>=4.17.0",
   "pulumi-tls>=5.1.0",
+  "pulumi>=3.0.0",
   "pulumiverse-scaleway>=1.27.1",
   "sopsy>=1.1.0"
 ]
@@ -20,18 +33,6 @@ name = "infra"
 readme = "README.md"
 requires-python = ">=3.11"
 version = "0.1.0"
-
-[dependency-groups]
-dev = [
-  "black>=25.1.0",
-  "flake8>=7.2.0",
-  "pre-commit>=4.2.0",
-  "toml-sort>=0.24.2"
-]
-
-[build-system]
-build-backend = "setuptools.build_meta"
-requires = ["setuptools>=45", "wheel"]
 
 [tool.setuptools]
 include-package-data = true
