@@ -8,5 +8,3 @@ config:
     pulumi:tags:
         value:
             pulumi:template: python
-backend:
-    url: s3://tqtensor-pulumi-bucket-us?region=us-east-1

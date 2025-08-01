@@ -14,12 +14,14 @@ OPTS_2ND = get_options(
 vertex_sa = gcp.serviceaccount.Account(
     "vertex_sa",
     account_id="vertex-sa-eu-west-4",
+    display_name="Vertex AI Service Account",
     opts=OPTS,
 )
 
 vertex_sa_2nd = gcp.serviceaccount.Account(
     "vertex_sa_2nd",
-    account_id="vertex-sa-eu-west-4-2nd",
+    account_id="vertex-sa-eu-west-4",
+    display_name="Vertex AI Service Account",
     opts=OPTS_2ND,
 )
 

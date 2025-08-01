@@ -85,10 +85,10 @@ servingEngineSpec:
   # - shmSize: (optional, string) The size of the shared memory, e.g., "20Gi"
   #
     modelSpec:
-        - name: menlo-jan-nano
+        - name: rolm-ocr
           repository: vllm/vllm-openai
           tag: latest
-          modelURL: Menlo/Jan-nano
+          modelURL: reducto/RolmOCR
           replicaCount: 1
 
           requestCPU: 4
@@ -109,7 +109,7 @@ servingEngineSpec:
               mountPvcStorage: true
 
           vllmConfig:
-              dtype: bfloat16
+              dtype: float16
               extraArgs: [--disable-log-requests, --trust-remote-code]
 
           nodeSelectorTerms: []

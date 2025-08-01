@@ -6,5 +6,4 @@ from .langfuse import *  # noqa
 from .mlflow import *  # noqa
 from .nextcloud import *  # noqa
 from .scw_genai import *  # noqa
-from .velero import *  # noqa
 from .vertex import *  # noqa

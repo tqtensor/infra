@@ -1,3 +1,4 @@
+import pulumi
 import pulumi_aws as aws
 
 from resources.utils import get_options
@@ -19,3 +20,6 @@ bedrock_policy_attachment = aws.iam.UserPolicyAttachment(
 bedrock_access_key = aws.iam.AccessKey(
     "bedrock_access_key", user=bedrock_user.name, opts=OPTS
 )
+
+pulumi.export("IAM: Bedrock: access_key_id", bedrock_access_key.id)
+pulumi.export("IAM: Bedrock: access_key_secret", bedrock_access_key.secret)
