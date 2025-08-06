@@ -8,15 +8,6 @@ from resources.k8s.providers import k8s_provider_auto_pilot_eu_west_4
 OPTS = pulumi.ResourceOptions(provider=k8s_provider_auto_pilot_eu_west_4)
 
 
-def render_configmap(obj, opts):
-    if obj["kind"] == "ConfigMap" and obj["apiVersion"] == "v1":
-        obj["data"] = {
-            "PYTHONPATH": "/app",
-            "PORT": "8000",
-            "ENV": "production",
-        }
-
-
 def render_deployment(obj, opts):
     if obj["kind"] == "Deployment" and obj["apiVersion"] == "apps/v1":
         obj["spec"]["template"]["spec"]["containers"][0][
@@ -39,6 +30,6 @@ base_dir = Path(__file__).parent / "base"
 openpom_kustomize = Directory(
     "openpom_kustomize",
     directory=base_dir.as_posix(),
-    transformations=[render_configmap, render_deployment],
+    transformations=[render_deployment],
     opts=OPTS,
 )
