@@ -6,6 +6,8 @@ metadata:
     namespace: openpom
 spec:
     replicas: 1
+    strategy:
+        type: Recreate
     selector:
         matchLabels:
             app: openpom-app
@@ -20,16 +22,9 @@ spec:
             containers:
                 - name: openpom
                   image: ''
+                  imagePullPolicy: Always
                   ports:
-                      - containerPort: 8000
-                  env:
-                      - name: PORT
-                        value: '8000'
-                  envFrom:
-                      - configMapRef:
-                            name: openpom-config
-                      - secretRef:
-                            name: openpom-secrets
+                      - containerPort: 8080
                   resources:
                       requests:
                           nvidia.com/gpu: 1
