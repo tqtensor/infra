@@ -3,11 +3,13 @@ config:
     gcp:project: gen-lang-client-0608717027
     infra:cloudflareAccountId: 5b2f50a9a58974fa222a4966649c3705
     cloudflare:apiToken:
-        secure: v1:wTO9cwPF+5wvYC7E:nskezgKs7KbOYYFEImjbFT/c9nu/GMH4k9bY2NjmUVB8fpCrAwzV++aISe2oZILG0J++rFjUdZI=
+        secure: v1:rC0nWvZGpmeHCSs+:0Pl6buvj5Mv4ZgRa8bCjHfHc8mkq38OtD/Z0glLWzVcae7AyoAp1nCQ655kIywtP2i9YnDgfKz8=
     scaleway:access_key:
-        secure: v1:bWBXPHSULpK8dgFm:k2iaRVGydR2LLsePeTcMJIi9JOhXlkvhHn7CKFHvip1APJ3X
+        secure: v1:C8X5fwYT2Bj4uxhr:zsJZpBIrUTbvpZMapAMv3m7x4bHOVquOXcDBC6RKT5RJQe4k
     scaleway:secret_key:
-        secure: v1:WWhGBb+++Bgpo8TC:YpD2NYuOTwcJTqqTK/fcwMm/Upa+G/qkd8gZXfmX6VqChkEF0kaVR+KofVGezuEbvHipbw==
+        secure: v1:I9DvZFmLYlQN8BQL:5UEMKrPy6vbjq3jBPLQicjXE08cMlLS2vWTQToPWaVkihzco2ujYeBHklevFrgDCcV+L3Q==
     scaleway:organization_id: 8db19ba6-cb4f-4819-88bb-90ec328cb9a8
     scaleway:project_id: 8db19ba6-cb4f-4819-88bb-90ec328cb9a8
-encryptionsalt: v1:BkGasZnqmaE=:v1:GRObEg6+swsg5Z7y:yyXK5l4blVcQfk77x2oFwd89F4mMqA==
+secretsprovider: awskms://c7fd5cab-3baf-40c1-a129-3d4a58c70cd3?region=us-east-1
+encryptedkey: 
+    AQICAHhZfWILurHAsFqnvtAb0hx4XSK8Hq5vHmUDi3UArtcCpgHSrM9mqseuebr7QGoqHUwEAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMumCQJPyTBjlZOXxrAgEQgDtO58DJVH6gmmziOJWqJMyE6W4aSHwFmdiIfPcQHMJpmsazqAzaGDR95dBeCJYuTiLPrBDsXcWYw7PIKA==
