@@ -1,0 +1,25 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: openpom-ingress
+    namespace: openpom
+    annotations:
+        kubernetes.io/ingress.class: nginx
+spec:
+    ingressClassName: nginx
+    tls:
+        - secretName: openpom-tls-secret
+          hosts:
+              - openpom.tqtensor.com
+    rules:
+        - host: openpom.tqtensor.com
+          http:
+              paths:
+                  - path: /
+                    pathType: Prefix
+                    backend:
+                        service:
+                            name: openpom-service
+                            port:
+                                number: 80

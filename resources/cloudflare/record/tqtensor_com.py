@@ -83,6 +83,17 @@ nextcloud_tqtensor_com = cloudflare.Record(
     opts=OPTS,
 )
 
+openpom_tqtensor_com = cloudflare.Record(
+    "openpom_tqtensor_com",
+    name="openpom",
+    ttl=1,
+    type="A",
+    content=nginx_ip_eu_west_4.address,
+    zone_id=tqtensor_com.id,
+    proxied=True,
+    opts=OPTS,
+)
+
 vllm_tqtensor_com = cloudflare.Record(
     "vllm_tqtensor_com",
     name="vllm",
