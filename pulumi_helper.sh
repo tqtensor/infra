@@ -22,7 +22,7 @@ fi
 # Login to Pulumi backend
 echo ""
 echo "Logging in to Pulumi backend..."
-pulumi login "s3://pulumi-pixelml?region=us-east-1"
+pulumi login "s3://tqtensor-pulumi-bucket-us?region=us-east-1"
 
 if [ $? -ne 0 ]; then
     echo "Error: Failed to login to Pulumi backend"
