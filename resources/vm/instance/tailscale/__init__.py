@@ -18,7 +18,7 @@ COUNTRY_CODES = {
 def create_tailscale_instance(
     country_code: str,
 ) -> gcp.compute.Instance:
-    boot_image = gcp.compute.get_image(family="debian-11", project="debian-cloud")
+    boot_image = gcp.compute.get_image(family="debian-12", project="debian-cloud")
 
     region = COUNTRY_CODES[country_code]["region"]
     zone = COUNTRY_CODES[country_code]["zone"]
@@ -41,7 +41,7 @@ def create_tailscale_instance(
     instance = gcp.compute.Instance(
         f"ts-{country_code}-instance",
         name=f"ts-{country_code}-instance",
-        machine_type="e2-micro",
+        machine_type="e2-small",
         zone=zone,
         boot_disk=gcp.compute.InstanceBootDiskArgs(
             initialize_params=gcp.compute.InstanceBootDiskInitializeParamsArgs(
