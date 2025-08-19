@@ -82,7 +82,7 @@ proxy_config:
               vertex_location: us-central1
           credential_info:
               description: Vertex AI secondary service account
-        - credential_name: bedrock
+        - credential_name: bedrock_east
           credential_values:
               aws_access_key_id: os.environ/BEDROCK_AWS_ACCESS_KEY_ID
               aws_secret_access_key: os.environ/BEDROCK_AWS_SECRET_ACCESS_KEY
@@ -172,11 +172,19 @@ proxy_config:
         - model_name: bedrock-claude-3.7-sonnet
           litellm_params:
               model: bedrock/us.anthropic.claude-3-7-sonnet-20250219-v1:0
-              litellm_credential_name: bedrock
+              litellm_credential_name: bedrock_east
+        - model_name: bedrock-claude-4.0-sonnet
+          litellm_params:
+              model: bedrock/us.anthropic.claude-sonnet-4-20250514-v1:0
+              litellm_credential_name: bedrock_east
         - model_name: bedrock-claude-4.0-sonnet
           litellm_params:
               model: bedrock/us.anthropic.claude-sonnet-4-20250514-v1:0
               litellm_credential_name: bedrock_west
+        - model_name: bedrock-titan-embed-text-v2
+          litellm_params:
+              model: bedrock/amazon.titan-embed-text-v2:0
+              litellm_credential_name: bedrock_east
         - model_name: azure-gpt-41
           litellm_params:
               model: azure/gpt-4.1

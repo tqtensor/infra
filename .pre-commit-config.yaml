@@ -37,15 +37,3 @@ repos:
             pass_filenames: false
             always_run: true
             args: ['--ignore=F841,E501']
-          - id: dvc-add
-            name: dvc add
-            entry: uv run dvc add state
-            language: system
-            pass_filenames: false
-            always_run: true
-          - id: dvc-push
-            name: dvc push
-            entry: uv run dvc push
-            language: system
-            pass_filenames: false
-            always_run: true
