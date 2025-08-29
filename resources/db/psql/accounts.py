@@ -19,13 +19,3 @@ mlflow_auth_db, mlflow_auth_user, mlflow_auth_grant_privileges = create_db_and_u
     username="mlflow_auth",
     opts=OPTS,
 )
-
-# Langfuse
-langfuse_db, langfuse_user, langfuse_grant_privileges = create_db_and_user(
-    username="langfuse", opts=OPTS
-)
-
-# LiteLLM
-litellm_db, litellm_user, litellm_grant_privileges = create_db_and_user(
-    username="litellm", opts=OPTS
-)
