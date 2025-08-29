@@ -2,7 +2,6 @@ from .arq import *  # noqa
 from .bedrock import *  # noqa
 from .cloudrun import *  # noqa
 from .fast import *  # noqa
-from .langfuse import *  # noqa
 from .mlflow import *  # noqa
 from .nextcloud import *  # noqa
 from .scw_genai import *  # noqa

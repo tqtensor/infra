@@ -3,12 +3,6 @@ roles:
     airbyte:
         password: 
             ENC[AES256_GCM,data:n3lVfYKRdWZfGgNC47Pjdp+udpxEOos64rNeP6V8IjA=,iv:Ae1zEa3i/ifnnlvNNzAdwoLaqavfGzpje5d2XyRLVpo=,tag:YJd0+PDIcb2r2l8yt0Ammg==,type:str]
-    langfuse:
-        password: 
-            ENC[AES256_GCM,data:YxJVjMmO/CQHp8PqSkWwjiPvBzaNzb8JQDKfZI8T29j3,iv:FbRCpgdvzlu3bNBWQDQbyq3McDfc1I+aZNo4m6g/A7U=,tag:f8ideAA4lDlyn29yGomxSw==,type:str]
-    litellm:
-        password: 
-            ENC[AES256_GCM,data:1yG5xqZKw4WlZCZhD6AbpKGhXUoqSjAX9vVRySfnrT0=,iv:yIFHVHcuG2h9dfEbJB7vMeuaYHVNMnFGLpA9pi96kO0=,tag:8k25qq6F3kBcYxZI93BxPg==,type:str]
     mlflow:
         password: 
             ENC[AES256_GCM,data:C/HktnudhFwnL3eGEAH8lZ74KWu97SBKhA8tyqpC4gOY,iv:WzziMxvIGQI3d/bX5RWcDBQf5Ss7Hx7J3pdtzTCBffs=,tag:tO6NqzTC3LTKPWuBTh121g==,type:str]
@@ -22,8 +16,8 @@ sops:
           enc: 
               AQICAHhZfWILurHAsFqnvtAb0hx4XSK8Hq5vHmUDi3UArtcCpgH6cgzK9cMCvOoEcam1N18cAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMZLwUTpTWRJ1tdrjrAgEQgDslmejQrh9afiNV1kfQJ75siJ2y8O0p98BKrzoha97bvsbIRmLyCEYn/CkuC54s4mklzIbv1+YdlwXWiA==
           aws_profile: personal
-    lastmodified: '2025-07-27T10:41:05Z'
+    lastmodified: '2025-08-29T19:00:38Z'
     mac: 
-        ENC[AES256_GCM,data:fkeNqW1sl5XYbv1Jlr9vnCaD0BpUXZPOhdQV6v9cMQ3FmtkgDAlrup74nYPVxlMivvGtvteQUlB1/NMfW7tjXlNg1W9GbLkN7BGmLAkK6sjMCfU19yJVIL7Jj7wYYVLDZJcJ9kmMQgwUm8w07S1HTHkZAKC6/SyE5SWzfMI+QZ8=,iv:32iG75pnJOxwaT32s+fE3TqXO5QZ+HOw2oEGcmfiPPg=,tag:NGpSd/D2T7kFc1lU5PMpig==,type:str]
+        ENC[AES256_GCM,data:HWH/ahmy9ExsmWMRbB21LLdHsI4VFMYh0tpoPyFPw0H6oZQ5t8DYAkjlH8jvhnmxZxbj1LzAvkUPh3JLFqajbksBwLg0Voz+yIZ7sH9JZXIhEfSSD422aQl9kSTGBDInO3/gZVGmUwtBJMyRyjF3WsJMlrm424e9hlsdZv23zEM=,iv:8XxmQcf9veU3muqF/mZaRFmcmkULrK5jsNop4i7ogKE=,tag:pGffa70/1s+km5swQTMV9g==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.10.2
