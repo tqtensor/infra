@@ -4,10 +4,18 @@ from resources.providers import gcp_pixelml_2nd_eu_west_4, gcp_pixelml_eu_west_4
 from resources.utils import get_options
 
 OPTS = get_options(
-    profile="pixelml", region="eu-west-4", type="resource", provider="gcp"
+    profile="pixelml",
+    region="eu-west-4",
+    type="resource",
+    provider="gcp",
+    protect=False,
 )
 OPTS_2ND = get_options(
-    profile="pixelml_2nd", region="eu-west-4", type="resource", provider="gcp"
+    profile="pixelml_2nd",
+    region="eu-west-4",
+    type="resource",
+    provider="gcp",
+    protect=False,
 )
 
 
