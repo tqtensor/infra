@@ -2,7 +2,6 @@ import pulumi_cloudflare as cloudflare
 
 from resources.constants import nginx_ip_par_2, tqtensor_com
 from resources.utils import get_options
-from resources.vm.networking import nginx_ip_eu_west_4
 
 OPTS = get_options(provider="cloudflare")
 
@@ -18,41 +17,9 @@ airbyte_tqtensor_com = cloudflare.Record(
     opts=OPTS,
 )
 
-db_tqtensor_com = cloudflare.Record(
-    "db_tqtensor_com",
-    name="db",
-    ttl=1,
-    type="A",
-    content=nginx_ip_eu_west_4.address,
-    zone_id=tqtensor_com.id,
-    opts=OPTS,
-)
-
 mlflow_tqtensor_com = cloudflare.Record(
     "mlflow_tqtensor_com",
     name="mlflow",
-    ttl=1,
-    type="A",
-    content=nginx_ip_eu_west_4.address,
-    zone_id=tqtensor_com.id,
-    proxied=True,
-    opts=OPTS,
-)
-
-openpom_tqtensor_com = cloudflare.Record(
-    "openpom_tqtensor_com",
-    name="openpom",
-    ttl=1,
-    type="A",
-    content=nginx_ip_eu_west_4.address,
-    zone_id=tqtensor_com.id,
-    proxied=True,
-    opts=OPTS,
-)
-
-vllm_tqtensor_com = cloudflare.Record(
-    "vllm_tqtensor_com",
-    name="vllm",
     ttl=1,
     type="A",
     content=nginx_ip_par_2.ip_address,

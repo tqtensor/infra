@@ -2,7 +2,9 @@ import pulumi_aws as aws
 
 from resources.utils import get_options
 
-OPTS = get_options(profile="pixelml", region="eu-central-1", type="resource")
+OPTS = get_options(
+    profile="pixelml", region="eu-central-1", type="resource", protect=False
+)
 
 
 gke_key = aws.kms.Key(
