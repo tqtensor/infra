@@ -10,11 +10,11 @@ from resources.cloudflare.tls import mlflow_origin_ca_cert_bundle
 from resources.db.instance import psql_par_1_instance
 from resources.db.psql import mlflow_auth_db, mlflow_auth_user, mlflow_db, mlflow_user
 from resources.iam.user import mlflow_access_key
-from resources.k8s.providers import k8s_provider_auto_pilot_eu_west_4
+from resources.k8s.providers import k8s_provider_par_2
 from resources.storage.bucket import mlflow_bucket
 from resources.utils import encode_tls_secret_data, fill_in_password
 
-OPTS = pulumi.ResourceOptions(provider=k8s_provider_auto_pilot_eu_west_4)
+OPTS = pulumi.ResourceOptions(provider=k8s_provider_par_2)
 
 
 mlflow_ns = k8s.core.v1.Namespace("mlflow_ns", metadata={"name": "mlflow"}, opts=OPTS)
@@ -139,7 +139,7 @@ mlflow_release = k8s.helm.v3.Release(
         values=chart_values,
     ),
     opts=pulumi.ResourceOptions(
-        provider=k8s_provider_auto_pilot_eu_west_4,
+        provider=k8s_provider_par_2,
         depends_on=[mlflow_ns, mlflow_tls_secret],
     ),
 )
