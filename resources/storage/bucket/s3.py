@@ -7,9 +7,7 @@ from resources.constants import stx_iam_user
 from resources.utils import get_options
 
 AS1_OPTS = get_options(profile="personal", region="ap-southeast-1", type="resource")
-EC1_OPTS = get_options(
-    profile="personal", region="eu-central-1", type="resource", protect=False
-)
+EC1_OPTS = get_options(profile="personal", region="eu-central-1", type="resource")
 UE1_OPTS = get_options(profile="personal", region="us-east-1", type="resource")
 
 
