@@ -4,7 +4,11 @@ from resources.providers import gcp_pixelml_us_central_1
 from resources.utils import get_options
 
 OPTS = get_options(
-    profile="pixelml", region="us-central-1", type="resource", provider="gcp"
+    profile="pixelml",
+    region="us-central-1",
+    type="resource",
+    provider="gcp",
+    protect=False,
 )
 
 

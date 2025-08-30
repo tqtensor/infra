@@ -42,12 +42,6 @@ pixelml_aws_us_east_1_key_pair = create_infra_key_pair(
 )
 
 # GCP
-pixelml_gcp_asia_east_1_key_pair = create_infra_key_pair(
-    profile="pixelml", region="asia-east-1", provider="gcp"
-)
-pixelml_gcp_asia_southeast_1_key_pair = create_infra_key_pair(
-    profile="pixelml", region="asia-southeast-1", provider="gcp"
-)
 pixelml_gcp_eu_west_4_key_pair = create_infra_key_pair(
     profile="pixelml", region="eu-west-4", provider="gcp"
 )

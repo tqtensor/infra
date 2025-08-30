@@ -4,7 +4,9 @@ from pulumi import Output
 
 from resources.utils import get_options
 
-OPTS = get_options(profile="personal", region="us-east-1", type="resource")
+OPTS = get_options(
+    profile="personal", region="us-east-1", type="resource", protect=False
+)
 
 
 nextcloud_user = aws.iam.User(

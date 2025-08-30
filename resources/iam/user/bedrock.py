@@ -3,7 +3,9 @@ import pulumi_aws as aws
 
 from resources.utils import get_options
 
-OPTS = get_options(profile="pixelml", region="us-east-1", type="resource")
+OPTS = get_options(
+    profile="pixelml", region="us-east-1", type="resource", protect=False
+)
 
 
 bedrock_user = aws.iam.User(
