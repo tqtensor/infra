@@ -5,10 +5,8 @@ Avoids accidental delete of resources or circular dependencies.
 import pulumi
 import pulumi_aws as aws
 import pulumi_cloudflare as cloudflare
-import pulumi_gcp as gcp
 import pulumiverse_scaleway as scw
 
-from resources.providers import gcp_pixelml_us_central_1
 from resources.utils import get_options
 
 # AWS
@@ -38,13 +36,6 @@ unifai_dev = cloudflare.Zone.get(
     "unifai_dev",
     id="e37a9e60005d57df4859fa4817c8128a",
     account_id=pulumi.Config().require("cloudflareAccountId"),
-)
-
-# GCP
-imported_cloudrun_sa = gcp.serviceaccount.Account.get(
-    "imported_cloudrun_sa",
-    id="projects/gen-lang-client-0608717027/serviceAccounts/cloudrun-sa-us-central-1@gen-lang-client-0608717027.iam.gserviceaccount.com",
-    project=gcp_pixelml_us_central_1.project,
 )
 
 # Scaleway
