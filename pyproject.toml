@@ -16,7 +16,6 @@ dependencies = [
   "pg8000>=1.31.2",
   "pulumi-aws>=6.66.2",
   "pulumi-awsx>=2.21.0",
-  "pulumi-azure-native>=2.89.1",
   "pulumi-cloudflare<6.0.0",
   "pulumi-gcp>=8.18.0",
   "pulumi-kubernetes>=4.21.1",
