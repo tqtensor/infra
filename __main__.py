@@ -1,7 +1,6 @@
 """A Python Pulumi program"""
 
 from resources.cloudflare import *  # noqa
-from resources.db import *  # noqa
 from resources.ecr import *  # noqa
 from resources.iam import *  # noqa
 from resources.k8s import *  # noqa
