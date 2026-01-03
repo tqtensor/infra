@@ -3,6 +3,11 @@
         "editor.defaultColorDecorators": "auto",
         "editor.semanticHighlighting.enabled": true
     },
+    "[yaml]": {
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false
+    },
     "cursorpyright.analysis.autoImportCompletions": true,
     "cursorpyright.analysis.diagnosticMode": "openFilesOnly",
     "cursorpyright.analysis.typeCheckingMode": "basic",
