@@ -24,10 +24,22 @@ service:
                 protocol: TCP
                 targetPort: 6881
 
-# Ingress managed by Pulumi separately
 ingress:
     main:
-        enabled: false
+        enabled: true
+        className: nginx
+        annotations:
+            nginx.ingress.kubernetes.io/backend-protocol: HTTP
+            nginx.ingress.kubernetes.io/ssl-redirect: 'true'
+        hosts:
+            - host: torrent.tqtensor.com
+              paths:
+                  - path: /
+                    pathType: Prefix
+        tls:
+            - secretName: torrent-tls-secret
+              hosts:
+                  - torrent.tqtensor.com
 
 persistence:
     config:
@@ -35,11 +47,13 @@ persistence:
         type: pvc
         accessMode: ReadWriteOnce
         size: 1Gi
+        storageClass: scw-bssd
     downloads:
         enabled: true
         type: pvc
-        accessMode: ReadWriteOnce
-        size: 50Gi
+        accessMode: ReadWriteMany
+        size: 200Gi
+        storageClass: nfs
 
 # Resource limits (adjust based on usage)
 resources:

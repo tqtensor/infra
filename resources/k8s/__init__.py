@@ -1,1 +1,1 @@
-from resources.k8s.helm.qbittorrent import *  # noqa
+from .helm import *  # noqa
