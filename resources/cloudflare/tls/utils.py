@@ -3,11 +3,11 @@ from typing import Tuple
 import pulumi_cloudflare as cloudflare
 import pulumi_tls as tls
 from pulumi import Output
-from pulumi_cloudflare.record import Record
+from pulumi_cloudflare import DnsRecord
 
 
 def create_origin_ca_cert(
-    host: Record,
+    host: DnsRecord,
 ) -> Tuple[cloudflare.OriginCaCertificate, tls.PrivateKey]:
     def make_resources(
         hostname: str,

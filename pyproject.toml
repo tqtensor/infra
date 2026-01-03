@@ -16,7 +16,7 @@ dependencies = [
   "pg8000>=1.31.2",
   "pulumi-aws>=6.66.2",
   "pulumi-awsx>=2.21.0",
-  "pulumi-cloudflare<6.0.0",
+  "pulumi-cloudflare>=6.4.1",
   "pulumi-gcp>=8.18.0",
   "pulumi-kubernetes>=4.21.1",
   "pulumi-postgresql>=3.15.0",
@@ -24,9 +24,9 @@ dependencies = [
   "pulumi-tls>=5.1.0",
   "pulumi>=3.0.0",
   "pulumiverse-scaleway>=1.27.1",
-  "sopsy>=1.1.0"
+  "sopsy>=1.1.0",
 ]
-description = "Infrastructure for my personal projects"
+description = "Infrastructure for my homelab"
 name = "infra"
 readme = "README.md"
 requires-python = ">=3.11"

@@ -6,7 +6,7 @@ from resources.utils import get_options
 OPTS = get_options(provider="cloudflare")
 
 
-wedding_tqtensor_com = cloudflare.Record(
+wedding_tqtensor_com = cloudflare.DnsRecord(
     "wedding_tqtensor_com",
     name="www.wedding",
     ttl=1,
