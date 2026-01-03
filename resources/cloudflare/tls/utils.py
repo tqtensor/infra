@@ -2,20 +2,15 @@ from typing import Tuple
 
 import pulumi_cloudflare as cloudflare
 import pulumi_tls as tls
-from pulumi import Output
 from pulumi_cloudflare import DnsRecord
 
 
 def create_origin_ca_cert(
     host: DnsRecord,
-    zone_name: str,
 ) -> Tuple[cloudflare.OriginCaCertificate, tls.PrivateKey]:
     def make_resources(
         hostname: str,
     ) -> Tuple[cloudflare.OriginCaCertificate, tls.PrivateKey]:
-        # Construct FQDN from hostname and zone name
-        fqdn = f"{hostname}.{zone_name}"
-
         private_key = tls.PrivateKey(
             f"{hostname}_private_key", algorithm="RSA", rsa_bits=2048
         )
@@ -23,17 +18,16 @@ def create_origin_ca_cert(
             f"{hostname}_csr",
             private_key_pem=private_key.private_key_pem,
             subject=tls.CertRequestSubjectArgs(
-                common_name=fqdn,
+                common_name=hostname,
             ),
         )
         origin_ca_cert = cloudflare.OriginCaCertificate(
             f"{hostname}_origin_ca_cert",
             csr=csr.cert_request_pem,
-            hostnames=[fqdn],
+            hostnames=[hostname],
             request_type="origin-rsa",
             requested_validity=365,  # 1 year
         )
         return origin_ca_cert, private_key
 
-    result = Output.all(host.name).apply(lambda args: make_resources(args[0]))
-    return result.apply(lambda r: r[0]), result.apply(lambda r: r[1])
+    return host.name.apply(make_resources)

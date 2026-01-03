@@ -5,10 +5,7 @@ import pulumi_kubernetes as k8s
 import yaml
 from pulumi import Output
 
-from resources.cloudflare.tls.tqtensor_com import (
-    torrent_origin_ca_cert,
-    torrent_private_key,
-)
+from resources.cloudflare.tls.tqtensor_com import torrent_origin_ca_cert_bundle
 from resources.providers.k8s import k8s_par_2
 from resources.utils import encode_tls_secret_data
 
@@ -25,9 +22,10 @@ qbittorrent_tls_secret = k8s.core.v1.Secret(
         "name": "torrent-tls-secret",
         "namespace": qbittorrent_ns.metadata["name"],
     },
+    type="kubernetes.io/tls",
     data=Output.all(
-        torrent_origin_ca_cert.certificate,
-        torrent_private_key.private_key_pem,
+        torrent_origin_ca_cert_bundle[0].certificate,
+        torrent_origin_ca_cert_bundle[1].private_key_pem,
     ).apply(lambda args: encode_tls_secret_data(args[0], args[1])),
     opts=OPTS,
 )
