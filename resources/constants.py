@@ -24,3 +24,8 @@ par_2_cluster: scw.kubernetes.Cluster = scw.kubernetes.Cluster.get(
     "par_2_cluster",
     id="fr-par/773f9f89-6cf5-44d9-b427-667dea748098",
 )
+
+nginx_ip_par_2 = scw.loadbalancers.Ip.get(
+    "nginx_ip_par_2",
+    id="fr-par-2/c8bbfacd-0e90-4297-a45a-0bbe30abceb3",
+)
