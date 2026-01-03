@@ -31,4 +31,4 @@ def create_origin_ca_cert(
         )
         return origin_ca_cert, private_key
 
-    return Output.all(host.hostname).apply(lambda args: make_resources(args[0]))
+    return Output.all(host.name).apply(lambda args: make_resources(args[0]))
