@@ -3,7 +3,7 @@ config:
     gcp:project: gen-lang-client-0608717027
     infra:cloudflareAccountId: 5b2f50a9a58974fa222a4966649c3705
     cloudflare:apiToken:
-        secure: v1:rC0nWvZGpmeHCSs+:0Pl6buvj5Mv4ZgRa8bCjHfHc8mkq38OtD/Z0glLWzVcae7AyoAp1nCQ655kIywtP2i9YnDgfKz8=
+        secure: v1:3+X7RFdcOlQrJyD5:SivwglvshHohYv9/3RxeyGxJTjbUU9NoqbX3LZ7UVPXKrtKDN7INqqZzcWQ68Yl6roPqTc62Zww=
     scaleway:access_key:
         secure: v1:C8X5fwYT2Bj4uxhr:zsJZpBIrUTbvpZMapAMv3m7x4bHOVquOXcDBC6RKT5RJQe4k
     scaleway:secret_key:
@@ -11,5 +11,4 @@ config:
     scaleway:organization_id: 8db19ba6-cb4f-4819-88bb-90ec328cb9a8
     scaleway:project_id: 8db19ba6-cb4f-4819-88bb-90ec328cb9a8
 secretsprovider: awskms://c7fd5cab-3baf-40c1-a129-3d4a58c70cd3?region=us-east-1
-encryptedkey: 
-    AQICAHhZfWILurHAsFqnvtAb0hx4XSK8Hq5vHmUDi3UArtcCpgHSrM9mqseuebr7QGoqHUwEAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMumCQJPyTBjlZOXxrAgEQgDtO58DJVH6gmmziOJWqJMyE6W4aSHwFmdiIfPcQHMJpmsazqAzaGDR95dBeCJYuTiLPrBDsXcWYw7PIKA==
+encryptedkey: AQICAHhZfWILurHAsFqnvtAb0hx4XSK8Hq5vHmUDi3UArtcCpgHSrM9mqseuebr7QGoqHUwEAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMumCQJPyTBjlZOXxrAgEQgDtO58DJVH6gmmziOJWqJMyE6W4aSHwFmdiIfPcQHMJpmsazqAzaGDR95dBeCJYuTiLPrBDsXcWYw7PIKA==
