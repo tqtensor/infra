@@ -1,0 +1,68 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+    name: qbittorrent-r2-sync
+    labels:
+        app: qbittorrent-r2-sync
+spec:
+    # Run every 5 minutes
+    schedule: '*/5 * * * *'
+    successfulJobsHistoryLimit: 3
+    failedJobsHistoryLimit: 3
+    concurrencyPolicy: Forbid
+    jobTemplate:
+        spec:
+            template:
+                metadata:
+                    labels:
+                        app: qbittorrent-r2-sync
+                spec:
+                    restartPolicy: OnFailure
+                    volumes:
+                        - name: qbittorrent-downloads
+                          persistentVolumeClaim:
+                              claimName: qbittorrent-config
+                    containers:
+                        - name: aws-cli-sync
+                          image: amazon/aws-cli:latest
+                          command:
+                              - /bin/sh
+                              - -c
+                              - |
+                                echo "Starting sync to R2..."
+                                aws s3 sync /downloads s3://tqtensor-homelab/qbittorrent/ \
+                                  --endpoint-url "${R2_ENDPOINT}" \
+                                  --region auto \
+                                  --exclude ".*" \
+                                  --exclude "*.!qB" \
+                                  --delete
+                                echo "Sync completed successfully"
+                          volumeMounts:
+                              - name: qbittorrent-downloads
+                                mountPath: /downloads
+                                subPath: qbittorrent/downloads
+                                readOnly: true
+                          env:
+                              - name: AWS_ACCESS_KEY_ID
+                                valueFrom:
+                                    secretKeyRef:
+                                        name: qbittorrent-r2-sync-secrets
+                                        key: r2_access_key_id
+                              - name: AWS_SECRET_ACCESS_KEY
+                                valueFrom:
+                                    secretKeyRef:
+                                        name: qbittorrent-r2-sync-secrets
+                                        key: r2_secret_access_key
+                              - name: R2_ENDPOINT
+                                valueFrom:
+                                    secretKeyRef:
+                                        name: qbittorrent-r2-sync-secrets
+                                        key: r2_endpoint
+                          resources:
+                              requests:
+                                  cpu: 100m
+                                  memory: 128Mi
+                              limits:
+                                  cpu: 1000m
+                                  memory: 512Mi
