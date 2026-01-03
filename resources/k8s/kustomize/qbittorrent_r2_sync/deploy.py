@@ -1,4 +1,5 @@
 import base64
+import hashlib
 from pathlib import Path
 
 import pulumi
@@ -10,10 +11,13 @@ from resources.providers.k8s import k8s_par_2
 
 OPTS = pulumi.ResourceOptions(provider=k8s_par_2)
 
-# Use the existing qbittorrent namespace created in helm/qbittorrent.py
+
+def sha256_hash(value: str) -> str:
+    return hashlib.sha256(value.encode()).hexdigest()
+
+
 qbittorrent_ns_name = "torrent"
 
-# Get the Cloudflare Account ID for R2 endpoint
 account_id = pulumi.Config().require("cloudflareAccountId")
 
 qbittorrent_r2_sync_secrets = k8s.core.v1.Secret(
@@ -28,7 +32,9 @@ qbittorrent_r2_sync_secrets = k8s.core.v1.Secret(
     ).apply(
         lambda args: {
             "r2_access_key_id": base64.b64encode(args[0].encode()).decode(),
-            "r2_secret_access_key": base64.b64encode(args[1].encode()).decode(),
+            "r2_secret_access_key": base64.b64encode(
+                sha256_hash(args[1]).encode()
+            ).decode(),
             "r2_endpoint": base64.b64encode(
                 f"https://{account_id}.r2.cloudflarestorage.com".encode()
             ).decode(),
