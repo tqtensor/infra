@@ -7,7 +7,7 @@ dev = [
   "black>=25.1.0",
   "flake8>=7.2.0",
   "pre-commit>=4.2.0",
-  "toml-sort>=0.24.2",
+  "toml-sort>=0.24.2"
 ]
 
 [project]
@@ -24,7 +24,7 @@ dependencies = [
   "pulumi-tls>=5.1.0",
   "pulumi>=3.0.0",
   "pulumiverse-scaleway>=1.27.1",
-  "sopsy>=1.1.0",
+  "sopsy>=1.1.0"
 ]
 description = "Infrastructure for my homelab"
 name = "infra"

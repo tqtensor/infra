@@ -6,8 +6,8 @@ metadata:
     labels:
         app: qbittorrent-r2-sync
 spec:
-    # Run every 5 minutes
-    schedule: '*/5 * * * *'
+    # Run every 30 minutes
+    schedule: '*/30 * * * *'
     successfulJobsHistoryLimit: 3
     failedJobsHistoryLimit: 3
     concurrencyPolicy: Forbid
@@ -31,12 +31,15 @@ spec:
                               - -c
                               - |
                                 echo "Starting sync to R2..."
+                                echo "Comparing files (size-only mode)..."
                                 aws s3 sync /downloads s3://tqtensor-homelab/qbittorrent/ \
                                   --endpoint-url "${R2_ENDPOINT}" \
                                   --region auto \
+                                  --size-only \
                                   --exclude ".*" \
                                   --exclude "*.!qB" \
-                                  --delete
+                                  --delete \
+                                  --debug
                                 echo "Sync completed successfully"
                           volumeMounts:
                               - name: qbittorrent-downloads
