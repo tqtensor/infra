@@ -64,10 +64,3 @@ pulumi_bucket = aws.s3.Bucket(
     bucket="tqtensor-pulumi-bucket-us",
     opts=UE1_OPTS,
 )
-
-pulumi_bucket_acl = aws.s3.BucketAcl(
-    "pulumi_bucket_acl",
-    bucket=pulumi_bucket.id,
-    acl="private",
-    opts=UE1_OPTS,
-)
