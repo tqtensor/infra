@@ -37,9 +37,3 @@ tqtensor_homelab_r2_token = cloudflare.ApiToken(
     ],
     opts=OPTS,
 )
-
-pulumi.export("IAM: R2: tqtensor-homelab: Token ID", tqtensor_homelab_r2_token.id)
-pulumi.export(
-    "IAM: R2: tqtensor-homelab: Token Secret (SHA256)",
-    tqtensor_homelab_r2_token.value.apply(sha256_hash),
-)
