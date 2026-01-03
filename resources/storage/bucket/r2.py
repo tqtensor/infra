@@ -29,7 +29,9 @@ tqtensor_homelab_r2_token = cloudflare.ApiToken(
             resources=json.dumps(
                 {
                     f"com.cloudflare.edge.r2.bucket.{account_id}_default_tqtensor-homelab": "*"
-                }
+                },
+                sort_keys=True,
+                separators=(",", ":"),
             ),
         )
     ],
