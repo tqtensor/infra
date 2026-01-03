@@ -27,7 +27,7 @@ service:
 ingress:
     main:
         enabled: true
-        className: nginx
+        ingressClassName: nginx
         annotations:
             nginx.ingress.kubernetes.io/backend-protocol: HTTP
             nginx.ingress.kubernetes.io/ssl-redirect: 'true'
