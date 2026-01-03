@@ -1,4 +1,18 @@
 {
-    "python.defaultInterpreterPath": ".venv/bin/python",
-    "editor.wordWrap": "on"
+    "[python]": {
+        "editor.defaultColorDecorators": "auto",
+        "editor.semanticHighlighting.enabled": true
+    },
+    "cursorpyright.analysis.autoImportCompletions": true,
+    "cursorpyright.analysis.diagnosticMode": "openFilesOnly",
+    "cursorpyright.analysis.typeCheckingMode": "basic",
+    "cursorpyright.disableLanguageServices": false,
+    "editor.semanticHighlighting.enabled": true,
+    "editor.wordWrap": "on",
+    "files.associations": {
+        "*.py": "python"
+    },
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+    "python.languageServer": "None",
+    "python.pythonPath": "${workspaceFolder}/.venv/bin/python"
 }
