@@ -22,7 +22,7 @@ spec:
                     volumes:
                         - name: qbittorrent-downloads
                           persistentVolumeClaim:
-                              claimName: qbittorrent-config
+                              claimName: qbittorrent-downloads
                     containers:
                         - name: aws-cli-sync
                           image: amazon/aws-cli:latest
@@ -41,7 +41,6 @@ spec:
                           volumeMounts:
                               - name: qbittorrent-downloads
                                 mountPath: /downloads
-                                subPath: qbittorrent/downloads
                                 readOnly: true
                           env:
                               - name: AWS_ACCESS_KEY_ID
