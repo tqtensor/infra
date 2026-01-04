@@ -31,15 +31,26 @@ spec:
                               - -c
                               - |
                                 echo "Starting sync to R2..."
-                                echo "Comparing files (size-only mode)..."
-                                aws s3 sync /downloads s3://tqtensor-homelab/qbittorrent/ \
-                                  --endpoint-url "${R2_ENDPOINT}" \
+                                echo "Excluding files modified in the last 60 minutes to avoid syncing incomplete downloads..."
+
+                                # Find files modified in the last 60 minutes and create exclusion patterns
+                                # Using a more robust approach with proper quoting
+                                EXCLUDE_ARGS=""
+                                while IFS= read -r -d '' file; do
+                                  rel_path="${file#/downloads/}"
+                                  EXCLUDE_ARGS="$EXCLUDE_ARGS --exclude $(printf '%q' "$rel_path")"
+                                done < <(find /downloads -type f -mmin -60 -print0 2>/dev/null)
+
+                                echo "Syncing files (using checksum comparison)..."
+                                eval "aws s3 sync /downloads s3://tqtensor-homelab/qbittorrent/ \
+                                  --endpoint-url '${R2_ENDPOINT}' \
                                   --region auto \
-                                  --size-only \
-                                  --exclude ".*" \
-                                  --exclude "*.!qB" \
+                                  --exact-timestamps \
+                                  --exclude '.*' \
+                                  --exclude '*.!qB' \
+                                  $EXCLUDE_ARGS \
                                   --delete \
-                                  --debug
+                                  --debug"
                                 echo "Sync completed successfully"
                           volumeMounts:
                               - name: qbittorrent-downloads
