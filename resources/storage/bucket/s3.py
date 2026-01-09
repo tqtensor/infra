@@ -64,3 +64,9 @@ pulumi_bucket = aws.s3.Bucket(
     bucket="tqtensor-pulumi-bucket-us",
     opts=UE1_OPTS,
 )
+
+tqtensor_lab_bucket = aws.s3.Bucket(
+    "tqtensor_lab_bucket",
+    bucket="tqtensor-lab",
+    opts=EC1_OPTS,
+)
