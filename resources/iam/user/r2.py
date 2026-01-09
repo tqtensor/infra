@@ -6,7 +6,7 @@ import pulumi_cloudflare as cloudflare
 
 from resources.utils import get_options
 
-OPTS = get_options(provider="cloudflare")
+OPTS = get_options(provider="cloudflare", protect=False)
 
 
 def sha256_hash(value: str) -> str:
