@@ -1,7 +1,8 @@
 import pulumi
 import pulumi_cloudflare as cloudflare
 
-from resources.constants import tqtensor_com, tqtensor_homelab_bucket
+from resources.constants import tqtensor_com
+from resources.storage.bucket.r2 import tqtensor_homelab_bucket
 from resources.utils import get_options
 
 OPTS = get_options(provider="cloudflare")
