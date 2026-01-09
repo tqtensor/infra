@@ -4,7 +4,7 @@ import os
 import re
 import subprocess
 from pathlib import Path
-from typing import Dict, Union
+from typing import Any, Dict, Literal, Union, overload
 
 import pulumi
 import pulumi_gcp as gcp
@@ -16,6 +16,30 @@ from sopsy import Sops
 from sopsy.errors import SopsyCommandFailedError
 
 from resources.providers import *  # noqa
+
+
+@overload
+def get_options(
+    profile: str = ...,
+    region: str = ...,
+    *,
+    type: Literal["resource"] = ...,
+    protect: bool = ...,
+    provider: str = ...,
+    kwargs: dict = ...,
+) -> pulumi.ResourceOptions: ...
+
+
+@overload
+def get_options(
+    profile: str = ...,
+    region: str = ...,
+    *,
+    type: Literal["invoke"],
+    protect: bool = ...,
+    provider: str = ...,
+    kwargs: dict = ...,
+) -> pulumi.InvokeOptions: ...
 
 
 def get_options(
@@ -44,7 +68,9 @@ def get_options(
         if type == "resource":
             return pulumi.ResourceOptions(protect=protect, **kwargs)
         elif type == "invoke":
-            return pulumi.InvokeOptions(protect=protect, **kwargs)
+            return pulumi.InvokeOptions(**kwargs)
+        else:
+            raise ValueError("Invalid type")
     else:
         raise ValueError("Invalid provider")
 
@@ -56,7 +82,7 @@ def encode_tls_secret_data(cert_pem: str, key_pem: str) -> Dict[str, str]:
     }
 
 
-def decode_password(encrypted_yaml: str) -> dict:
+def decode_password(encrypted_yaml: str) -> Dict[str, Any]:
     sops_decoder = Sops(encrypted_yaml)
     try:
         credentials = sops_decoder.decrypt()
@@ -65,6 +91,10 @@ def decode_password(encrypted_yaml: str) -> dict:
     except Exception as e:
         pulumi.log.error(f"Failed to decrypt {encrypted_yaml}: {e}")
         raise
+    if not isinstance(credentials, dict):
+        raise TypeError(
+            f"Expected dict from {encrypted_yaml}, got {type(credentials).__name__}"
+        )
     return credentials
 
 
@@ -107,7 +137,7 @@ def fill_in_password(
         is_updated = True
 
     if not is_updated:
-        return credentials
+        return Output.from_input(credentials)
 
     # Wait for the Output to resolve before writing to YAML
     def write_credentials(creds: dict):
@@ -130,7 +160,7 @@ def normalize_email(email: str):
 
 def create_kubeconfig(
     cluster: Union[gcp.container.Cluster, scw.kubernetes.Cluster],
-) -> str:
+) -> Output[str]:
     if isinstance(cluster, gcp.container.Cluster):
         return Output.all(
             cluster.name,
