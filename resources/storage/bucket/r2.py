@@ -24,3 +24,21 @@ tqtensor_reddot_bucket = cloudflare.R2Bucket(
     storage_class="Standard",
     opts=OPTS,
 )
+
+tqtensor_reddot_bucket_cors = cloudflare.R2BucketCors(
+    "tqtensor_reddot_bucket_cors",
+    account_id=pulumi.Config().require("cloudflareAccountId"),
+    bucket_name=tqtensor_reddot_bucket.name,
+    rules=[
+        {
+            "allowed": {
+                "methods": ["GET", "PUT", "POST", "DELETE"],
+                "origins": ["chrome-extension://*"],
+                "headers": ["*"],
+            },
+            "max_age_seconds": 3600,
+            "id": "AllowChromeExtension",
+        }
+    ],
+    opts=OPTS,
+)
