@@ -24,6 +24,13 @@ reddot_s3_policy = aws.iam.Policy(
                 {
                     "Effect": "Allow",
                     "Action": [
+                        "s3:ListBucket",
+                    ],
+                    "Resource": reddot_recordings_bucket.arn,
+                },
+                {
+                    "Effect": "Allow",
+                    "Action": [
                         "s3:PutObject",
                         "s3:GetObject",
                         "s3:AbortMultipartUpload",
