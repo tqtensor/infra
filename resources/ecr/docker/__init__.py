@@ -1,1 +1,0 @@
-from .devcontainer import *  # noqa
