@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import pulumi
 import pulumi_kubernetes as k8s
 from pulumi import Output
@@ -5,10 +7,13 @@ from pulumi import Output
 from resources.cloudflare.tls.tqtensor_com import paper_ai_origin_ca_cert_bundle
 from resources.k8s.helm.paperless import paperless_ns
 from resources.providers.k8s import k8s_par_2
-from resources.utils import encode_tls_secret_data
+from resources.utils import decode_password, encode_tls_secret_data
 
 OPTS = pulumi.ResourceOptions(provider=k8s_par_2)
 
+
+secrets_file_path = Path(__file__).parent / "secrets" / "paperless.yaml"
+paperless_secrets = decode_password(encrypted_yaml=str(secrets_file_path))
 
 paperless_ai_tls_secret = k8s.core.v1.Secret(
     "paperless_ai_tls_secret",
@@ -60,6 +65,9 @@ paperless_ai_deployment = k8s.apps.v1.Deployment(
                     fs_group=1000,
                     run_as_user=1000,
                     run_as_group=1000,
+                    seccomp_profile=k8s.core.v1.SeccompProfileArgs(
+                        type="RuntimeDefault"
+                    ),
                 ),
                 containers=[
                     k8s.core.v1.ContainerArgs(
@@ -77,7 +85,19 @@ paperless_ai_deployment = k8s.apps.v1.Deployment(
                                 name="PAPERLESS_AI_PORT", value="3000"
                             ),
                             k8s.core.v1.EnvVarArgs(
+                                name="RAG_SERVICE_URL",
+                                value="http://paperless-paperless-ngx:8000",
+                            ),
+                            k8s.core.v1.EnvVarArgs(
                                 name="RAG_SERVICE_ENABLED", value="true"
+                            ),
+                            k8s.core.v1.EnvVarArgs(
+                                name="PAPERLESS_API_URL",
+                                value="http://paperless-paperless-ngx:8000/api",
+                            ),
+                            k8s.core.v1.EnvVarArgs(
+                                name="PAPERLESS_API_TOKEN",
+                                value=paperless_secrets["paperless_api_key"],
                             ),
                         ],
                         volume_mounts=[
@@ -93,10 +113,14 @@ paperless_ai_deployment = k8s.apps.v1.Deployment(
                                 name="openapi",
                                 mount_path="/app/OPENAPI",
                             ),
+                            k8s.core.v1.VolumeMountArgs(
+                                name="public-images",
+                                mount_path="/app/public/images",
+                            ),
                         ],
                         resources=k8s.core.v1.ResourceRequirementsArgs(
-                            requests={"memory": "256Mi", "cpu": "100m"},
-                            limits={"memory": "1Gi", "cpu": "1000m"},
+                            requests={"memory": "512Mi", "cpu": "100m"},
+                            limits={"memory": "2Gi", "cpu": "1000m"},
                         ),
                         security_context=k8s.core.v1.SecurityContextArgs(
                             allow_privilege_escalation=False,
@@ -118,6 +142,10 @@ paperless_ai_deployment = k8s.apps.v1.Deployment(
                     ),
                     k8s.core.v1.VolumeArgs(
                         name="openapi",
+                        empty_dir=k8s.core.v1.EmptyDirVolumeSourceArgs(),
+                    ),
+                    k8s.core.v1.VolumeArgs(
+                        name="public-images",
                         empty_dir=k8s.core.v1.EmptyDirVolumeSourceArgs(),
                     ),
                 ],
