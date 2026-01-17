@@ -2,18 +2,22 @@ from typing import Tuple
 
 import pulumi_cloudflare as cloudflare
 import pulumi_tls as tls
+from pulumi import Output
 from pulumi_cloudflare import DnsRecord
 
 
 def create_origin_ca_cert(
     host: DnsRecord,
     zone_name: str = "tqtensor.com",
-) -> Tuple[cloudflare.OriginCaCertificate, tls.PrivateKey]:
+) -> Output[Tuple[cloudflare.OriginCaCertificate, tls.PrivateKey]]:
     def make_resources(
         hostname: str,
     ) -> Tuple[cloudflare.OriginCaCertificate, tls.PrivateKey]:
-        # Construct FQDN from subdomain + zone
-        fqdn = f"{hostname}.{zone_name}"
+        fqdn = (
+            hostname
+            if hostname.endswith(f".{zone_name}")
+            else f"{hostname}.{zone_name}"
+        )
 
         private_key = tls.PrivateKey(
             f"{hostname}_private_key", algorithm="RSA", rsa_bits=2048
