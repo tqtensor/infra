@@ -1,0 +1,99 @@
+---
+global:
+    security:
+        allowInsecureImages: true
+
+image:
+    repository: ghcr.io/paperless-ngx/paperless-ngx
+    pullPolicy: IfNotPresent
+    tag: 2.14.7
+
+env:
+    TZ: Europe/Amsterdam
+    PAPERLESS_URL: https://paper.tqtensor.com
+    # PAPERLESS_SECRET_KEY will be set via K8s secret
+    # Database connection set via envFrom secret
+
+service:
+    main:
+        ports:
+            http:
+                port: 8000
+
+ingress:
+    main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+            nginx.ingress.kubernetes.io/backend-protocol: HTTP
+            nginx.ingress.kubernetes.io/ssl-redirect: 'true'
+            nginx.ingress.kubernetes.io/proxy-body-size: 64m
+        hosts:
+            - host: paper.tqtensor.com
+              paths:
+                  - path: /
+                    pathType: Prefix
+        tls:
+            - secretName: paper-tls-secret
+              hosts:
+                  - paper.tqtensor.com
+
+persistence:
+    data:
+        enabled: true
+        type: pvc
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        storageClass: scw-bssd
+    media:
+        enabled: true
+        type: pvc
+        accessMode: ReadWriteOnce
+        size: 50Gi
+        storageClass: scw-bssd
+    export:
+        enabled: true
+        type: pvc
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        storageClass: scw-bssd
+    consume:
+        enabled: true
+        type: pvc
+        accessMode: ReadWriteOnce
+        size: 10Gi
+        storageClass: scw-bssd
+
+# Disable built-in PostgreSQL - using Scaleway Serverless SQL
+postgresql:
+    enabled: false
+
+# Disable built-in MariaDB
+mariadb:
+    enabled: false
+
+# Enable Redis (required for Paperless-ngx)
+redis:
+    enabled: true
+    auth:
+        enabled: true
+        username: ''
+    image:
+        registry: docker.io
+        repository: bitnamilegacy/redis
+        tag: 7.4.2-debian-12-r0
+    master:
+        persistence:
+            enabled: true
+            size: 1Gi
+            storageClass: scw-bssd
+    replica:
+        replicaCount: 0
+
+resources:
+    requests:
+        memory: 512Mi
+        cpu: 200m
+    limits:
+        memory: 2Gi
+        cpu: 2000m
