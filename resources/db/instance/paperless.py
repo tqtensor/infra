@@ -9,19 +9,19 @@ project_id = config.require("project_id")
 OPTS = get_options(profile="pixelml", region="par-1", provider="scw", protect=False)
 
 
-paperless_iam_app = scw.IamApplication(
+paperless_iam_app = scw.iam.Application(
     "paperless_db_app",
     name="paperless-db-app",
     opts=OPTS,
 )
 
-paperless_iam_policy = scw.IamPolicy(
+paperless_iam_policy = scw.iam.Policy(
     "paperless_db_policy",
     name="paperless-db-policy",
     description="Grants Paperless app access to Serverless SQL Database",
     application_id=paperless_iam_app.id,
     rules=[
-        scw.IamPolicyRuleArgs(
+        scw.iam.PolicyRuleArgs(
             project_ids=[project_id],
             permission_set_names=["ServerlessSQLDatabaseReadWrite"],
         )
@@ -29,7 +29,7 @@ paperless_iam_policy = scw.IamPolicy(
     opts=OPTS,
 )
 
-paperless_api_key = scw.IamApiKey(
+paperless_api_key = scw.iam.ApiKey(
     "paperless_db_api_key",
     application_id=paperless_iam_app.id,
     opts=OPTS,
