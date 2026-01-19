@@ -65,6 +65,7 @@ def get_options(
         else:
             raise ValueError("Invalid type")
     elif provider == "cloudflare":
+
         if type == "resource":
             return pulumi.ResourceOptions(protect=protect, **kwargs)
         elif type == "invoke":
