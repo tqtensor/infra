@@ -13,9 +13,8 @@ tqtensor_com: cloudflare.Zone = cloudflare.Zone.get(
 )
 
 # GCP
-netherlands_ts_external_ip: gcp.compute.Address = gcp.compute.Address.get(
-    "netherlands_ts_external_ip",
-    id="ts-nld-external-ip",
+netherlands_ts_external_ip = gcp.compute.get_address(
+    name="ts-nld-external-ip",
     region="europe-west4",
     project="gen-lang-client-0608717027",
 )
