@@ -8,6 +8,7 @@ from resources.cloudflare.tls.tqtensor_com import paper_ai_origin_ca_cert_bundle
 from resources.k8s.helm.paperless import paperless_ns
 from resources.providers.k8s import k8s_par_2
 from resources.utils import decode_password, encode_tls_secret_data
+from resources.vm.networking.whitelist import whitelist_cidrs
 
 OPTS = pulumi.ResourceOptions(provider=k8s_par_2)
 
@@ -188,6 +189,9 @@ paperless_ai_ingress = k8s.networking.v1.Ingress(
             "nginx.ingress.kubernetes.io/backend-protocol": "HTTP",
             "nginx.ingress.kubernetes.io/ssl-redirect": "true",
             "nginx.ingress.kubernetes.io/proxy-body-size": "64m",
+            "nginx.ingress.kubernetes.io/whitelist-source-range": Output.all(
+                *whitelist_cidrs
+            ).apply(lambda args: ",".join(args)),
         },
     ),
     spec=k8s.networking.v1.IngressSpecArgs(

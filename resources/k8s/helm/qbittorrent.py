@@ -8,6 +8,7 @@ from pulumi import Output
 from resources.cloudflare.tls.tqtensor_com import torrent_origin_ca_cert_bundle
 from resources.providers.k8s import k8s_par_2
 from resources.utils import encode_tls_secret_data
+from resources.vm.networking.whitelist import whitelist_cidrs
 
 OPTS = pulumi.ResourceOptions(provider=k8s_par_2)
 
@@ -33,6 +34,10 @@ qbittorrent_tls_secret = k8s.core.v1.Secret(
 values_file_path = Path(__file__).parent / "values" / "qbittorrent.yaml"
 with open(values_file_path, "r") as f:
     chart_values = yaml.safe_load(f)
+
+chart_values["ingress"]["main"]["annotations"][
+    "nginx.ingress.kubernetes.io/whitelist-source-range"
+] = Output.all(*whitelist_cidrs).apply(lambda args: ",".join(args))
 
 qbittorrent_release = k8s.helm.v3.Release(
     "qbittorrent",
