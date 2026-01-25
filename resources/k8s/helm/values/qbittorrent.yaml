@@ -53,7 +53,7 @@ persistence:
         type: pvc
         accessMode: ReadWriteMany
         size: 200Gi
-        storageClass: nfs
+        storageClass: nfs-dns
 
 # Resource limits (adjust based on usage)
 resources:
