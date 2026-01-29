@@ -49,3 +49,14 @@ paper_ai_tqtensor_com = cloudflare.DnsRecord(
     proxied=True,
     opts=OPTS,
 )
+
+code_tqtensor_com = cloudflare.DnsRecord(
+    "code_tqtensor_com",
+    name="code",
+    ttl=1,
+    type="A",
+    content=nginx_ip_par_2.ip_address,
+    zone_id=tqtensor_com.id,
+    proxied=True,
+    opts=OPTS,
+)
