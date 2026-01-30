@@ -93,12 +93,10 @@ code_server_deployment = k8s.apps.v1.Deployment(
                             ),
                         ],
                         resources=k8s.core.v1.ResourceRequirementsArgs(
-                            requests={"memory": "256Mi", "cpu": "100m"},
-                            limits={"memory": "1Gi", "cpu": "500m"},
+                            requests={"memory": "2Gi", "cpu": "512m"},
+                            limits={"memory": "16Gi", "cpu": "8"},
                         ),
                         security_context=k8s.core.v1.SecurityContextArgs(
-                            allow_privilege_escalation=False,
-                            capabilities=k8s.core.v1.CapabilitiesArgs(drop=["ALL"]),
                             read_only_root_filesystem=False,
                         ),
                     )
