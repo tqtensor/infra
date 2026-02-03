@@ -4,9 +4,9 @@
         "editor.semanticHighlighting.enabled": true
     },
     "[yaml]": {
-        "editor.tabSize": 2,
+        "editor.detectIndentation": false,
         "editor.insertSpaces": true,
-        "editor.detectIndentation": false
+        "editor.tabSize": 2
     },
     "cursorpyright.analysis.autoImportCompletions": true,
     "cursorpyright.analysis.diagnosticMode": "openFilesOnly",
@@ -17,7 +17,10 @@
     "files.associations": {
         "*.py": "python"
     },
+    "python.analysis.showHoverGoToLinks": true,
     "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
     "python.languageServer": "None",
+    "python.pyrefly.disableLanguageServices": false,
+    "python.pyrefly.displayTypeErrors": "default",
     "python.pythonPath": "${workspaceFolder}/.venv/bin/python"
 }

@@ -197,6 +197,8 @@ users:
         )
     elif isinstance(cluster, scw.kubernetes.Cluster):
         return cluster.kubeconfigs[0].config_file
+    else:
+        raise ValueError(f"Unsupported cluster type: {type(cluster)}")
 
 
 def create_docker_config(provider: str, server: str):
