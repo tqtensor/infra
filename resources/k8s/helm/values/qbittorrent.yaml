@@ -55,6 +55,21 @@ persistence:
         size: 200Gi
         storageClass: nfs-dns
 
+# Liveness probe to detect stale NFS mounts
+probes:
+    liveness:
+        enabled: true
+        custom: true
+        spec:
+            exec:
+                command:
+                    - ls
+                    - /downloads
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            timeoutSeconds: 10
+            failureThreshold: 3
+
 # Resource limits (adjust based on usage)
 resources:
     requests:
