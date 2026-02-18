@@ -1,10 +1,12 @@
+from pathlib import Path
+
 import pulumi
 import pulumi_kubernetes as k8s
 from pulumi import Output
 
 from resources.cloudflare.tls.tqtensor_com import code_origin_ca_cert_bundle
 from resources.providers.k8s import k8s_par_2
-from resources.utils import encode_tls_secret_data
+from resources.utils import decode_password, encode_tls_secret_data
 from resources.vm.networking.whitelist import whitelist_cidrs
 
 OPTS = pulumi.ResourceOptions(provider=k8s_par_2)
@@ -52,6 +54,21 @@ code_server_pvc = k8s.core.v1.PersistentVolumeClaim(
     ),
 )
 
+_secrets_path = Path(__file__).parent / "secrets" / "code_server.yaml"
+_credentials = decode_password(encrypted_yaml=str(_secrets_path))
+
+code_server_auth_secret = k8s.core.v1.Secret(
+    "code_server_auth_secret",
+    metadata=k8s.meta.v1.ObjectMetaArgs(
+        name="code-server-auth",
+        namespace=code_server_ns.metadata["name"],
+    ),
+    string_data={"PASSWORD": _credentials["password"]},
+    opts=pulumi.ResourceOptions.merge(
+        OPTS, pulumi.ResourceOptions(depends_on=[code_server_ns])
+    ),
+)
+
 code_server_deployment = k8s.apps.v1.Deployment(
     "code_server_deployment",
     metadata=k8s.meta.v1.ObjectMetaArgs(
@@ -80,7 +97,18 @@ code_server_deployment = k8s.apps.v1.Deployment(
                     k8s.core.v1.ContainerArgs(
                         name="code-server",
                         image="codercom/code-server:latest",
-                        args=["--auth", "none", "--bind-addr", "0.0.0.0:8080"],
+                        args=["--auth", "password", "--bind-addr", "0.0.0.0:8080"],
+                        env=[
+                            k8s.core.v1.EnvVarArgs(
+                                name="PASSWORD",
+                                value_from=k8s.core.v1.EnvVarSourceArgs(
+                                    secret_key_ref=k8s.core.v1.SecretKeySelectorArgs(
+                                        name="code-server-auth",
+                                        key="PASSWORD",
+                                    )
+                                ),
+                            )
+                        ],
                         ports=[
                             k8s.core.v1.ContainerPortArgs(
                                 container_port=8080, name="http"
@@ -114,7 +142,9 @@ code_server_deployment = k8s.apps.v1.Deployment(
     ),
     opts=pulumi.ResourceOptions.merge(
         OPTS,
-        pulumi.ResourceOptions(depends_on=[code_server_ns, code_server_pvc]),
+        pulumi.ResourceOptions(
+            depends_on=[code_server_ns, code_server_pvc, code_server_auth_secret]
+        ),
     ),
 )
 
